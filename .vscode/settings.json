@@ -1,0 +1,40 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.maxTokenizationLineLength": 2500,
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[jsx]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[tsx]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  }
+}

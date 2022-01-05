@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
-    title: "koueinotou-official-site",
+    siteUrl: "https://koueinotou.luftelli.com",
+    title: "光影の塔公式サイト",
   },
   plugins: [
     {
@@ -29,5 +29,7 @@ module.exports = {
       },
       __key: "images",
     },
+    'gatsby-plugin-typegen',
+    'gatsby-plugin-postcss'
   ],
 };
