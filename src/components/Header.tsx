@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, pageDescription, className =
         <meta name='description' content={description} />
       </Helmet>
 
-      <nav className='flex justify-center w-full mb-9 py-4 border-b-2'></nav>
+      <nav className='flex justify-center w-full py-4'></nav>
     </header>
   );
 };
