@@ -7,16 +7,27 @@ type ButtonProps = {
 };
 
 const Button: React.FC<ButtonProps> = ({ children, link, className }) => {
-  return link == null ? (
+  // https://やhttp://を含まないなら内部コンテンツとする
+  const isInternal = link == null ? false : !link.includes('://');
+
+  const mainComponent = (
     <div
-      className={`flex justify-center items-center h-12 w-64 bg-teal-400 hover:bg-teal-500 rounded-lg ${
-        className ?? ''
-      }`}
+      className={`flex justify-center items-center text-2xl text-white font-bold align-middle h-12 w-64 rounded-lg ${
+        link == null ? 'bg-gray-500' : ' bg-teal-400 hover:bg-teal-500'
+      } ${className ?? ''}`}
     >
-      <p className='text-2xl text-white font-bold h-fit align-middle'>{children}</p>
+      {children}
     </div>
+  );
+
+  return link == null ? (
+    mainComponent
+  ) : isInternal ? (
+    <Link to={link}>{mainComponent}</Link>
   ) : (
-    <Link to={link}>{children}</Link>
+    <a href={link} target='_blank'>
+      {mainComponent}
+    </a>
   );
 };
 export default Button;

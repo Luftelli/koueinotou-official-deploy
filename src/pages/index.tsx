@@ -23,8 +23,18 @@ const IndexPage = () => {
       </Section>
 
       <Section>
-        <p className='text-xl'>ダウンロードはこちら</p>
-        <Button className='flex-none'>Steam</Button>
+        <div className='flex justify-center w-full gap-x-6'>
+          <div>
+            <p className='text-xl'>最新情報はこちら</p>
+            <Button link='https://twitter.com/luftelli' className='flex-none'>
+              Twitter
+            </Button>
+          </div>
+          <div>
+            <p className='text-xl'>ストアページ準備中</p>
+            <Button className='flex-none'>Steam</Button>
+          </div>
+        </div>
       </Section>
 
       <Section>
