@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import DeveloperCard from '../components/DeveloperCard';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
+import TwoDevidedList from '../components/TwoDevidedList';
 
 import CdecIcon from '../images/cdec_icon_v2.1.png';
 import ZipIcon from '../images/zip_icon.jpg';
@@ -52,39 +53,40 @@ const IndexPage = () => {
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>ニュース</h2>
         <Box>
-          <ul className='text-lg text-left text-black'>
-            <li>2022/1/10：公式サイトオープン</li>
-            <li>2021/11/14：デジゲー博2021出展</li>
-          </ul>
+          <TwoDevidedList
+            items={[
+              ['2022/1/10', '：公式サイトオープン'],
+              ['2021/11/14', '：デジゲー博2021出展'],
+            ]}
+            className='text-lg text-left text-black'
+          />
         </Box>
       </Section>
 
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>スペック</h2>
         <Box>
-          <ul className='text-lg text-left text-black'>
-            <li>ゲームタイトル：光影の塔</li>
-            <li>価格：未定</li>
-            <li>発売日：2022年8月予定</li>
-            <li>対応プレイ人数：1-8人</li>
-            <li>対応プラットフォーム：Windows, MacOS X（予定）</li>
-            <li>対応言語：日本語、英語（予定）</li>
-            <li>対応年齢：全年齢</li>
-            <li>ネットワーク機能：あり</li>
-            <li>開発チーム名：Luftelli</li>
-          </ul>
+          <TwoDevidedList
+            items={[
+              ['ゲームタイトル', '：光影の塔'],
+              ['価格', '：未定'],
+              ['発売日', '：2022年8月予定'],
+              ['対応プレイ人数', '：1-8人'],
+              ['対応プラットフォーム', '：Windows, MacOS X（予定）'],
+              ['対応言語', '：日本語、英語（予定）'],
+              ['対応年齢', '：全年齢'],
+              ['ネットワーク機能', '：あり'],
+              ['開発チーム名', '：Luftelli'],
+            ]}
+            className='text-lg text-left text-black'
+          />
         </Box>
       </Section>
 
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>開発者</h2>
-        <div className='grid grid-cols-2 w-full gap-12'>
-          <DeveloperCard
-            icon={CdecIcon}
-            name='Cdec'
-            twitter='cdecpgl'
-            charge='全般担当'
-          />
+        <div className='grid grid-cols-3 w-full gap-12'>
+          <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
           <DeveloperCard name='Lui' charge='開発補助' />
           <DeveloperCard name='Van' charge='デバッグ担当' />
           <DeveloperCard
@@ -93,11 +95,7 @@ const IndexPage = () => {
             twitter='ziiiii_iiiiip'
             charge='開発補助（2018/7～）'
           />
-          <DeveloperCard
-            name='S丼'
-            twitter='S_don_Luftelli'
-            charge='プログラム補助（～2018/3）'
-          />
+          <DeveloperCard name='S丼' twitter='S_don_Luftelli' charge='プログラム補助（～2018/3）' />
         </div>
       </Section>
     </Layout>
