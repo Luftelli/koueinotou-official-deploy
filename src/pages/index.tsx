@@ -47,7 +47,14 @@ const IndexPage = () => {
 
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>ギャラリー</h2>
-        <StaticImage src='../images/ss1.jpg' alt='Screen Shot 1' />
+        <div className='grid grid-cols-2 w-full gap-12'>
+          <StaticImage src='../images/ss1.jpg' alt='Screen Shot 1' />
+          <StaticImage src='../images/ss5.jpg' alt='Screen Shot 5' />
+          <StaticImage src='../images/ss2.jpg' alt='Screen Shot 2' />
+          <StaticImage src='../images/ss4.jpg' alt='Screen Shot 4' />
+          <StaticImage src='../images/ss3.jpg' alt='Screen Shot 3' />
+          <StaticImage src='../images/ss6.jpg' alt='Screen Shot 6' />
+        </div>
       </Section>
 
       <Section className='gap-y-4'>
