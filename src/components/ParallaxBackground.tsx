@@ -1,7 +1,7 @@
 import { StaticImage } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 
-const scrollScale=0.1;
+const scrollScale = 0.1;
 
 function getScrollRate() {
   var scroll = window.scrollY;
@@ -27,7 +27,7 @@ const ParallaxBackground: React.FC = () => {
     <div
       className='fixed -z-50'
       style={{
-        top: `-${Math.round(scrollRate * 100 * scrollScale)}%`,
+        top: `-${scrollRate * 100 * scrollScale}%`,
       }}
     >
       <StaticImage src='../images/starsky.jpg' alt='Background' />
