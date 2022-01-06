@@ -67,37 +67,40 @@ const IndexPage = () => {
         </div>
       </Section>
 
-      <Section className='gap-y-4'>
-        <h2 className='text-3xl'>ニュース</h2>
-        <Box>
-          <TwoDevidedList
-            items={[
-              ['2022/1/10', '：公式サイトオープン'],
-              ['2021/11/14', '：デジゲー博2021出展'],
-            ]}
-            className='text-lg text-left text-black'
-          />
-        </Box>
-      </Section>
-
-      <Section className='gap-y-4'>
-        <h2 className='text-3xl'>スペック</h2>
-        <Box>
-          <TwoDevidedList
-            items={[
-              ['ゲームタイトル', '：光影の塔'],
-              ['価格', '：未定'],
-              ['発売日', '：2022年8月予定'],
-              ['対応プレイ人数', '：1-8人'],
-              ['対応プラットフォーム', '：Windows, MacOS X（予定）'],
-              ['対応言語', '：日本語、英語（予定）'],
-              ['対応年齢', '：全年齢'],
-              ['ネットワーク機能', '：あり'],
-              ['開発チーム名', '：Luftelli'],
-            ]}
-            className='text-lg text-left text-black'
-          />
-        </Box>
+      <Section>
+        <div className='grid grid-cols-2 w-full gap-12'>
+          <div className='h-full flex flex-col gap-4'>
+            <h2 className='text-3xl'>ニュース</h2>
+            <Box className='h-full'>
+              <TwoDevidedList
+                items={[
+                  ['2022/1/10', '：公式サイトオープン'],
+                  ['2021/11/14', '：デジゲー博2021出展'],
+                ]}
+                className='text-base text-left text-black'
+              />
+            </Box>
+          </div>
+          <div className='h-full flex flex-col gap-4'>
+            <h2 className='text-3xl'>スペック</h2>
+            <Box className='h-full'>
+              <TwoDevidedList
+                items={[
+                  ['ゲームタイトル', '：光影の塔'],
+                  ['価格', '：未定'],
+                  ['発売日', '：2022年8月予定'],
+                  ['対応プレイ人数', '：1-8人'],
+                  ['対応プラットフォーム', '：Windows, MacOS X（予定）'],
+                  ['対応言語', '：日本語、英語（予定）'],
+                  ['対応年齢', '：全年齢'],
+                  ['ネットワーク機能', '：あり'],
+                  ['開発チーム名', '：Luftelli'],
+                ]}
+                className='text-base text-left text-black'
+              />
+            </Box>
+          </div>
+        </div>
       </Section>
 
       <Section className='gap-y-4'>
