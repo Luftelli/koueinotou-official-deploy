@@ -46,12 +46,14 @@ const IndexPage = () => {
       <Section className='gap-y-6'>
         <div className='flex justify-center w-full gap-x-6'>
           <Button className='flex-none'>ゲームシステム</Button>
-          <Button className='flex-none'>開発状況</Button>
         </div>
         <div className='flex justify-center w-full gap-x-6'>
-          <Button className='flex-none'>お問い合わせ</Button>
-          <Button className='flex-none'>利用規約</Button>
-          <Button className='flex-none'>ガイドライン</Button>
+          <Button className='flex-none'>開発状況</Button>
+          <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none'>
+            お問い合わせ
+          </Button>
+          {/* <Button className='flex-none'>利用規約</Button>
+          <Button className='flex-none'>ガイドライン</Button> */}
         </div>
       </Section>
 
