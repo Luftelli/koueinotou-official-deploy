@@ -6,6 +6,9 @@ import DeveloperCard from '../components/DeveloperCard';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 
+import CdecIcon from '../images/cdec_icon_v2.1.png';
+import ZipIcon from '../images/zip_icon.jpg';
+
 const IndexPage = () => {
   return (
     <Layout>
@@ -29,24 +32,24 @@ const IndexPage = () => {
         <p className='text-2xl'>塔を壊す</p>
       </Section>
 
-      <Section className='gap-y-4'>
-        <div className='flex justify-center w-full gap-x-4'>
+      <Section className='gap-y-6'>
+        <div className='flex justify-center w-full gap-x-6'>
           <Button className='flex-none'>ゲームシステム</Button>
           <Button className='flex-none'>開発状況</Button>
         </div>
-        <div className='flex justify-center w-full gap-x-4'>
+        <div className='flex justify-center w-full gap-x-6'>
           <Button className='flex-none'>お問い合わせ</Button>
           <Button className='flex-none'>利用規約</Button>
           <Button className='flex-none'>ガイドライン</Button>
         </div>
       </Section>
 
-      <Section className='gap-y-2'>
+      <Section className='gap-y-4'>
         <h2 className='text-3xl'>ギャラリー</h2>
         <StaticImage src='../images/ss1.jpg' alt='Screen Shot 1' />
       </Section>
 
-      <Section className='gap-y-2'>
+      <Section className='gap-y-4'>
         <h2 className='text-3xl'>ニュース</h2>
         <Box>
           <ul className='text-lg text-left text-black'>
@@ -56,7 +59,7 @@ const IndexPage = () => {
         </Box>
       </Section>
 
-      <Section className='gap-y-2'>
+      <Section className='gap-y-4'>
         <h2 className='text-3xl'>スペック</h2>
         <Box>
           <ul className='text-lg text-left text-black'>
@@ -73,11 +76,11 @@ const IndexPage = () => {
         </Box>
       </Section>
 
-      <Section className='gap-y-2'>
+      <Section className='gap-y-4'>
         <h2 className='text-3xl'>開発者</h2>
-        <div className='grid grid-cols-2 w-full gap-4'>
+        <div className='grid grid-cols-2 w-full gap-12'>
           <DeveloperCard
-            icon='cdec_icon_v2.1.png'
+            icon={CdecIcon}
             name='Cdec'
             twitter='cdecpgl'
             charge='全般担当'
@@ -85,17 +88,15 @@ const IndexPage = () => {
           <DeveloperCard name='Lui' charge='開発補助' />
           <DeveloperCard name='Van' charge='デバッグ担当' />
           <DeveloperCard
-            icon='zip_icon.jpg'
+            icon={ZipIcon}
             name='Zip'
             twitter='ziiiii_iiiiip'
-            charge='開発補助'
-            supplement='（2018/7～）'
+            charge='開発補助（2018/7～）'
           />
           <DeveloperCard
             name='S丼'
             twitter='S_don_Luftelli'
-            charge='プログラム補助'
-            supplement='（～2018/3）'
+            charge='プログラム補助（～2018/3）'
           />
         </div>
       </Section>
