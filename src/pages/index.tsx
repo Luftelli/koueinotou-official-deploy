@@ -196,15 +196,15 @@ const IndexPage = () => {
         <h2 className='text-3xl'>開発者</h2>
         <div className='grid grid-cols-3 w-full gap-12'>
           <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
-          <DeveloperCard name='Lui' charge='開発補助' />
+          <DeveloperCard name='Lui' charge='企画・デザインサポート' />
           <DeveloperCard name='Van' charge='デバッグ担当' />
           <DeveloperCard
             icon={ZipIcon}
             name='Zip'
             twitter='ziiiii_iiiiip'
-            charge='開発補助（2018/7～）'
+            charge='開発サポート（2018/7～）'
           />
-          <DeveloperCard name='S丼' twitter='S_don_Luftelli' charge='プログラム補助（～2018/3）' />
+          <DeveloperCard name='S丼' twitter='S_don_Luftelli' charge='開発サポート（～2018/3）' />
         </div>
       </Section>
     </Layout>
