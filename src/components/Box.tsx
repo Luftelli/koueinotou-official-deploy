@@ -10,7 +10,7 @@ type SectionProps = {
 const Box: React.FC<SectionProps> = ({ children, className }) => {
   return (
     <div
-      className={`w-full p-4 bg-white rounded-lg ${className ?? ''}`}
+      className={`w-full p-4 bg-gray-900 border border-teal-200 rounded-lg ${className ?? ''}`}
     >
       {children}
     </div>

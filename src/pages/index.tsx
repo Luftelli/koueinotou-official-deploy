@@ -146,7 +146,7 @@ const IndexPage = () => {
                   ['2022/1/10', '：公式サイトオープン'],
                   ['2021/11/14', '：デジゲー博2021出展'],
                 ]}
-                className='text-base text-left text-black'
+                className='text-base text-left'
               />
             </Box>
           </div>
@@ -157,15 +157,15 @@ const IndexPage = () => {
                 items={[
                   ['ゲームタイトル', '：光影の塔'],
                   ['価格', '：未定'],
-                  ['発売日', '：2022年8月予定'],
+                  ['発売日', '：2022年後半予定'],
                   ['対応プレイ人数', '：1-8人'],
-                  ['対応プラットフォーム', '：Windows, MacOS X（予定）'],
+                  ['対応プラットフォーム', '：Windows、MacOS X（予定）'],
                   ['対応言語', '：日本語、英語（予定）'],
                   ['対応年齢', '：全年齢'],
                   ['ネットワーク機能', '：あり'],
                   ['開発チーム名', '：Luftelli'],
                 ]}
-                className='text-base text-left text-black'
+                className='text-base text-left'
               />
             </Box>
           </div>

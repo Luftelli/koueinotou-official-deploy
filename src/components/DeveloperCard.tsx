@@ -21,7 +21,7 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({
 }) => {
   return (
     <Box className={className}>
-      <div className='flex flex-col text-black gap-4'>
+      <div className='flex flex-col gap-4'>
         <div className='flex justify-center items-end gap-4 h-16'>
           {icon == null ? (
             <></>
@@ -34,7 +34,7 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({
           ) : (
             <a href={`https://twitter.com/${twitter}`} target='_blank' className='flex-none w-6'>
               <StaticImage
-                src={`../images/twitter_logo_black.png`}
+                src={`../images/twitter_logo_white.png`}
                 alt={`${name} icon`}
                 width={128}
                 className='w-full'
