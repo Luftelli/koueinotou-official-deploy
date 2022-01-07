@@ -12,21 +12,21 @@ import ZipIcon from '../images/zip_icon.jpg';
 
 const gameIntroductionItems = [
   {
-    title: '個性的な二つのステージ',
+    title: '塔を占拠した数で競うチーム制バトル',
+    imageId: 'buttle',
     content: (
       <>
-        ギミックたくさんなきれいな街の中を駆け巡る
+        光チームと影チームの最大4vs4で戦い
         <br />
-        多人数向けの「未来都市」。
+        制限時間終了時により多くの塔を
         <br />
-        オセロのように塔を挟んで壊していく
-        <br />
-        戦略性が問われる「オセロ空間」。
+        占拠していたチームの勝ちです。
       </>
     ),
   },
   {
-    title: 'パワーアップアイテムでパワーアップ',
+    title: 'パワーアップアイテムを集めて強化',
+    imageId: 'powerup',
     content: (
       <>
         ステージに散らばる
@@ -38,28 +38,48 @@ const gameIntroductionItems = [
     ),
   },
   {
-    title: '武器を拾って攻撃',
+    title: '多種多様な武器',
+    imageId: 'weapon',
     content: (
       <>
         ステージには様々な武器が落ちています。
         <br />
-        好みの武器を見つけて塔をたくさん破壊しよう！
-      </>
-    ),
-  },
-  {
-    title: '塔を占拠した数で競う',
-    content: (
-      <>
-        制限時間終了時に
+        お気に入りの武器を見つけて
         <br />
-        より多く塔を占拠していたチームの勝ちです。
-        <br />
-        好みの武器を見つけて塔をたくさん破壊しよう！
+        塔を壊し占拠したり敵を妨害したりできます。
       </>
     ),
   },
 ] as const;
+
+function gameIntroductionImage(id: string, className: string) {
+  switch (id) {
+    case 'buttle':
+      return (
+        <StaticImage
+          src='../images/intro_winner.jpg'
+          alt={`Screen Shot ${id}`}
+          className={className}
+        />
+      );
+    case 'powerup':
+      return (
+        <StaticImage
+          src='../images/intro_powerup.jpg'
+          alt={`Screen Shot ${id}`}
+          className={className}
+        />
+      );
+    case 'weapon':
+      return (
+        <StaticImage
+          src='../images/intro_weapon.jpg'
+          alt={`Screen Shot ${id}`}
+          className={className}
+        />
+      );
+  }
+}
 
 const IndexPage = () => {
   return (
@@ -97,11 +117,11 @@ const IndexPage = () => {
       <Section className='gap-y-6'>
         {gameIntroductionItems.map((g, i) => (
           <div className='flex w-full odd:flex-row-reverse even:flex-row gap-x-4'>
-            <StaticImage src='../images/ss1.jpg' alt={`Screen Shot ${i}`} className='basis-1/2' />
+            {gameIntroductionImage(g.imageId, 'basis-1/2')}
             <div className='basis-1/2 flex flex-col p-4 gap-y-2'>
               <p className='text-2xl'>{g.title}</p>
               <div className='flex-grow'></div>
-              <p className='text-base'>{g.content}</p>
+              <p className='text-base leading-relaxed'>{g.content}</p>
               <div className='flex-grow'></div>
             </div>
           </div>
