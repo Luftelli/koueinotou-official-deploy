@@ -59,6 +59,7 @@ function gameIntroductionImage(id: string, className: string) {
         <StaticImage
           src='../images/intro_winner.jpg'
           alt={`Screen Shot ${id}`}
+          width={640}
           className={className}
         />
       );
@@ -67,6 +68,7 @@ function gameIntroductionImage(id: string, className: string) {
         <StaticImage
           src='../images/intro_powerup.jpg'
           alt={`Screen Shot ${id}`}
+          width={640}
           className={className}
         />
       );
@@ -75,6 +77,7 @@ function gameIntroductionImage(id: string, className: string) {
         <StaticImage
           src='../images/intro_weapon.jpg'
           alt={`Screen Shot ${id}`}
+          width={640}
           className={className}
         />
       );
@@ -84,7 +87,12 @@ function gameIntroductionImage(id: string, className: string) {
 const IndexPage = () => {
   return (
     <Layout>
-      <StaticImage src='../images/header.jpg' alt='Header' className='flex-none w-full' />
+      <StaticImage
+        src='../images/header.jpg'
+        alt='Header'
+        width={1920}
+        className='flex-none w-full'
+      />
       <Section>
         <p className='text-4xl'>
           <span className='text-amber-200 font-bold'>光</span>と
@@ -115,7 +123,7 @@ const IndexPage = () => {
       </Section>
 
       <Section className='gap-y-6'>
-        {gameIntroductionItems.map((g, i) => (
+        {gameIntroductionItems.map((g) => (
           <div className='flex w-full odd:flex-row-reverse even:flex-row gap-x-4'>
             {gameIntroductionImage(g.imageId, 'basis-1/2')}
             <div className='basis-1/2 flex flex-col p-4 gap-y-2'>
@@ -147,12 +155,12 @@ const IndexPage = () => {
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>ギャラリー</h2>
         <div className='grid grid-cols-2 w-full gap-12'>
-          <StaticImage src='../images/ss1.jpg' alt='Screen Shot 1' />
-          <StaticImage src='../images/ss5.jpg' alt='Screen Shot 5' />
-          <StaticImage src='../images/ss2.jpg' alt='Screen Shot 2' />
-          <StaticImage src='../images/ss4.jpg' alt='Screen Shot 4' />
-          <StaticImage src='../images/ss3.jpg' alt='Screen Shot 3' />
-          <StaticImage src='../images/ss6.jpg' alt='Screen Shot 6' />
+          <StaticImage src='../images/ss1.jpg' alt='Screen Shot 1' width={640} />
+          <StaticImage src='../images/ss5.jpg' alt='Screen Shot 5' width={640} />
+          <StaticImage src='../images/ss2.jpg' alt='Screen Shot 2' width={640} />
+          <StaticImage src='../images/ss4.jpg' alt='Screen Shot 4' width={640} />
+          <StaticImage src='../images/ss3.jpg' alt='Screen Shot 3' width={640} />
+          <StaticImage src='../images/ss6.jpg' alt='Screen Shot 6' width={640} />
         </div>
       </Section>
 
