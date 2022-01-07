@@ -10,66 +10,13 @@ import TwoDevidedList from '../components/TwoDevidedList';
 import CdecIcon from '../images/cdec_icon_v2.1.png';
 import ZipIcon from '../images/zip_icon.jpg';
 
-const gameIntroductionItems = [
-  {
-    title: '個性的な二つのステージ',
-    content: (
-      <>
-        ギミックたくさんなきれいな街の中を駆け巡る
-        <br />
-        多人数向けの「未来都市」。
-        <br />
-        オセロのように塔を挟んで壊していく
-        <br />
-        戦略性が問われる「オセロ空間」。
-      </>
-    ),
-  },
-  {
-    title: 'パワーアップアイテムでパワーアップ',
-    content: (
-      <>
-        ステージに散らばる
-        <br />
-        パワーアップアイテムを取ることで
-        <br />
-        速さや攻撃力などプレイヤーを強化できます。
-      </>
-    ),
-  },
-  {
-    title: '武器を拾って攻撃',
-    content: (
-      <>
-        ステージには様々な武器が落ちています。
-        <br />
-        好みの武器を見つけて塔をたくさん破壊しよう！
-      </>
-    ),
-  },
-  {
-    title: '塔を占拠した数で競う',
-    content: (
-      <>
-        制限時間終了時に
-        <br />
-        より多く塔を占拠していたチームの勝ちです。
-        <br />
-        好みの武器を見つけて塔をたくさん破壊しよう！
-      </>
-    ),
-  },
-] as const;
-
-const IndexPage = () => {
+const DevelopmentStatusPage = () => {
   return (
     <Layout>
       <StaticImage src='../images/header.jpg' alt='Header' className='flex-none w-full' />
       <Section>
         <p className='text-4xl'>
-          <span className='text-amber-200 font-bold'>光</span>と
-          <span className='text-indigo-500 font-bold'>影</span>
-          に分かれて戦う
+          光と影に分かれて戦う
           <br />
           オンライン対戦型3Dシューティング
         </p>
@@ -91,31 +38,17 @@ const IndexPage = () => {
       </Section>
 
       <Section>
-        <p className='text-4xl'>鋭意開発中</p>
-      </Section>
-
-      <Section className='gap-y-6'>
-        {gameIntroductionItems.map((g, i) => (
-          <div className='flex w-full odd:flex-row-reverse even:flex-row gap-x-4'>
-            <StaticImage src='../images/ss1.jpg' alt={`Screen Shot ${i}`} className='basis-1/2' />
-            <div className='basis-1/2 flex flex-col p-4 gap-y-2'>
-              <p className='text-2xl'>{g.title}</p>
-              <div className='flex-grow'></div>
-              <p className='text-base'>{g.content}</p>
-              <div className='flex-grow'></div>
-            </div>
-          </div>
-        ))}
+        <p className='text-2xl'>パワーアップアイテムを集め</p>
+        <p className='text-2xl'>武器を拾い</p>
+        <p className='text-2xl'>塔を壊す</p>
       </Section>
 
       <Section className='gap-y-6'>
         <div className='flex justify-center w-full gap-x-6'>
-          <Button className='flex-none h-20'>ゲームシステム詳細（準備中）</Button>
+          <Button className='flex-none'>ゲームシステム</Button>
         </div>
         <div className='flex justify-center w-full gap-x-6'>
-          <Button link='/development-status' className='flex-none'>
-            開発状況
-          </Button>
+          <Button className='flex-none'>開発状況</Button>
           <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none'>
             お問い合わせ
           </Button>
@@ -191,4 +124,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default DevelopmentStatusPage;

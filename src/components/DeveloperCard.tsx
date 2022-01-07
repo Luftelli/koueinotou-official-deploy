@@ -43,7 +43,7 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({
           )}
         </div>
         <div>{charge}</div>
-        <div>{supplement ?? '　'}</div>
+        <div>{supplement ?? ''}</div>
       </div>
     </Box>
   );
