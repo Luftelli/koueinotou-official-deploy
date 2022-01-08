@@ -141,9 +141,9 @@ const IndexPage = () => {
           <Button className='flex-none h-20'>ゲームシステム詳細（準備中）</Button>
         </div>
         <div className='flex justify-center w-full gap-x-6'>
-          <Button link='/development-status' className='flex-none'>
+          {/* <Button link='/development-status' className='flex-none'>
             開発状況
-          </Button>
+          </Button> */}
           <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none'>
             お問い合わせ
           </Button>
