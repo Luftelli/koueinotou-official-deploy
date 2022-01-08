@@ -104,7 +104,7 @@ const IndexPage = () => {
       </Section>
 
       <Section>
-        <div className='flex justify-center w-full gap-x-6'>
+        <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
           <div>
             <p className='text-xl'>最新情報はこちら</p>
             <Button link='https://twitter.com/luftelli' className='flex-none'>
@@ -124,9 +124,9 @@ const IndexPage = () => {
 
       <Section className='gap-y-6'>
         {gameIntroductionItems.map((g) => (
-          <div className='flex w-full odd:flex-row-reverse even:flex-row gap-x-4'>
-            {gameIntroductionImage(g.imageId, 'basis-1/2')}
-            <div className='basis-1/2 flex flex-col p-4 gap-y-2'>
+          <div className='flex w-full gap-x-4 flex-col items-center lg:odd:flex-row-reverse lg:even:flex-row'>
+            {gameIntroductionImage(g.imageId, 'max-w-md lg:basis-1/2')}
+            <div className='flex flex-col p-4 gap-y-2 lg:basis-1/2 '>
               <p className='text-2xl'>{g.title}</p>
               <div className='flex-grow'></div>
               <p className='text-base leading-relaxed'>{g.content}</p>
@@ -137,10 +137,10 @@ const IndexPage = () => {
       </Section>
 
       <Section className='gap-y-6'>
-        <div className='flex justify-center w-full gap-x-6'>
+        <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
           <Button className='flex-none h-20'>ゲームシステム詳細（準備中）</Button>
         </div>
-        <div className='flex justify-center w-full gap-x-6'>
+        <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
           {/* <Button link='/development-status' className='flex-none'>
             開発状況
           </Button> */}
@@ -154,18 +154,48 @@ const IndexPage = () => {
 
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>ギャラリー</h2>
-        <div className='grid grid-cols-2 w-full gap-12'>
-          <StaticImage src='../images/ss1.jpg' alt='Screen Shot 1' width={640} />
-          <StaticImage src='../images/ss5.jpg' alt='Screen Shot 5' width={640} />
-          <StaticImage src='../images/ss2.jpg' alt='Screen Shot 2' width={640} />
-          <StaticImage src='../images/ss4.jpg' alt='Screen Shot 4' width={640} />
-          <StaticImage src='../images/ss3.jpg' alt='Screen Shot 3' width={640} />
-          <StaticImage src='../images/ss6.jpg' alt='Screen Shot 6' width={640} />
+        <div className='grid w-full gap-12 grid-cols-1 lg:grid-cols-2'>
+          <StaticImage
+            src='../images/ss1.jpg'
+            alt='Screen Shot 1'
+            width={640}
+            className='justify-self-center max-w-md'
+          />
+          <StaticImage
+            src='../images/ss5.jpg'
+            alt='Screen Shot 5'
+            width={640}
+            className='justify-self-center max-w-md'
+          />
+          <StaticImage
+            src='../images/ss2.jpg'
+            alt='Screen Shot 2'
+            width={640}
+            className='justify-self-center max-w-md'
+          />
+          <StaticImage
+            src='../images/ss4.jpg'
+            alt='Screen Shot 4'
+            width={640}
+            className='justify-self-center max-w-md'
+          />
+          <StaticImage
+            src='../images/ss3.jpg'
+            alt='Screen Shot 3'
+            width={640}
+            className='justify-self-center max-w-md'
+          />
+          <StaticImage
+            src='../images/ss6.jpg'
+            alt='Screen Shot 6'
+            width={640}
+            className='justify-self-center max-w-md'
+          />
         </div>
       </Section>
 
       <Section>
-        <div className='grid grid-cols-2 w-full gap-12'>
+        <div className='grid w-full gap-12 grid-cols-1 lg:grid-cols-2'>
           <div className='h-full flex flex-col gap-4'>
             <h2 className='text-3xl'>ニュース</h2>
             <Box className='h-full'>
@@ -202,7 +232,7 @@ const IndexPage = () => {
 
       <Section className='gap-y-4'>
         <h2 className='text-3xl'>開発者</h2>
-        <div className='grid grid-cols-3 w-full gap-12'>
+        <div className='grid w-full gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
           <DeveloperCard name='Lui' charge='企画・デザインサポート' />
           <DeveloperCard name='Van' charge='デバッグ担当' />
