@@ -3,7 +3,8 @@ module.exports = {
   theme: {
     fontFamily: {
       body: [
-        'Noto Sans Japanese'
+        'Noto Sans Japanese',
+        'ui-sans-serif'
       ]
     },
     extend: {},

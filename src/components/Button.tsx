@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({ children, link, className }) => {
   const mainComponent = (
     <div
       className={`flex justify-center items-center text-2xl text-white font-bold align-middle h-12 w-64 rounded-lg ${
-        link == null ? 'bg-gray-500' : ' bg-teal-400 hover:bg-teal-500'
+        link == null ? 'bg-gray-500' : ' bg-teal-500 hover:bg-teal-600'
       } ${className ?? ''}`}
     >
       {children}
