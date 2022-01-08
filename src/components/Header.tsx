@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, pageDescription, className =
         <meta property='og:title' content={pageTitle ?? 'トップページ'} />
         <meta property='og:type' content={isTopPage ? 'website' : 'article'} />
         <meta property='og:url' content={data?.site?.siteMetadata?.siteUrl} />
-        <meta property='og:image' content={`${data?.site?.siteMetadata?.siteUrl}/${OgpImage}`} />
+        <meta property='og:image' content={`${data?.site?.siteMetadata?.siteUrl}${OgpImage}`} />
         <meta property='og:description' content={description} />
         <meta property='twitter:card' content='summary_large_image' />
         <meta property='twitter:site' content='@luftelli' />
