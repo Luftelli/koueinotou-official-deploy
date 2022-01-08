@@ -1,4 +1,4 @@
-type ImportedImage = {};
+type ImportedImage = string;
 const importedImage: ImportedImage;
 
 declare module '*.png' {

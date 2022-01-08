@@ -1,4 +1,3 @@
-import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
@@ -59,7 +58,7 @@ const items = [
 
 const DevelopmentStatusPage = () => {
   return (
-    <Layout>
+    <Layout pageTitle='開発状況' pageDescription='開発の状況'>
       <h1 className='text-4xl'>開発状況</h1>
 
       <Section>

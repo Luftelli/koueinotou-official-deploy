@@ -93,7 +93,7 @@ const items = [
 
 const DevelopmentStatusPage = () => {
   return (
-    <Layout>
+    <Layout pageTitle='開発履歴' pageDescription='開発に関する今までの履歴'>
       <h1 className='text-4xl'>開発履歴</h1>
 
       <Section className='gap-y-4'>

@@ -26,7 +26,11 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({
           {icon == null ? (
             <></>
           ) : (
-            <img src={icon as any} alt={`${name} icon`} className='flex-none h-16 bg-black rounded-[50%]' />
+            <img
+              src={icon}
+              alt={`${name} icon`}
+              className='flex-none h-16 bg-black rounded-[50%]'
+            />
           )}
           <p className='text-3xl'>{name}</p>
           {twitter == null ? (
