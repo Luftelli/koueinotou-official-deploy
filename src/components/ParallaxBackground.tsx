@@ -66,31 +66,32 @@ function calculateAdaptedImageSize(imageSize: ImageSize | undefined) {
   }
 }
 
+/**
+ * 遅い速度でスクロールする背景
+ */
 const ParallaxBackground: React.FC = () => {
   const [scrollRate, setScrollRate] = useState(0);
   const [imageSize, setImageSize] = useState<ImageSize>();
 
+  // 背景画像サイズ取得。初回のみ実行
   useEffect(() => {
     const image = new Image();
     image.onload = () => {
       setImageSize({ width: image.width, height: image.height });
     };
     image.src = BackgroundImage;
-  });
+  }, []);
 
   function onScroll(): void {
     setScrollRate(getScrollRate());
   }
 
-  // 背景画像サイズ取得
   useEffect(() => {
     document.addEventListener('scroll', onScroll);
     return (): void => document.removeEventListener('scroll', onScroll);
   }, [setScrollRate]);
 
   const adaptedImageSize = calculateAdaptedImageSize(imageSize);
-
-  console.log('1')
 
   return (
     <div
