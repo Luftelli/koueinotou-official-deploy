@@ -16,7 +16,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/icon.png",
+        icon: "src/images/ctm_icon_v1_small_origin.png",
       },
     },
     "gatsby-plugin-sharp",
