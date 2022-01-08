@@ -123,8 +123,11 @@ const IndexPage = () => {
       </Section>
 
       <Section className='gap-y-6'>
-        {gameIntroductionItems.map((g) => (
-          <div className='flex w-full gap-x-4 flex-col items-center lg:odd:flex-row-reverse lg:even:flex-row'>
+        {gameIntroductionItems.map((g, i) => (
+          <div
+            key={i}
+            className='flex w-full gap-x-4 flex-col items-center lg:odd:flex-row-reverse lg:even:flex-row'
+          >
             {gameIntroductionImage(g.imageId, 'max-w-md lg:basis-1/2')}
             <div className='flex flex-col p-4 gap-y-2 lg:basis-1/2 '>
               <p className='text-2xl'>{g.title}</p>
