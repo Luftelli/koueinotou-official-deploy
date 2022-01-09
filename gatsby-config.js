@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://koueinotou.netlify.app",
+    siteUrl: "https://koueinotou.luftelli.com",
     title: "光影の塔公式サイト",
   },
   plugins: [
