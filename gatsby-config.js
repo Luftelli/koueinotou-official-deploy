@@ -30,6 +30,7 @@ module.exports = {
       __key: "images",
     },
     'gatsby-plugin-typegen',
+    'gatsby-plugin-netlify',
     'gatsby-plugin-postcss'
   ],
 };
