@@ -233,7 +233,7 @@ const IndexPage = () => {
         </div>
       </Section>
 
-      {/* <Section className='gap-y-4'>
+      <Section className='gap-y-4'>
         <h2 className='text-3xl'>開発者</h2>
         <div className='grid w-full gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
@@ -245,9 +245,9 @@ const IndexPage = () => {
             twitter='ziiiii_iiiiip'
             charge='開発サポート（2018/7～）'
           />
-          <DeveloperCard name='S丼' twitter='S_don_Luftelli' charge='発案・初期開発（～2018/3）' />
+          {/* <DeveloperCard name='S丼' twitter='S_don_Luftelli' charge='発案・初期開発（～2018/3）' /> */}
         </div>
-      </Section> */}
+      </Section>
     </Layout>
   );
 };
