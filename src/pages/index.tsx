@@ -245,7 +245,7 @@ const IndexPage = () => {
             twitter='ziiiii_iiiiip'
             charge='開発サポート（2018/7～）'
           />
-          {/* <DeveloperCard name='S丼' twitter='S_don_Luftelli' charge='発案・初期開発（～2018/3）' /> */}
+          <DeveloperCard name='S丼' charge='発案・初期開発（～2018/3）' />
         </div>
       </Section>
     </Layout>
