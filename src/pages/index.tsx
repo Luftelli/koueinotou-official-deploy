@@ -112,8 +112,8 @@ const IndexPage = () => {
             </Button>
           </div>
           <div>
-            <p className='text-xl'>ストアページ準備中</p>
-            <Button className='flex-none'>Steam</Button>
+            <p className='text-xl'>ストアページはこちら</p>
+            <Button link='https://store.steampowered.com/app/1822700' className='flex-none'>Steam</Button>
           </div>
         </div>
       </Section>
