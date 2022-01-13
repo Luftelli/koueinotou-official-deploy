@@ -1,5 +1,6 @@
 import { Link } from 'gatsby';
 import React from 'react';
+import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
 type ButtonProps = {
   link?: string;
@@ -25,9 +26,9 @@ const Button: React.FC<ButtonProps> = ({ children, link, className }) => {
   ) : isInternal ? (
     <Link to={link}>{mainComponent}</Link>
   ) : (
-    <a href={link} target='_blank'>
+    <OutboundLink href={link} target='_blank'>
       {mainComponent}
-    </a>
+    </OutboundLink>
   );
 };
 export default Button;
