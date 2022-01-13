@@ -113,7 +113,7 @@ const IndexPage = () => {
           </div>
           <div>
             <p className='text-xl'>ストアページはこちら</p>
-            <Button link='https://store.steampowered.com/app/1822700' className='flex-none'>Steam</Button>
+            <Button link='https://store.steampowered.com/app/1822700?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent' className='flex-none'>Steam</Button>
           </div>
         </div>
       </Section>
