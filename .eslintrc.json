@@ -17,12 +17,21 @@
       "jsx": true
     },
     "ecmaVersion": 13,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
     "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
@@ -45,6 +54,10 @@
       {
         "allowAsStatement": true
       }
-    ]
+    ],
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    // 厳しすぎるルールは無効化
+    "arrow-body-style": ["error", "as-needed"],
+    "react/require-default-props": "off"
   }
 }

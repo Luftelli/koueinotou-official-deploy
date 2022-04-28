@@ -25,7 +25,10 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, pageDescription, className =
   const isTopPage = pageTitle == null;
   const siteName = data?.site?.siteMetadata?.title ?? 'タイトル不明';
   const title = pageTitle == null ? siteName : `${siteName} ${pageTitle}`;
-  const description = pageDescription == null ? 'オンライン対戦型3Dシューティングゲーム「光影の塔」公式サイト' : pageDescription;
+  const description =
+    pageDescription == null
+      ? 'オンライン対戦型3Dシューティングゲーム「光影の塔」公式サイト'
+      : pageDescription;
 
   return (
     <header className={className}>

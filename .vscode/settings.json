@@ -7,7 +7,7 @@
       "source.fixAll": true
     }
   },
-  "[jsx]": {
+  "[javascriptreact]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": true
@@ -19,7 +19,7 @@
       "source.fixAll": true
     }
   },
-  "[tsx]": {
+  "[typescriptreact]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": true

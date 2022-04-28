@@ -18,38 +18,33 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({
   charge,
   supplement,
   className,
-}) => {
-  return (
-    <Box className={className}>
-      <div className='flex flex-col gap-4'>
-        <div className='flex justify-center items-end gap-4 h-16'>
-          {icon == null ? (
-            <></>
-          ) : (
-            <img
-              src={icon}
+}) => (
+  <Box className={className}>
+    <div className='flex flex-col gap-4'>
+      <div className='flex justify-center items-end gap-4 h-16'>
+        {icon == null ? undefined : (
+          <img src={icon} alt={`${name} icon`} className='flex-none h-16 bg-black rounded-[50%]' />
+        )}
+        <p className='text-3xl'>{name}</p>
+        {twitter == null ? undefined : (
+          <a
+            href={`https://twitter.com/${twitter}`}
+            target='_blank'
+            className='flex-none w-6'
+            rel='noreferrer'
+          >
+            <StaticImage
+              src='../images/twitter_logo_white.png'
               alt={`${name} icon`}
-              className='flex-none h-16 bg-black rounded-[50%]'
+              width={128}
+              className='w-full'
             />
-          )}
-          <p className='text-3xl'>{name}</p>
-          {twitter == null ? (
-            <></>
-          ) : (
-            <a href={`https://twitter.com/${twitter}`} target='_blank' className='flex-none w-6'>
-              <StaticImage
-                src={`../images/twitter_logo_white.png`}
-                alt={`${name} icon`}
-                width={128}
-                className='w-full'
-              />
-            </a>
-          )}
-        </div>
-        <div>{charge}</div>
-        <div>{supplement ?? ''}</div>
+          </a>
+        )}
       </div>
-    </Box>
-  );
-};
+      <div>{charge}</div>
+      <div>{supplement ?? ''}</div>
+    </div>
+  </Box>
+);
 export default DeveloperCard;

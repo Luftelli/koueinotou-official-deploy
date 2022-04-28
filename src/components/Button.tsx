@@ -21,11 +21,15 @@ const Button: React.FC<ButtonProps> = ({ children, link, className }) => {
     </div>
   );
 
-  return link == null ? (
-    mainComponent
-  ) : isInternal ? (
-    <Link to={link}>{mainComponent}</Link>
-  ) : (
+  if (link == null) {
+    return mainComponent;
+  }
+
+  if (isInternal) {
+    return <Link to={link}>{mainComponent}</Link>;
+  }
+
+  return (
     <OutboundLink href={link} target='_blank'>
       {mainComponent}
     </OutboundLink>

@@ -8,8 +8,7 @@ type LayoutProp = {
   pageDescription?: string;
 };
 
-const Layout: React.FC<LayoutProp> = ({ children, pageTitle, pageDescription }) => {
-  return (
+const Layout: React.FC<LayoutProp> = ({ children, pageTitle, pageDescription }) => (
     <>
       <ParallaxBackground />
       <div className='flex flex-col font-body min-h-screen'>
@@ -24,5 +23,4 @@ const Layout: React.FC<LayoutProp> = ({ children, pageTitle, pageDescription }) 
       </div>
     </>
   );
-};
 export default Layout;

@@ -19,10 +19,10 @@ type ImageSize = {
  * @returns スクロール率
  */
 function getScrollRate() {
-  var scroll = window.scrollY;
-  var documentHeight = document.documentElement.scrollHeight;
-  var viweHeight = document.documentElement.clientHeight;
-  var scrollHeight = documentHeight - viweHeight;
+  const scroll = window.scrollY;
+  const documentHeight = document.documentElement.scrollHeight;
+  const viweHeight = document.documentElement.clientHeight;
+  const scrollHeight = documentHeight - viweHeight;
   return scroll / scrollHeight;
 }
 
@@ -57,13 +57,12 @@ function calculateAdaptedImageSize(imageSize: ImageSize | undefined) {
       width: imageSize.width * (requiredSize.height / imageSize.height),
       height: requiredSize.height,
     };
-  } else {
-    // 幅が足りない
-    return {
-      width: requiredSize.width,
-      height: imageSize.height * (requiredSize.width / imageSize.width),
-    };
   }
+  // 幅が足りない
+  return {
+    width: requiredSize.width,
+    height: imageSize.height * (requiredSize.width / imageSize.width),
+  };
 }
 
 /**
@@ -105,7 +104,7 @@ const ParallaxBackground: React.FC = () => {
       }}
     >
       {adaptedImageSize == null ? (
-        <div className='w-screen h-screen bg-black'></div>
+        <div className='w-screen h-screen bg-black' />
       ) : (
         // 画像サイズ取得時に画像をロードするのでStaticImageを使うメリットがないため、通常のimgタグを使用する
         <img
