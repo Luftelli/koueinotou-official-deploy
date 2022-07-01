@@ -124,31 +124,6 @@ const IndexPage = () => (
       </div>
     </Section>
 
-    <Section className='gap-y-6'>
-      <a href='https://www.konami.com/games/event/igc/' target='_blank' rel='noreferrer'>
-        <p className='text-4xl'>
-          6月26（日）開催の
-          <br />
-          Indie Games Connect 2022に出展します！
-        </p>
-      </a>
-
-      <a href='https://www.konami.com/games/event/igc/' target='_blank' rel='noreferrer'>
-        <div className='grid w-full gap-12 grid-cols-1 lg:grid-cols-2'>
-          <div className='h-full flex flex-col gap-4'>
-            <img src='https://www.konami.com/games/s/event/igc/img/share_img.jpg' alt='IGC2022' />
-          </div>
-          <div className='flex items-center max-w-md lg:basis-1/2'>
-            <p className='text-xl leading-relaxed'>
-              ブース36で出展します。
-              <br />
-              試遊できますので、ぜひ遊びに来てください！
-            </p>
-          </div>
-        </div>
-      </a>
-    </Section>
-
     <Section>
       <p className='text-4xl'>鋭意開発中</p>
     </Section>
