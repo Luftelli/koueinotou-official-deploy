@@ -1,36 +1,36 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://koueinotou.luftelli.com",
-    title: "光影の塔公式サイト",
+    siteUrl: 'https://koueinotou.luftelli.com',
+    title: '「光影の塔」公式サイト',
   },
   plugins: [
     {
-      resolve: "gatsby-plugin-google-analytics",
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
-        trackingId: "UA-126703906-1",
+        trackingId: 'UA-126703906-1',
       },
     },
-    "gatsby-plugin-image",
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-sitemap",
+    'gatsby-plugin-image',
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sitemap',
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        icon: "src/images/ctm_icon_v1_origin.png",
+        icon: 'src/images/ctm_icon_v1_origin.png',
       },
     },
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
     {
-      resolve: "gatsby-source-filesystem",
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: "images",
-        path: "./src/images/",
+        name: 'images',
+        path: './src/images/',
       },
-      __key: "images",
+      __key: 'images',
     },
     'gatsby-plugin-typegen',
     'gatsby-plugin-netlify',
-    'gatsby-plugin-postcss'
+    'gatsby-plugin-postcss',
   ],
 };
