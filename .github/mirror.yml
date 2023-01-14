@@ -1,0 +1,33 @@
+name: Mirror Repository
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MIRROR_RIPOSITORY: git@github.com:Luftelli/koueinotou-official-deploy.git
+      GIT_NAME: Luftelli
+      GIT_MAILADDRESS: luftelli7@gmail.com
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: refs/heads/main
+      - name: Set user info to git
+        run: |
+          git config --global user.name $GIT_NAME
+          git config --global user.email $GIT_MAILADDRESS
+      - name: Set git key
+        run: |
+          mkdir ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      - name: Add mirror repogitory
+        run: |
+          git remote add mirror $MIRROR_RIPOSITORY
+      - name: Push to mirror repogitory
+        run: |
+          git push -f mirror main
