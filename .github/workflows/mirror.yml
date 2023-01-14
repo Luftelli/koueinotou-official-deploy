@@ -9,17 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MIRROR_RIPOSITORY: git@github.com:Luftelli/koueinotou-official-deploy.git
-      GIT_NAME: Luftelli
-      GIT_MAILADDRESS: luftelli7@gmail.com
     steps:
       - uses: actions/checkout@v3
         with:
           ref: refs/heads/main
           fetch-depth: 0
-      - name: Set user info to git
-        run: |
-          git config --global user.name $GIT_NAME
-          git config --global user.email $GIT_MAILADDRESS
       - name: Set git key
         run: |
           mkdir ~/.ssh
