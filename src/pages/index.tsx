@@ -13,7 +13,7 @@ import ZipIcon from '../images/zip_icon.jpg';
 const gameIntroductionItems = [
   {
     title: '塔を占拠した数で競うチーム制バトル',
-    imageId: 'buttle',
+    imageId: 'battle',
     content: (
       <>
         光チームと影チームの最大4vs4で戦い
@@ -54,7 +54,7 @@ const gameIntroductionItems = [
 
 function gameIntroductionImage(id: string, className: string) {
   switch (id) {
-    case 'buttle':
+    case 'battle':
       return (
         <StaticImage
           src='../images/intro_winner.jpg'
@@ -210,11 +210,13 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
+                ['2023/1/14', '：公開予定日変更（2022年度第4四半期→2023年）'],
+                ['2022/11/13', '：デジゲー博2022出展'],
                 ['2022/8/14', '：公開予定日変更（2022年後半→2022年度第4四半期）'],
-                ['2022/4/28', '：IGC2022出展決定'],
+                ['2022/6/26', '：IGC2022出展'],
                 ['2022/1/12', '：Steamストアページ開設'],
                 ['2022/1/10', '：公式サイトオープン'],
-                ['2021/11/14', '：デジゲー博2021出展'],
+                ['2021/11/13', '：デジゲー博2021出展'],
               ]}
               className='text-base text-left'
             />
@@ -227,9 +229,9 @@ const IndexPage = () => (
               items={[
                 ['ゲームタイトル', '：光影の塔'],
                 ['価格', '：未定'],
-                ['発売日', '：2022年度第4四半期予定'],
+                ['発売日', '：2023年予定'],
                 ['対応プレイ人数', '：1-8人'],
-                ['対応プラットフォーム', '：Windows、MacOS X（予定）'],
+                ['対応プラットフォーム', '：Windows、MacOS X'],
                 ['対応言語', '：日本語、英語（予定）'],
                 ['対応年齢', '：全年齢'],
                 ['ネットワーク機能', '：あり'],
