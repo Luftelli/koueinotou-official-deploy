@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: refs/heads/main
+          fetch-depth: 0
       - name: Set user info to git
         run: |
           git config --global user.name $GIT_NAME
