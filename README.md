@@ -8,7 +8,9 @@
 使用フレームワークは以下の通り。
 
 - UIフレームワーク: Gatsby.js (TypeScript)
-- CSSフレームワーク: Tailwind CSS
+- CSSフレームワーク: Tailwind CSS, daisyUI
+- グラフ表示: react-chartjs-2
+- 時刻管理: date-fns
 
 本リポジトリはNetlifyへのデプロイ向けにpublicリポジトリとしているため、PR等は受け付けていない。
 開発はLuftelliメンバーのみが実施する。
