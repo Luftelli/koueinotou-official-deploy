@@ -7,7 +7,7 @@
 
 ### 要件
 
-- 言語: Node.js v14系列
+- 言語: Node.js v18系列
 - エディタ: VSCode
 
 Node.jsをインストールしていない場合は、Node.jsをインストールする。

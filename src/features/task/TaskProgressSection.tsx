@@ -27,6 +27,7 @@ export type TaskProgressSectionProps = {
   dueOn: Date | undefined;
   displayTaskList?: boolean;
   collapsed?: boolean;
+  children?: React.ReactNode;
 };
 
 export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({

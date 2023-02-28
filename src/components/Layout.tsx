@@ -6,6 +6,7 @@ import ParallaxBackground from './ParallaxBackground';
 type LayoutProp = {
   pageTitle?: string;
   pageDescription?: string;
+  children: React.ReactNode;
 };
 
 const Layout: React.FC<LayoutProp> = ({ children, pageTitle, pageDescription }) => (

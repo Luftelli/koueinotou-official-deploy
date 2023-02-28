@@ -1,4 +1,7 @@
-module.exports = {
+import type { GatsbyConfig } from 'gatsby';
+
+const config: GatsbyConfig = {
+  graphqlTypegen: true,
   siteMetadata: {
     siteUrl: 'https://koueinotou.luftelli.com',
     title: '「光影の塔」公式サイト',
@@ -29,8 +32,17 @@ module.exports = {
       },
       __key: 'images',
     },
-    'gatsby-plugin-typegen',
     'gatsby-plugin-netlify',
     'gatsby-plugin-postcss',
+    'gatsby-transformer-json',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'src',
+        path: `${__dirname}/contents/tasks/`,
+      },
+    },
   ],
 };
+
+export default config;
