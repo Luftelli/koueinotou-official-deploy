@@ -21,10 +21,18 @@ import { assertNever } from '../../utility/type';
 
 ChartJS.register(ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
+export const TaskProgressGraphCountSource = {
+  TaskCount: 'TaskCount',
+  TaskWeight: 'TaskWeight',
+} as const;
+export type TaskProgressGraphCountSource =
+  (typeof TaskProgressGraphCountSource)[keyof typeof TaskProgressGraphCountSource];
+
 export type TaskProgressSectionProps = {
   name: string;
   taskGroup: TaskGroup;
   dueOn: Date | undefined;
+  graphCountSource: TaskProgressGraphCountSource;
   displayTaskList?: boolean;
   collapsed?: boolean;
   children?: React.ReactNode;
@@ -35,12 +43,24 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   name,
   taskGroup,
   dueOn,
+  graphCountSource,
   displayTaskList = true,
   collapsed = false,
 }) => {
-  const doneCount = taskGroup.getCountByStatus(TaskStatus.Done);
-  const inProgressCount = taskGroup.getCountByStatus(TaskStatus.InProgress);
-  const toDoCount = taskGroup.getCountByStatus(TaskStatus.Todo);
+  function getCount(status: TaskStatus) {
+    switch (graphCountSource) {
+      case TaskProgressGraphCountSource.TaskCount:
+        return taskGroup.getCountByStatus(status);
+      case TaskProgressGraphCountSource.TaskWeight:
+        return taskGroup.getWeightByStatus(status);
+      default:
+        return assertNever(graphCountSource);
+    }
+  }
+
+  const doneCount = getCount(TaskStatus.Done);
+  const inProgressCount = getCount(TaskStatus.InProgress);
+  const toDoCount = getCount(TaskStatus.Todo);
   const percentage = Math.round((doneCount / taskGroup.totalCount) * 100);
   let statusText;
   let progressDisplay: JSX.Element;

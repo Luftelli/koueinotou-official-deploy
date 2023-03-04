@@ -2,6 +2,7 @@ import React from 'react';
 
 type SectionProps = {
   className?: string;
+  children: React.ReactNode;
 };
 
 /**

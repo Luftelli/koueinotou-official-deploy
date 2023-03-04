@@ -3,6 +3,7 @@ import React from 'react';
 type SectionProps = {
   className?: string;
   collapsed?: boolean;
+  children: React.ReactNode;
 };
 
 /**
