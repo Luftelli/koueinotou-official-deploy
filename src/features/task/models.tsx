@@ -29,34 +29,110 @@ export type SubTask = Readonly<{
 }>;
 
 export class Task {
+  constructor(name: string, status: TaskStatus, dueOn: Date | undefined, newTasks?: SubTask[]) {
+    this._name = name;
+    this._subTasks = newTasks ?? [];
+    this._selfStatus = status;
+    this._selfDueOn = dueOn;
+    this._addCountAndFinalDueOn(this._subTasks);
+    this._updateStatus();
+  }
+
+  /**
+   * 特定状態のタスク数
+   *
+   * 以下の値が返される。
+   * - サブタスクがある場合：特定状態のサブタスク数
+   * - サブタスクがなくタスク自身の状態と一致した場合：1
+   * - サブタスクがなくタスク自身の状態と一致しない場合：0
+   * ただし、タスク自身の状態によってサブタスクの状態は以下のように上書きされる。
+   * - タスク自身が完了の場合：全てのサブタスクが完了となる
+   * @param status 対象の状態
+   * @returns タスク数
+   */
+  getCountByStatus(status: TaskStatus) {
+    // サブタスクがなかったら自分自身のカウントを返す
+    if (this._subTasks.length === 0) {
+      return this._selfStatus === status ? 1 : 0;
+    }
+
+    return this._counts[status];
+  }
+
+  /**
+   * サブタスクを追加する
+   * @param newTasks サブタスクリスト
+   */
+  add(...newTasks: readonly SubTask[]) {
+    this._subTasks.push(...newTasks);
+    this._addCountAndFinalDueOn(newTasks);
+    this._updateStatus();
+  }
+
+  /**
+   * タスク名
+   */
   get name() {
     return this._name;
   }
 
+  /**
+   * 進捗情報を含んだタスク名
+   *
+   * サブタスクがない場合はタスク名と同一となり、サブタスクがある場合は全サブタスク数と完了したサブタスク数を含んだ名前となる。
+   */
+  get nameWithProgress() {
+    return this._subTasks.length === 0
+      ? this._name
+      : `${this._name} (${this.getCountByStatus(TaskStatus.Done)}/${this._subTasks.length})`;
+  }
+
+  /**
+   * サブタスクリスト
+   */
   get subTasks() {
     return this._subTasks;
   }
 
-  get subTasksFinalDueOn() {
-    return this._subTasksFinalDueOn;
-  }
-
+  /**
+   * タスク自身の期限
+   */
   get selfDueOn() {
     return this._selfDueOn;
   }
 
+  /**
+   * 期限
+   *
+   * タスク自身と全サブタスクで最も遅い期限が返される。
+   */
   get dueOn() {
+    if (this._subTasksFinalDueOn == null) {
+      return this._selfDueOn;
+    }
+
+    if (this._selfDueOn == null) {
+      return this._subTasksFinalDueOn;
+    }
+
     return max([this._subTasksFinalDueOn, this._selfDueOn]);
   }
 
-  get subTasksStatus() {
-    return this._subTasksStatus;
-  }
-
+  /**
+   * タスク自身の状態
+   */
   get selfStatus() {
     return this._selfStatus;
   }
 
+  /**
+   * 状態
+   *
+   * 以下のように判定される。
+   * - タスク自身が完了している場合：完了
+   * - タスク自身が進行中の場合：進行中
+   * - 上記以外の場合：サブタスクの状態
+   */
   get status() {
     if (this._selfStatus === TaskStatus.Done) {
       return TaskStatus.Done;
@@ -69,36 +145,25 @@ export class Task {
     return this._subTasksStatus;
   }
 
-  get subTaskCount() {
-    return this._counts.Done + this._counts.InProgress + this._counts.ToDo;
-  }
-
-  constructor(name: string, status: TaskStatus, dueOn: Date, newTasks?: Task[]) {
-    this._name = name;
-    this._subTasks = newTasks ?? [];
-    this._selfStatus = status;
-    this._selfDueOn = dueOn;
-    this._addCountAndFinalDueOn(this._subTasks);
-    this._updateStatus();
-  }
-
-  getSubTaskCountByStatus(status: TaskStatus) {
-    return this._counts[status];
-  }
-
-  add(...newTasks: readonly Task[]) {
-    this._subTasks.push(...newTasks);
-    this._addCountAndFinalDueOn(newTasks);
-    this._updateStatus();
+  /**
+   * タスク数
+   *
+   * 以下の値が返される。
+   * - サブタスクがある場合：サブタスク数
+   * - サブタスクがない場合：1
+   */
+  get count() {
+    // サブタスクがなければ自分自身を1とカウントして返す
+    return Math.max(this._subTasks.length, 1);
   }
 
   private _name: string;
 
-  private _subTasks: Task[];
+  private _subTasks: SubTask[];
 
-  private _subTasksFinalDueOn: Date = new Date();
+  private _subTasksFinalDueOn: Date | undefined;
 
-  private _selfDueOn: Date = new Date();
+  private _selfDueOn: Date | undefined;
 
   private _subTasksStatus: TaskStatus = TaskStatus.Todo;
 
@@ -120,48 +185,31 @@ export class Task {
     }
   }
 
-  private _addCountAndFinalDueOn(newTasks: readonly Task[]) {
-    newTasks.forEach((t) => {
-      if (t.dueOn != null) {
-        this._subTasksFinalDueOn = max([this._subTasksFinalDueOn, t.dueOn]);
+  private _addCountAndFinalDueOn(newTasks: readonly SubTask[]) {
+    newTasks.forEach((s) => {
+      if (s.dueOn != null) {
+        this._subTasksFinalDueOn =
+          this._subTasksFinalDueOn == null ? s.dueOn : max([this._subTasksFinalDueOn, s.dueOn]);
       }
-      this._counts[t.status] += 1;
+      let subTaskStatus = s.status;
+      switch (this._selfStatus) {
+        case TaskStatus.Done:
+          // 親が完了していたら子も完了とする
+          subTaskStatus = TaskStatus.Done;
+          break;
+        case TaskStatus.InProgress:
+          break;
+        case TaskStatus.Todo:
+          break;
+        default:
+          assertNever(this._selfStatus);
+      }
+      this._counts[subTaskStatus] += 1;
     });
   }
 }
 
-// export type Task = Readonly<{
-//   name: string;
-//   status: TaskStatus;
-//   weight: number;
-//   dueOn: Date | undefined;
-// }>;
-
 export class TaskGroup {
-  get name() {
-    return this._name;
-  }
-
-  get tasks() {
-    return this._tasks;
-  }
-
-  get finalDueOn() {
-    return this._finalDueOn;
-  }
-
-  get status() {
-    return this._status;
-  }
-
-  get totalCount() {
-    return this._counts.Done + this._counts.InProgress + this._counts.ToDo;
-  }
-
-  get totalWeight() {
-    return this._weight.Done + this._weight.InProgress + this._weight.ToDo;
-  }
-
   constructor(name: string, newTasks?: Task[]) {
     this._name = name;
     this._tasks = newTasks ?? [];
@@ -169,35 +217,90 @@ export class TaskGroup {
     this._updateStatus();
   }
 
+  /**
+   * 特定状態のタスク数
+   * @param status 状態
+   * @returns タスク数
+   */
   getCountByStatus(status: TaskStatus) {
     return this._counts[status];
   }
 
-  getWeightByStatus(status: TaskStatus) {
-    return this._weight[status];
+  /**
+   * 特定状態の再帰的なタスク数
+   * @param status 状態
+   * @returns タスク数
+   */
+  getRecursiveCountByStatus(status: TaskStatus) {
+    return this._tasks.reduce((c, t) => c + t.getCountByStatus(status), 0);
   }
 
+  /**
+   * タスクを追加する
+   * @param newTasks タスクリスト
+   */
   add(...newTasks: readonly Task[]) {
     this._tasks.push(...newTasks);
     this._addCountAndFinalDueOn(newTasks);
     this._updateStatus();
   }
 
+  /**
+   * タスクグループ名
+   */
+  get name() {
+    return this._name;
+  }
+
+  /**
+   * タスクリスト
+   */
+  get tasks() {
+    return this._tasks;
+  }
+
+  /**
+   * タスク内で最も遅い期限
+   */
+  get finalDueOn() {
+    return this._finalDueOn;
+  }
+
+  /**
+   * タスクの状態
+   *
+   * 状況は以下のように選択される。
+   * - 進行中・完了のタスクが0の場合：未着手
+   * - 進行中・未着手のタスクが0：完了
+   * - 上記以外の場合：進行中
+   */
+  get status() {
+    return this._status;
+  }
+
+  /**
+   * タスク数
+   */
+  get count() {
+    return this._counts.Done + this._counts.InProgress + this._counts.ToDo;
+  }
+
+  /**
+   * 再帰的なタスク数
+   */
+  get recursiveCount() {
+    return this._tasks.reduce((c, t) => c + t.count, 0);
+  }
+
   private _name: string;
 
   private _tasks: Task[];
 
-  private _finalDueOn: Date = new Date();
+  private _finalDueOn: Date | undefined;
 
   private _status: TaskStatus = TaskStatus.Todo;
 
   private _counts: { [t in TaskStatus]: number } = {
-    [TaskStatus.Done]: 0,
-    [TaskStatus.InProgress]: 0,
-    [TaskStatus.Todo]: 0,
-  };
-
-  private _weight: { [t in TaskStatus]: number } = {
     [TaskStatus.Done]: 0,
     [TaskStatus.InProgress]: 0,
     [TaskStatus.Todo]: 0,
@@ -216,10 +319,9 @@ export class TaskGroup {
   private _addCountAndFinalDueOn(newTasks: readonly Task[]) {
     newTasks.forEach((t) => {
       if (t.dueOn != null) {
-        this._finalDueOn = max([this._finalDueOn, t.dueOn]);
+        this._finalDueOn = this._finalDueOn == null ? t.dueOn : max([this._finalDueOn, t.dueOn]);
       }
       this._counts[t.status] += 1;
-      this._weight[t.status] += t.weight;
     });
   }
 }

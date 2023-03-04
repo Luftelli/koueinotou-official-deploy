@@ -5,7 +5,7 @@ import HeadBase from '../components/HeadBase';
 
 import Layout from '../components/Layout';
 
-import { Task, TaskGroup, TaskStatus } from '../features/task/models';
+import { SubTask, Task, TaskGroup, TaskStatus } from '../features/task/models';
 import {
   TaskProgressGraphCountSource,
   TaskProgressSection,
@@ -54,69 +54,34 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
           return undefined;
         }
 
+        function parseCompleted(completed: boolean) {
+          return completed ? TaskStatus.Done : TaskStatus.Todo;
+        }
+
+        function parseDueOn(dueOnStr: string | null) {
+          return dueOnStr == null ? undefined : parse(dueOnStr, 'yyyy-MM-dd', new Date());
+        }
+
         const tasks: Task[] = [];
         g.tasks.forEach((t) => {
-          if (t == null || t.name == null || t.completed == null) {
+          if (t == null || t.name == null || t.completed == null || t.subTasks == null) {
             return;
           }
 
-          if (t.subTasks == null || t.subTasks.length === 0) {
-            tasks.push({
-              name: t.name,
-              status: t.completed ? TaskStatus.Done : TaskStatus.Todo,
-              dueOn: t.dueOn == null ? undefined : parse(t.dueOn, 'yyyy-MM-dd', new Date()),
-              weight: 1,
+          const subTasks: SubTask[] = [];
+          t.subTasks.forEach((s) => {
+            if (s == null || s.name == null || s.completed == null) {
+              return;
+            }
+
+            subTasks.push({
+              name: s.name,
+              status: parseCompleted(s.completed),
+              dueOn: parseDueOn(s.dueOn),
             });
-            return;
-          }
-
-          const actualCompleteCount = t.subTasks.reduce(
-            (r, s) => r + (s?.completed ?? true ? 1 : 0),
-            0,
-          );
-          const [status, completeCount] = (() => {
-            // 親タスクが終わっていたら子タスクも完了とみなす
-            if (t.completed) {
-              return [TaskStatus.Done, t.subTasks.length];
-            }
-
-            if (actualCompleteCount === t.subTasks.length) {
-              return [TaskStatus.Done, actualCompleteCount];
-            }
-
-            if (actualCompleteCount === 0) {
-              return [TaskStatus.Todo, actualCompleteCount];
-            }
-
-            return [TaskStatus.InProgress, actualCompleteCount];
-          })();
-
-          tasks.push({
-            name: `${t.name} (${completeCount}/${t.subTasks.length})`,
-            status,
-            dueOn: t.dueOn == null ? undefined : parse(t.dueOn, 'yyyy-MM-dd', new Date()),
-            weight: t.subTasks.length,
           });
 
-          // t.subTasks.forEach((st) => {
-          //   if (st == null || st.name == null || st.completed == null) {
-          //     return;
-          //   }
-
-          //   // サブタスクに期限がない場合は親の期限参照
-          //   const subDueOn = st.dueOn ?? t.dueOn;
-          //   // サブタスクが終わってなくても親が終わってたら終わっているとみなす
-          //   const subCompleted = t.completed || st.completed;
-          //   tasks.push({
-          //     name: `${t.name}/${st.name}`,
-          //     status: subCompleted ? TaskStatus.Done : TaskStatus.Todo,
-          //     dueOn:
-          //       subDueOn ?? subDueOn == null
-          //         ? undefined
-          //         : parse(subDueOn, 'yyyy-MM-dd', new Date()),
-          //     weight: 1,
-          //   });
-          // });
+          tasks.push(new Task(t.name, parseCompleted(t.completed), parseDueOn(t.dueOn), subTasks));
         });
 
         return new TaskGroup(extractTaskGroupName(g.name), tasks);
@@ -149,7 +114,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
         name='全体状況'
         taskGroup={allGroup}
         dueOn={allGroup.finalDueOn}
-        graphCountSource={TaskProgressGraphCountSource.TaskWeight}
+        graphCountSource={TaskProgressGraphCountSource.TaskRecuesiveCount}
         displayTaskList={false}
       >
         <ul className='steps steps-vertical'>
@@ -165,7 +130,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
           name={g.name}
           taskGroup={g}
           dueOn={g.finalDueOn}
-          graphCountSource={TaskProgressGraphCountSource.TaskWeight}
+          graphCountSource={TaskProgressGraphCountSource.TaskRecuesiveCount}
         />
       ))}
     </Layout>

@@ -23,7 +23,7 @@ ChartJS.register(ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
 export const TaskProgressGraphCountSource = {
   TaskCount: 'TaskCount',
-  TaskWeight: 'TaskWeight',
+  TaskRecuesiveCount: 'TaskRecuesiveCount',
 } as const;
 export type TaskProgressGraphCountSource =
   (typeof TaskProgressGraphCountSource)[keyof typeof TaskProgressGraphCountSource];
@@ -51,8 +51,19 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
     switch (graphCountSource) {
       case TaskProgressGraphCountSource.TaskCount:
         return taskGroup.getCountByStatus(status);
-      case TaskProgressGraphCountSource.TaskWeight:
-        return taskGroup.getWeightByStatus(status);
+      case TaskProgressGraphCountSource.TaskRecuesiveCount:
+        return taskGroup.getRecursiveCountByStatus(status);
+      default:
+        return assertNever(graphCountSource);
+    }
+  }
+
+  function getTotalCount() {
+    switch (graphCountSource) {
+      case TaskProgressGraphCountSource.TaskCount:
+        return taskGroup.count;
+      case TaskProgressGraphCountSource.TaskRecuesiveCount:
+        return taskGroup.recursiveCount;
       default:
         return assertNever(graphCountSource);
     }
@@ -61,7 +72,7 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   const doneCount = getCount(TaskStatus.Done);
   const inProgressCount = getCount(TaskStatus.InProgress);
   const toDoCount = getCount(TaskStatus.Todo);
-  const percentage = Math.round((doneCount / taskGroup.totalCount) * 100);
+  const percentage = Math.round((doneCount / getTotalCount()) * 100);
   let statusText;
   let progressDisplay: JSX.Element;
   const dueOnText = dueOn == null ? undefined : format(dueOn, 'y年M月d日');
@@ -175,11 +186,11 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
               <table className='text-base text-left'>
                 <tbody>
                   {taskGroup.tasks.map((t) => (
-                    <tr key={t.name}>
+                    <tr key={t.nameWithProgress}>
                       <td>
                         <TaskStatusIcon status={t.status} />
                       </td>
-                      <td>{t.name}</td>
+                      <td>{t.nameWithProgress}</td>
                     </tr>
                   ))}
                 </tbody>
