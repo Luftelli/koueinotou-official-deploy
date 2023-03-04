@@ -5,6 +5,7 @@ import { OutboundLink } from 'gatsby-plugin-google-analytics';
 type ButtonProps = {
   link?: string;
   className?: string;
+  children?: React.ReactNode;
 };
 
 const Button: React.FC<ButtonProps> = ({ children, link, className }) => {

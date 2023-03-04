@@ -2,9 +2,10 @@ import * as React from 'react';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import Button from '../components/Button';
+import HeadBase from '../components/HeadBase';
 
 const NotFoundPage = () => (
-  <Layout pageTitle='開発状況' pageDescription='開発の状況'>
+  <Layout>
     <h1 className='text-4xl'>ページが見つかりません</h1>
 
     <Section className='gap-y-4'>
@@ -15,3 +16,7 @@ const NotFoundPage = () => (
 );
 
 export default NotFoundPage;
+
+export const Head = () => (
+  <HeadBase pageTitle='ページが見つかりません' pageDescription='ページが見つかりません' />
+);

@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '../components/Box';
 import Button from '../components/Button';
 import DeveloperCard from '../components/DeveloperCard';
+import HeadBase from '../components/HeadBase';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import TwoDevidedList from '../components/TwoDevidedList';
@@ -263,3 +264,5 @@ const IndexPage = () => (
 );
 
 export default IndexPage;
+
+export const Head = () => <HeadBase />;

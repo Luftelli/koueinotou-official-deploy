@@ -1,6 +1,7 @@
 import { parse } from 'date-fns';
 import { graphql, PageProps } from 'gatsby';
 import React from 'react';
+import HeadBase from '../components/HeadBase';
 
 import Layout from '../components/Layout';
 
@@ -143,7 +144,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
   }
 
   return (
-    <Layout pageTitle='開発状況' pageDescription='開発の状況'>
+    <Layout>
       <TaskProgressSection
         name='全体状況'
         taskGroup={allGroup}
@@ -172,6 +173,8 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 };
 
 export default DevelopmentStatusPage;
+
+export const Head = () => <HeadBase pageTitle='開発状況' pageDescription='開発の状況' />;
 
 export const query = graphql`
   query DevelopmentStatusPageQuery {
