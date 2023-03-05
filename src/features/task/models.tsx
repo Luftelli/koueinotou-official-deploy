@@ -253,6 +253,22 @@ export class TaskGroup {
   }
 
   /**
+   * バージョン文字列
+   */
+  get versionString() {
+    const info = this._extractInfoFromName();
+    return `v${info.majorVersion}.${info.minorVersion}.${info.patchVersion}`;
+  }
+
+  /**
+   * タイトル
+   */
+  get title() {
+    const info = this._extractInfoFromName();
+    return info.title;
+  }
+
+  /**
    * タスクリスト
    */
   get tasks() {
@@ -292,6 +308,22 @@ export class TaskGroup {
     return this._tasks.reduce((c, t) => c + t.count, 0);
   }
 
+  static sort(l: TaskGroup, r: TaskGroup) {
+    // eslint-disable-next-line no-underscore-dangle
+    const lInfo = l._extractInfoFromName();
+    // eslint-disable-next-line no-underscore-dangle
+    const rInfo = r._extractInfoFromName();
+
+    const lVer = lInfo.majorVersion * 10000 + lInfo.minorVersion * 100 + lInfo.patchVersion;
+    const rVer = rInfo.majorVersion * 10000 + rInfo.minorVersion * 100 + rInfo.patchVersion;
+
+    if (lVer === rVer) {
+      return 0;
+    }
+
+    return lVer < rVer ? -1 : 1;
+  }
+
   private _name: string;
 
   private _tasks: Task[];
@@ -324,4 +356,51 @@ export class TaskGroup {
       this._counts[t.status] += 1;
     });
   }
+
+  /**
+   * タスクグループ名から各種情報を取り出す
+   *
+   * 以下のいずれかのフォーマットを受け付ける。
+   *
+   * - `v{メジャーバージョン}.{マイナーバージョン}.{パッチバージョン}
+   * - `v{メジャーバージョン}.{マイナーバージョン}.{パッチバージョン}-{バージョン補足}
+   * - `v{メジャーバージョン}.{マイナーバージョン}.{パッチバージョン}: {タイトル}`
+   * - `v{メジャーバージョン}.{マイナーバージョン}.{パッチバージョン}: {タイトル}（済）`
+   * - `v{メジャーバージョン}.{マイナーバージョン}.{パッチバージョン}-{バージョン補足}: {タイトル}`
+   * - `v{メジャーバージョン}.{マイナーバージョン}.{パッチバージョン}-{バージョン補足}: {タイトル}（済）`
+   * @returns 情報
+   */
+  private _extractInfoFromName(): TaskGroupNameInfo {
+    const items = this._name.split(':');
+    const rawVersionStr = items[0];
+    const rawTitle = items.length >= 2 ? items[1].trim() : undefined;
+
+    const versionStrItems = rawVersionStr.split('-');
+    const rawVersion = versionStrItems[0].replace(/^v/, '');
+    const versionAppendix = versionStrItems.length >= 2 ? versionStrItems[1] : undefined;
+
+    const versionItems = rawVersion.split('.');
+    if (versionItems.length !== 3) {
+      throw new Error(`The version "${rawVersion}" is not invalid.`);
+    }
+    const [major, minor, patch] = versionItems.map((vi) => Number.parseInt(vi, 10));
+
+    const title = rawTitle == null ? undefined : rawTitle.replace(/（済）$/g, '');
+
+    return {
+      majorVersion: major,
+      minorVersion: minor,
+      patchVersion: patch,
+      versionApendix: versionAppendix,
+      title,
+    };
+  }
 }
+
+export type TaskGroupNameInfo = {
+  majorVersion: number;
+  minorVersion: number;
+  patchVersion: number;
+  versionApendix: string | undefined;
+  title: string | undefined;
+};

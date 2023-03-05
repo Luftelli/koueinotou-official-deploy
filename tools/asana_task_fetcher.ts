@@ -1,53 +1,39 @@
+/* eslint-disable max-classes-per-file */
 /* eslint-disable no-console */
-import axios, { Axios } from 'axios';
 import * as fs from 'fs';
 import dotenv from 'dotenv';
+import {
+  AsanaApiClient,
+  AsanaSection,
+  AsanaTask,
+  createAsanaApiClientFromEnvVars,
+} from './asana_api_client';
 
 dotenv.config();
 
 const JSON_DESTINATION = 'contents/tasks/asana_tasks.json';
 
-type GetSectionResponseSection = {
-  gid: string;
-  name: string;
+type AsanaGetSectionResponse = {
+  data: readonly AsanaSection[];
 };
 
-type GetSectionResponse = {
-  data: readonly GetSectionResponseSection[];
+type AsanaGetSectionTaskResponse = {
+  data: readonly AsanaTask[];
 };
 
-type GetSectionTaskResponseTask = {
-  gid: string;
-  completed: boolean;
-  due_on: Date | undefined;
-  name: string;
-  num_subtasks: number;
-};
-
-type GetSectionTaskResponse = {
-  data: readonly GetSectionTaskResponseTask[];
-};
-
-type GetTaskSubTaskResponseSubTask = {
-  gid: string;
-  completed: boolean;
-  due_on: Date | undefined;
-  name: string;
-};
-
-type GetTaskSubTaskResponse = {
-  data: readonly GetTaskSubTaskResponseSubTask[];
+type AsanaGetTaskSubTaskResponse = {
+  data: readonly AsanaTask[];
 };
 
 type SubTask = {
   name: string;
-  dueOn: Date | undefined;
+  dueOn: string | undefined;
   completed: boolean;
 };
 
 type Task = {
   name: string;
-  dueOn: Date | undefined;
+  dueOn: string | undefined;
   subTasks: readonly SubTask[];
   completed: boolean;
 };
@@ -57,62 +43,60 @@ type TaskGroup = {
   tasks: readonly Task[];
 };
 
-function isTargetSection(section: GetSectionResponseSection) {
+function isTargetSection(section: AsanaSection) {
   return section.name.startsWith('v');
 }
 
-async function getSection(client: Axios, projectId: string) {
-  const sectionResponse = await client.get<GetSectionResponse>(
+async function getSection(client: AsanaApiClient, projectId: string) {
+  const sectionResponse = await client.get<AsanaGetSectionResponse>(
     `projects/${projectId}/sections?opt_fields=gid,name`,
   );
-  console.info(`${sectionResponse.data.data.length} section data are obtained.`);
+  console.info(`${sectionResponse.data.length} section data are obtained.`);
 
-  const targetSections = sectionResponse.data.data.filter(isTargetSection);
+  const targetSections = sectionResponse.data.filter(isTargetSection);
   console.info(`${targetSections.length} target sections are found.`);
 
   return targetSections;
 }
 
 async function getTasksBySection(
-  client: Axios,
-  section: GetSectionResponseSection,
+  client: AsanaApiClient,
+  section: AsanaSection,
 ): Promise<readonly Task[]> {
-  const taskResponse = await client.get<GetSectionTaskResponse>(
-    `sections/${section.gid}/tasks?opt_fields=gid,name,completed,due_on,num_subtasks`,
+  const taskResponse = await client.get<AsanaGetSectionTaskResponse>(
+    `sections/${section.gid}/tasks?opt_fields=gid,name,completed,due_on,num_subtasks,completed_at`,
   );
-  console.info(
-    `${taskResponse.data.data.length} tasks are obtained in the section "${section.name}".`,
-  );
+  console.info(`${taskResponse.data.length} tasks are obtained in the section "${section.name}".`);
 
-  const tasks: Task[] = [];
-  // eslint-disable-next-line no-restricted-syntax
-  for (const task of taskResponse.data.data) {
+  const promises = taskResponse.data.map(async (task) => {
     let subTasks: readonly SubTask[] = [];
-    if (task.num_subtasks > 0) {
-      // eslint-disable-next-line no-await-in-loop
-      const subTaskResponse = await client.get<GetTaskSubTaskResponse>(
-        `tasks/${task.gid}/subtasks?opt_fields=gid,name,completed,due_on`,
+    if (task.num_subtasks == null || task.num_subtasks > 0) {
+      const subTaskResponse = await client.get<AsanaGetTaskSubTaskResponse>(
+        `tasks/${task.gid}/subtasks?opt_fields=gid,name,completed,due_on,completed_at`,
       );
       console.info(
-        `${subTaskResponse.data.data.length} sub tasks are obtained in the task "${task.name}".`,
+        `${subTaskResponse.data.length} sub tasks are obtained in the task "${task.name}".`,
       );
 
-      subTasks = subTaskResponse.data.data.map((d) => ({
+      subTasks = subTaskResponse.data.map((d) => ({
         name: d.name,
-        dueOn: d.due_on,
+        // タスク期限が設定されていない場合はタスク完了日を期限とする。タスク完了日には時間も入っているので日付のみ抽出
+        dueOn: d.due_on ?? d.completed_at?.split('T')[0],
         completed: d.completed,
       }));
     } else {
       console.info(`The task "${task.name}" doesn't have sub tasks.`);
     }
 
-    tasks.push({
+    return {
       name: task.name,
-      dueOn: task.due_on,
+      // subTaskと同様
+      dueOn: task.due_on ?? task.completed_at?.split('T')[0],
       completed: task.completed,
       subTasks,
-    });
-  }
+    };
+  });
+  const tasks: readonly Task[] = await Promise.all(promises);
 
   return tasks;
 }
@@ -140,45 +124,32 @@ function saveTaskGroups(
 }
 
 async function main() {
-  if (typeof process.env.ASANA_API_TOKEN !== 'string') {
-    throw Error('The environment variable "ASANA_API_TOKEN" is not set.');
-  }
-
   if (typeof process.env.ASANA_PROJECT_ID !== 'string') {
     throw Error('The environment variable "ASANA_PROJECT_ID" is not set.');
   }
 
-  const apiToken = process.env.ASANA_API_TOKEN;
   const projectId = process.env.ASANA_PROJECT_ID;
-
   const blackWordList =
     typeof process.env.BLACK_WORD_LIST === 'string' ? process.env.BLACK_WORD_LIST.split(',') : [];
 
   const startTime = performance.now();
-
-  const client = axios.create({
-    baseURL: 'https://app.asana.com/api/1.0/',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${apiToken}`,
-    },
-  });
+  const client = createAsanaApiClientFromEnvVars();
 
   const targetSections = await getSection(client, projectId);
 
-  const taskGroups: TaskGroup[] = [];
-  // eslint-disable-next-line no-restricted-syntax
-  for (const section of targetSections) {
-    // eslint-disable-next-line no-await-in-loop
+  const promises = targetSections.map(async (section) => {
     const tasks = await getTasksBySection(client, section);
-    taskGroups.push({
+    return {
       name: section.name,
       tasks,
-    });
-  }
+    };
+  });
+  const taskGroups: readonly TaskGroup[] = await Promise.all(promises);
 
   saveTaskGroups(taskGroups, JSON_DESTINATION, blackWordList);
+
   const endTime = performance.now();
+  console.log(`API call count is ${client.callCount}.`);
   console.log(`Process is finished in ${endTime - startTime}ms`);
 }
 

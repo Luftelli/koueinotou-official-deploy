@@ -23,7 +23,7 @@ ChartJS.register(ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
 export const TaskProgressGraphCountSource = {
   TaskCount: 'TaskCount',
-  TaskRecuesiveCount: 'TaskRecuesiveCount',
+  TaskRecursiveCount: 'TaskRecursiveCount',
 } as const;
 export type TaskProgressGraphCountSource =
   (typeof TaskProgressGraphCountSource)[keyof typeof TaskProgressGraphCountSource];
@@ -51,7 +51,7 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
     switch (graphCountSource) {
       case TaskProgressGraphCountSource.TaskCount:
         return taskGroup.getCountByStatus(status);
-      case TaskProgressGraphCountSource.TaskRecuesiveCount:
+      case TaskProgressGraphCountSource.TaskRecursiveCount:
         return taskGroup.getRecursiveCountByStatus(status);
       default:
         return assertNever(graphCountSource);
@@ -62,7 +62,7 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
     switch (graphCountSource) {
       case TaskProgressGraphCountSource.TaskCount:
         return taskGroup.count;
-      case TaskProgressGraphCountSource.TaskRecuesiveCount:
+      case TaskProgressGraphCountSource.TaskRecursiveCount:
         return taskGroup.recursiveCount;
       default:
         return assertNever(graphCountSource);
@@ -73,40 +73,38 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   const inProgressCount = getCount(TaskStatus.InProgress);
   const toDoCount = getCount(TaskStatus.Todo);
   const percentage = Math.round((doneCount / getTotalCount()) * 100);
-  let statusText;
   let progressDisplay: JSX.Element;
-  const dueOnText = dueOn == null ? undefined : format(dueOn, 'y年M月d日');
+  let dueOnTextSuffix;
+  let statusTextHead = '';
+
   switch (taskGroup.status) {
     case TaskStatus.Done:
-      {
-        const suffix = dueOnText == null ? '' : `${dueOnText}`;
-        statusText = `: ${suffix}完了`;
-        progressDisplay = <p className='text-2xl font-bold'>完了</p>;
-      }
+      statusTextHead = '完了済み';
+      dueOnTextSuffix = '完了';
+      progressDisplay = <p className='text-2xl font-bold'>完了</p>;
       break;
     case TaskStatus.InProgress:
-      {
-        const suffix = dueOnText == null ? '' : `（${dueOnText}完了予定）`;
-        statusText = `: 進行中${suffix}`;
-        progressDisplay = (
-          <p className='text-2xl font-bold'>
-            進捗
-            <br />
-            {percentage}%
-          </p>
-        );
-      }
+      statusTextHead = '進行中';
+      dueOnTextSuffix = '完了予定';
+      progressDisplay = (
+        <p className='text-2xl font-bold'>
+          進捗
+          <br />
+          {percentage}%
+        </p>
+      );
       break;
     case TaskStatus.Todo:
-      {
-        const suffix = dueOnText == null ? '' : `（${dueOnText}完了予定）`;
-        statusText = `: 未着手${suffix}`;
-        progressDisplay = <p className='text-2xl font-bold'>未着手</p>;
-      }
+      statusTextHead = '未着手';
+      dueOnTextSuffix = '完了予定';
+      progressDisplay = <p className='text-2xl font-bold'>未着手</p>;
       break;
     default:
       return assertNever(taskGroup.status);
   }
+
+  const dueOnText = dueOn == null ? undefined : format(dueOn, 'y年M月d日');
+  const statusText = `${statusTextHead}: ${dueOnText}${dueOnTextSuffix}`;
 
   const labels = [];
   const colors = [];
@@ -129,12 +127,11 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
 
   return (
     <Section className='gap-y-1 flex-grow-0 my-2'>
-      <h2 className='text-3xl'>
-        {name}
-        {statusText}
-      </h2>
-      <Box className='h-full' collapsed={collapsed}>
-        <div className='grid w-full gap-12 grid-cols-1 lg:grid-cols-2 justify-center'>
+      <h2 className='text-3xl'>{name}</h2>
+      <p className='text-xl'>{statusText}</p>
+      {/* スクロールバーを表示するために絶対値指定 */}
+      <Box className='h-[28rem]' collapsed={collapsed}>
+        <div className='grid w-full h-full gap-12 grid-cols-1 lg:grid-cols-2 justify-center'>
           <div className='relative flex justify-center items-center'>
             <Doughnut
               data={
@@ -181,20 +178,22 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
               {progressDisplay}
             </div>
           </div>
-          <div className='h-min mx-auto my-auto'>
+          <div className='h-full overflow-y-auto flex w-'>
             {displayTaskList && (
-              <table className='text-base text-left'>
-                <tbody>
-                  {taskGroup.tasks.map((t) => (
-                    <tr key={t.nameWithProgress}>
-                      <td>
-                        <TaskStatusIcon status={t.status} />
-                      </td>
-                      <td>{t.nameWithProgress}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className='h-auto mx-auto my-auto'>
+                <table className='text-base text-left'>
+                  <tbody>
+                    {taskGroup.tasks.map((t) => (
+                      <tr key={t.nameWithProgress}>
+                        <td>
+                          <TaskStatusIcon status={t.status} />
+                        </td>
+                        <td>{t.nameWithProgress}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
             {children}
           </div>

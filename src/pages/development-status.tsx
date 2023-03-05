@@ -1,6 +1,6 @@
 import { parse } from 'date-fns';
 import { graphql, PageProps } from 'gatsby';
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import HeadBase from '../components/HeadBase';
 
 import Layout from '../components/Layout';
@@ -12,40 +12,20 @@ import {
 } from '../features/task/TaskProgressSection';
 import { assertNever } from '../utility/type';
 
-function extractTaskGroupName(rawName: string) {
-  const items = rawName.split('-');
-  if (items.length === 1) {
-    return rawName;
-  }
-
-  const [versionString, otherString] = items;
-  const otherItems = otherString.split(':');
-  if (otherItems.length === 1) {
-    return versionString;
-  }
-
-  const versionTitle = otherItems[0];
-  return `${versionString}: ${versionTitle}`;
-}
-
-function sortTaskGroupName(l: string, r: string) {
-  const vl = l.split(':')[0];
-  const [lMajor, lMinor, lPatch] = vl.split('.').map((s) => Number.parseInt(s, 10));
-  const lVer = lMajor * 10000 + lMinor * 100 + lPatch;
-  const vr = r.split(':')[0];
-  const [rMajor, rMinor, rPatch] = vr.split('.').map((s) => Number.parseInt(s, 10));
-  const rVer = rMajor * 10000 + rMinor * 100 + rPatch;
-
-  if (lVer === rVer) {
-    return 0;
-  }
-
-  return lVer < rVer ? -1 : 1;
+function getSectionName(taskGroup: TaskGroup) {
+  return taskGroup.title == null
+    ? taskGroup.versionString
+    : `${taskGroup.versionString} ${taskGroup.title}`;
 }
 
 const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQueryQuery>> = ({
   data,
 }) => {
+  const currentProgressingPhaseRef = useRef<HTMLLIElement>(null);
+  useLayoutEffect(() => {
+    currentProgressingPhaseRef.current?.scrollIntoView();
+  }, []);
+
   const toolTaskGroups = data.allTasksJson.nodes.at(0)?.taskGroups;
   const taskGroups =
     toolTaskGroups
@@ -84,16 +64,29 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
           tasks.push(new Task(t.name, parseCompleted(t.completed), parseDueOn(t.dueOn), subTasks));
         });
 
-        return new TaskGroup(extractTaskGroupName(g.name), tasks);
+        return new TaskGroup(g.name, tasks);
       })
       .filter((g): g is TaskGroup => g != null) ?? [];
 
-  const sortedTaskGroups = taskGroups.sort((l, r) => sortTaskGroupName(l.name, r.name));
+  const sortedTaskGroups = taskGroups.sort((l, r) => TaskGroup.sort(l, r));
 
   const allGroup = new TaskGroup('All');
   sortedTaskGroups.forEach((g) => {
     allGroup.add(...g.tasks);
   });
+
+  function getPhaseDataContentByStatus(status: TaskStatus) {
+    switch (status) {
+      case TaskStatus.Done:
+        return '✓';
+      case TaskStatus.InProgress:
+        return '▶';
+      case TaskStatus.Todo:
+        return 'ー';
+      default:
+        return assertNever(status);
+    }
+  }
 
   function getPhaseClassNameByStatus(status: TaskStatus) {
     switch (status) {
@@ -108,29 +101,67 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
     }
   }
 
+  // 最初の完了状態でないグループが出たらそれをアクティブグループとし、それより後のグループは未着手状態とする
+  let isActiveGroupAppeard = false;
+  const stepElements = sortedTaskGroups.map((g) => {
+    const displayName = g.title == null ? g.versionString : `${g.versionString}: ${g.title}`;
+    if (isActiveGroupAppeard) {
+      return (
+        <li
+          data-content={getPhaseDataContentByStatus(TaskStatus.Todo)}
+          className={`step ${getPhaseClassNameByStatus(TaskStatus.Todo)}`}
+        >
+          {displayName}
+        </li>
+      );
+    }
+
+    const isCurrentGroupActive = g.status !== TaskStatus.Done;
+    isActiveGroupAppeard = isCurrentGroupActive;
+
+    if (isActiveGroupAppeard) {
+      return (
+        <li
+          ref={currentProgressingPhaseRef}
+          data-content={getPhaseDataContentByStatus(TaskStatus.InProgress)}
+          className={`step ${getPhaseClassNameByStatus(TaskStatus.InProgress)}`}
+        >
+          {displayName}
+        </li>
+      );
+    }
+
+    return (
+      <li
+        data-content={getPhaseDataContentByStatus(g.status)}
+        className={`step ${getPhaseClassNameByStatus(g.status)}`}
+      >
+        {displayName}
+      </li>
+    );
+  });
+
   return (
     <Layout>
       <TaskProgressSection
         name='全体状況'
         taskGroup={allGroup}
         dueOn={allGroup.finalDueOn}
-        graphCountSource={TaskProgressGraphCountSource.TaskRecuesiveCount}
+        graphCountSource={TaskProgressGraphCountSource.TaskRecursiveCount}
         displayTaskList={false}
       >
-        <ul className='steps steps-vertical'>
-          {sortedTaskGroups.map((g) => (
-            <li className={`step ${getPhaseClassNameByStatus(g.status)}`}>{g.name}</li>
-          ))}
-        </ul>
+        <div className='h-auto mx-auto my-auto'>
+          <ul className='steps steps-vertical overflow-auto'>{stepElements}</ul>
+        </div>
       </TaskProgressSection>
 
       <h1 className='text-4xl'>残作業詳細</h1>
       {sortedTaskGroups.map((g) => (
         <TaskProgressSection
-          name={g.name}
+          name={getSectionName(g)}
           taskGroup={g}
           dueOn={g.finalDueOn}
-          graphCountSource={TaskProgressGraphCountSource.TaskRecuesiveCount}
+          graphCountSource={TaskProgressGraphCountSource.TaskRecursiveCount}
         />
       ))}
     </Layout>
