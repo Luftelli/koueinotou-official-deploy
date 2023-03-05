@@ -29,22 +29,24 @@ export type TaskProgressGraphCountSource =
   (typeof TaskProgressGraphCountSource)[keyof typeof TaskProgressGraphCountSource];
 
 export type TaskProgressSectionProps = {
-  name: string;
+  title?: string;
   taskGroup: TaskGroup;
   dueOn: Date | undefined;
   graphCountSource: TaskProgressGraphCountSource;
   displayTaskList?: boolean;
   collapsed?: boolean;
+  hidden?: boolean;
   children?: React.ReactNode;
 };
 
 export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   children,
-  name,
+  title,
   taskGroup,
   dueOn,
   graphCountSource,
   displayTaskList = true,
+  hidden = false,
   collapsed = false,
 }) => {
   function getCount(status: TaskStatus) {
@@ -126,8 +128,8 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   }
 
   return (
-    <Section className='gap-y-1 flex-grow-0 my-2'>
-      <h2 className='text-3xl'>{name}</h2>
+    <Section className={`gap-y-1 flex-grow-0 my-2 ${hidden ? 'hidden' : ''}`}>
+      {title && <h2 className='text-3xl'>{title}</h2>}
       <p className='text-xl'>{statusText}</p>
       {/* スクロールバーを表示するために絶対値指定 */}
       <Box className='h-[28rem]' collapsed={collapsed}>
@@ -178,10 +180,10 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
               {progressDisplay}
             </div>
           </div>
-          <div className='h-full overflow-y-auto flex w-'>
+          <div className='h-full overflow-hidden'>
             {displayTaskList && (
-              <div className='h-auto mx-auto my-auto'>
-                <table className='text-base text-left'>
+              <div className='h-full overflow-y-auto flex'>
+                <table className='h-auto mx-auto my-auto text-base text-left'>
                   <tbody>
                     {taskGroup.tasks.map((t) => (
                       <tr key={t.nameWithProgress}>

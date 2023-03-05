@@ -1,6 +1,6 @@
 import { parse } from 'date-fns';
 import { graphql, PageProps } from 'gatsby';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import HeadBase from '../components/HeadBase';
 
 import Layout from '../components/Layout';
@@ -21,6 +21,7 @@ function getSectionName(taskGroup: TaskGroup) {
 const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQueryQuery>> = ({
   data,
 }) => {
+  const [displayCompletedSteps, setDisplayCompletedSteps] = useState(false);
   const currentProgressingPhaseRef = useRef<HTMLLIElement>(null);
   useLayoutEffect(() => {
     currentProgressingPhaseRef.current?.scrollIntoView();
@@ -91,9 +92,9 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
   function getPhaseClassNameByStatus(status: TaskStatus) {
     switch (status) {
       case TaskStatus.Done:
-        return 'step-primary';
+        return 'step-success';
       case TaskStatus.InProgress:
-        return 'step-accent';
+        return 'step-info';
       case TaskStatus.Todo:
         return '';
       default:
@@ -108,6 +109,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
     if (isActiveGroupAppeard) {
       return (
         <li
+          key={displayName}
           data-content={getPhaseDataContentByStatus(TaskStatus.Todo)}
           className={`step ${getPhaseClassNameByStatus(TaskStatus.Todo)}`}
         >
@@ -122,6 +124,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
     if (isActiveGroupAppeard) {
       return (
         <li
+          key={displayName}
           ref={currentProgressingPhaseRef}
           data-content={getPhaseDataContentByStatus(TaskStatus.InProgress)}
           className={`step ${getPhaseClassNameByStatus(TaskStatus.InProgress)}`}
@@ -133,6 +136,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 
     return (
       <li
+        key={displayName}
         data-content={getPhaseDataContentByStatus(g.status)}
         className={`step ${getPhaseClassNameByStatus(g.status)}`}
       >
@@ -141,27 +145,61 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
     );
   });
 
+  function onDisplayCompletedStepsToggleClicked() {
+    setDisplayCompletedSteps(!displayCompletedSteps);
+  }
+
+  const completedTaskGroupCount = sortedTaskGroups.filter(
+    (g) => g.status === TaskStatus.Done,
+  ).length;
+
   return (
     <Layout>
+      <h1 className='text-4xl'>全体状況</h1>
       <TaskProgressSection
-        name='全体状況'
         taskGroup={allGroup}
         dueOn={allGroup.finalDueOn}
         graphCountSource={TaskProgressGraphCountSource.TaskRecursiveCount}
         displayTaskList={false}
       >
-        <div className='h-auto mx-auto my-auto'>
-          <ul className='steps steps-vertical overflow-auto'>{stepElements}</ul>
+        <div className='h-full flex flex-col gap-1'>
+          <p className='text-2xl'>状況概要</p>
+          <p className='text-l'>
+            {sortedTaskGroups.length}ステップ中{completedTaskGroupCount}ステップ完了
+          </p>
+          <div className='h-full overflow-y-auto mx-auto my-auto'>
+            <ul className='steps steps-vertical overflow-auto'>{stepElements}</ul>
+          </div>
         </div>
       </TaskProgressSection>
 
-      <h1 className='text-4xl'>残作業詳細</h1>
+      <h1 className='text-4xl' aria-label='1'>
+        ステップ毎状況
+      </h1>
+      <div className='form-control'>
+        <label
+          className='label cursor-pointer justify-center gap-2'
+          htmlFor='display-completed-steps'
+        >
+          <span className='label-text'>完了済みのステップを表示する</span>
+          <input
+            type='checkbox'
+            className='toggle'
+            checked={displayCompletedSteps}
+            id='display-completed-steps'
+            onChange={onDisplayCompletedStepsToggleClicked}
+          />
+        </label>
+      </div>
+
       {sortedTaskGroups.map((g) => (
         <TaskProgressSection
-          name={getSectionName(g)}
+          key={g.name}
+          title={getSectionName(g)}
           taskGroup={g}
           dueOn={g.finalDueOn}
           graphCountSource={TaskProgressGraphCountSource.TaskRecursiveCount}
+          hidden={!displayCompletedSteps && g.status === TaskStatus.Done}
         />
       ))}
     </Layout>
