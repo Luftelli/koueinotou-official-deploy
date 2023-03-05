@@ -141,3 +141,4 @@ dist
 
 /public
 src/gatsby-types.d.ts
+contents/tasks/asana_tasks.json
