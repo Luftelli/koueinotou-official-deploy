@@ -131,9 +131,9 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
     <Section className={`gap-y-1 flex-grow-0 my-2 ${hidden ? 'hidden' : ''}`}>
       {title && <h2 className='text-3xl'>{title}</h2>}
       <p className='text-xl'>{statusText}</p>
-      {/* スクロールバーを表示するために絶対値指定 */}
-      <Box className='h-[28rem]' collapsed={collapsed}>
-        <div className='grid w-full h-full gap-12 grid-cols-1 lg:grid-cols-2 justify-center'>
+      <Box className='h-full' collapsed={collapsed}>
+        {/* 2列表示時はレイアウトの崩れを防止するために高さを具体的に指定。右側と同じ高さにする。1列表示時はh-fullにしないと崩れるのでそうする */}
+        <div className='grid w-full h-full lg:h-[28rem] gap-12 grid-cols-1 lg:grid-cols-2 justify-center'>
           <div className='relative flex justify-center items-center'>
             <Doughnut
               data={
@@ -180,21 +180,25 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
               {progressDisplay}
             </div>
           </div>
-          <div className='h-full overflow-hidden'>
+          {/* スクロールバーを表示するために絶対値指定 */}
+          <div className='overflow-hidden max-h-[28rem]'>
             {displayTaskList && (
-              <div className='h-full overflow-y-auto flex'>
-                <table className='h-auto mx-auto my-auto text-base text-left'>
-                  <tbody>
-                    {taskGroup.tasks.map((t) => (
-                      <tr key={t.nameWithProgress}>
-                        <td>
-                          <TaskStatusIcon status={t.status} />
-                        </td>
-                        <td>{t.nameWithProgress}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className='h-full flex flex-col gap-2 justify-center'>
+                <p className='text-2xl'>タスク一覧</p>
+                <div className='h-auto overflow-y-auto flex'>
+                  <table className='h-auto mx-auto text-base text-left'>
+                    <tbody>
+                      {taskGroup.tasks.map((t) => (
+                        <tr key={t.nameWithProgress}>
+                          <td>
+                            <TaskStatusIcon status={t.status} />
+                          </td>
+                          <td>{t.nameWithProgress}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
             {children}
