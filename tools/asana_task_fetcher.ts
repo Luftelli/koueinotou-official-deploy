@@ -116,7 +116,7 @@ function saveTaskGroups(
 
   blackWordList.forEach((w) => {
     // 小文字大文字を区別せず置換
-    data = data.replace(new RegExp(w, 'gi'), 'XXXXX');
+    data = data.replace(new RegExp(w, 'gi'), '');
   });
 
   fs.writeFileSync(path, data);

@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import Section from '../components/Section';
 import TwoDevidedList from '../components/TwoDevidedList';
 import Box from '../components/Box';
+import HeadBase from '../components/HeadBase';
 
 const items = [
   {
@@ -79,7 +80,19 @@ const items = [
   },
   {
     title: '2022/1',
-    cardTitle: '公式サイトオープン',
+    cardTitle: '公式サイト・Steamストアページオープン',
+    cardSubtitle: 'Men of the British Expeditionary Force (BEF) wade out to..',
+    cardDetailedText: 'Men of the British Expeditionary Force (BEF) wade out to..',
+    media: {
+      type: 'IMAGE',
+      source: {
+        url: 'http://someurl/image.jpg',
+      },
+    },
+  },
+  {
+    title: '2022/6',
+    cardTitle: 'IGC2022出展',
     cardSubtitle: 'Men of the British Expeditionary Force (BEF) wade out to..',
     cardDetailedText: 'Men of the British Expeditionary Force (BEF) wade out to..',
     media: {
@@ -92,7 +105,7 @@ const items = [
 ] as const;
 
 const DevelopmentStatusPage = () => (
-  <Layout pageTitle='開発履歴' pageDescription='開発に関する今までの履歴'>
+  <Layout>
     <h1 className='text-4xl'>開発履歴</h1>
 
     <Section className='gap-y-4'>
@@ -197,3 +210,7 @@ const DevelopmentStatusPage = () => (
 );
 
 export default DevelopmentStatusPage;
+
+export const Head = () => (
+  <HeadBase pageTitle='開発履歴' pageDescription='開発に関する今までの履歴' />
+);
