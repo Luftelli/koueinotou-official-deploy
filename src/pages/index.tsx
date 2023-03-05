@@ -125,8 +125,11 @@ const IndexPage = () => (
       </div>
     </Section>
 
-    <Section>
+    <Section className='gap-2'>
       <p className='text-4xl'>鋭意開発中</p>
+      <Button link='/development-status' className='flex-none'>
+        開発状況
+      </Button>
     </Section>
 
     <Section className='gap-y-6'>
@@ -151,9 +154,6 @@ const IndexPage = () => (
         <Button className='flex-none h-20'>ゲームシステム詳細（準備中）</Button>
       </div>
       <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
-        {/* <Button link='/development-status' className='flex-none'>
-            開発状況
-          </Button> */}
         <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none'>
           お問い合わせ
         </Button>

@@ -140,3 +140,4 @@ dist
 .pnp.*
 
 /public
+src/gatsby-types.d.ts
