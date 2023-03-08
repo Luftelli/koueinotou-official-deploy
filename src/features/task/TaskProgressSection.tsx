@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -8,6 +8,7 @@ import {
   Legend,
   ChartOptions,
   ChartData,
+  DoughnutController,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { format } from 'date-fns';
@@ -19,7 +20,7 @@ import { getTaskStatusColor, TaskGroup, TaskStatus } from './models';
 import { TaskStatusIcon } from './TaskIcon';
 import { assertNever } from '../../utility/type';
 
-ChartJS.register(ArcElement, Title, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(ArcElement, DoughnutController, Title, Tooltip, Legend, ChartDataLabels);
 
 export const TaskProgressGraphCountSource = {
   TaskCount: 'TaskCount',
@@ -49,6 +50,10 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   hidden = false,
   collapsed = false,
 }) => {
+  useLayoutEffect(() => {
+    ChartJS.register(ArcElement, DoughnutController, Title, Tooltip, Legend, ChartDataLabels);
+  }, []);
+
   function getCount(status: TaskStatus) {
     switch (graphCountSource) {
       case TaskProgressGraphCountSource.TaskCount:

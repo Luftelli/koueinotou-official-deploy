@@ -192,6 +192,9 @@ Cdecのアカウントで設定しているので、設定が必要な場合はC
 ちなみに、Vercelも検討したが、Vercelは商用利用がフリープランでは不可能なため（[参考](https://vercel.com/docs/concepts/limits/fair-use-policy#commercial-usage)）候補から外した。
 Netlifyはおそらく商用利用可能。
 
+なお、`gatuby build`でビルドすると、なぜかChart.jsを使用してページが正常に表示されなくなる。
+このため、これの解消方法が分かるまでは`gatuby build --no-uglify`でデプロイする。
+
 ## デプロイフロー
 
 NetlifyのフリープランはOrganizationのprivateリポジトリ`koueinotou-official`からのデプロイに対応しておらず、これを回避するためにpublicなリポジトリ`koueinotou-official-deploy`を経由してデプロイしている。
