@@ -1,6 +1,7 @@
 import { Link } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
+import { OutboundLink } from 'gatsby-plugin-google-gtag';
 
 type HeaderProps = {
   className?: string;
@@ -14,9 +15,9 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => (
         <Link to='/' className='tooltip' data-tip='トップページへ'>
           <StaticImage src='../images/ctm_logo_v1.png' height={32} alt='トップページへ' />
         </Link>
-        <a href='https://luftelli.com' className='tooltip' data-tip='サークルページへ'>
+        <OutboundLink href='https://luftelli.com' className='tooltip' data-tip='サークルページへ'>
           <p className='flex-none text-base'>Luftelli</p>
-        </a>
+        </OutboundLink>
       </div>
     </nav>
   </header>

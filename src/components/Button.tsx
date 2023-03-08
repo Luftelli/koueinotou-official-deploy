@@ -1,6 +1,6 @@
 import { Link } from 'gatsby';
 import React from 'react';
-import { OutboundLink } from 'gatsby-plugin-google-analytics';
+import { OutboundLink } from 'gatsby-plugin-google-gtag';
 
 type ButtonProps = {
   link?: string;
