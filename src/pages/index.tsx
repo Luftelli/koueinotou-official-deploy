@@ -106,6 +106,16 @@ const IndexPage = () => (
     </Section>
 
     <Section>
+      <p className='text-4xl'>デジゲー博2023に出展します！</p>
+      <a href='https://digigame-expo.org/' target='_blank' rel='noreferrer'>
+        <img
+          src='https://digigame-expo.org/wp-content/uploads/2014/06/digihaku-banner1.png'
+          alt='デジゲー博2023'
+        />
+      </a>
+    </Section>
+
+    <Section>
       <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
         <div>
           <p className='text-xl'>最新情報はこちら</p>
@@ -211,6 +221,7 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
+                ['2023/1/14', '：公開予定日変更（2023年→2023年度第4四半期）'],
                 ['2023/1/14', '：公開予定日変更（2022年度第4四半期→2023年）'],
                 ['2022/11/13', '：デジゲー博2022出展'],
                 ['2022/8/14', '：公開予定日変更（2022年後半→2022年度第4四半期）'],
@@ -230,7 +241,7 @@ const IndexPage = () => (
               items={[
                 ['ゲームタイトル', '：光影の塔'],
                 ['価格', '：未定'],
-                ['発売日', '：2023年予定'],
+                ['発売日', '：2023年度第4四半期予定'],
                 ['対応プレイ人数', '：1-8人'],
                 ['対応プラットフォーム', '：Windows、MacOS X'],
                 ['対応言語', '：日本語、英語（予定）'],
