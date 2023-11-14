@@ -10,6 +10,7 @@ import TwoDevidedList from '../components/TwoDevidedList';
 
 import CdecIcon from '../images/cdec_icon_v2.1.png';
 import ZipIcon from '../images/zip_icon.jpg';
+import YouTube from '../components/YouTube';
 
 const gameIntroductionItems = [
   {
@@ -103,16 +104,11 @@ const IndexPage = () => (
         <br />
         オンライン対戦型3Dシューティング
       </p>
-    </Section>
-
-    <Section>
-      <p className='text-4xl'>デジゲー博2023に出展します！</p>
-      <a href='https://digigame-expo.org/' target='_blank' rel='noreferrer'>
-        <img
-          src='https://digigame-expo.org/wp-content/uploads/2014/06/digihaku-banner1.png'
-          alt='デジゲー博2023'
-        />
-      </a>
+      <YouTube
+        embedId='6mDMBqVaPcI?si=6OYKrwPIalm1nbS3'
+        aspectRatio={16.0 / 9.0}
+        className='flex flex-grow mt-4 w-full'
+      />
     </Section>
 
     <Section>
@@ -221,6 +217,7 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
+                ['2022/11/12', '：デジゲー博2023出展'],
                 ['2023/1/14', '：公開予定日変更（2023年→2023年度第4四半期）'],
                 ['2023/1/14', '：公開予定日変更（2022年度第4四半期→2023年）'],
                 ['2022/11/13', '：デジゲー博2022出展'],
