@@ -110,7 +110,8 @@ const IndexPage = () => (
         <iframe
           src='https://store.steampowered.com/widget/1822700/?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
           frameBorder='0'
-          width='646'
+          // 幅の動的調整
+          width='350'
           height='190'
           title='Steam Store Widget'
         />
