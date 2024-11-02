@@ -104,8 +104,20 @@ const IndexPage = () => (
         <br />
         オンライン対戦型3Dシューティング
       </p>
+
+      <Section className='gap-2'>
+        <p className='text-xl'>ウィッシュリストにぜひ登録してください！</p>
+        <iframe
+          src='https://store.steampowered.com/widget/1822700/?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
+          frameBorder='0'
+          width='646'
+          height='190'
+          title='Steam Store Widget'
+        />
+      </Section>
+
       <YouTube
-        embedId='6mDMBqVaPcI?si=6OYKrwPIalm1nbS3'
+        embedId='dfol9DmL2xU?si=_arHjj5gLkTcs1wD'
         aspectRatio={16.0 / 9.0}
         className='flex flex-grow mt-4 w-full'
       />
@@ -114,28 +126,18 @@ const IndexPage = () => (
     <Section>
       <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
         <div>
+          <p className='text-xl'>鋭意開発中</p>
+          <Button link='/development-status' className='flex-none'>
+            開発状況
+          </Button>
+        </div>
+        <div>
           <p className='text-xl'>最新情報はこちら</p>
           <Button link='https://twitter.com/luftelli' className='flex-none'>
             Twitter
           </Button>
         </div>
-        <div>
-          <p className='text-xl'>ストアページはこちら</p>
-          <Button
-            link='https://store.steampowered.com/app/1822700?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
-            className='flex-none'
-          >
-            Steam
-          </Button>
-        </div>
       </div>
-    </Section>
-
-    <Section className='gap-2'>
-      <p className='text-4xl'>鋭意開発中</p>
-      <Button link='/development-status' className='flex-none'>
-        開発状況
-      </Button>
     </Section>
 
     <Section className='gap-y-6'>
@@ -217,12 +219,9 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
-                ['2024/1/31', '：公開予定日変更（2023年度第4四半期→2024年度）'],
-                ['2022/11/12', '：デジゲー博2023出展'],
-                ['2023/1/14', '：公開予定日変更（2023年→2023年度第4四半期）'],
-                ['2023/1/14', '：公開予定日変更（2022年度第4四半期→2023年）'],
+                ['2024/11/3', '：デジゲー博2024出展'],
+                ['2023/11/12', '：デジゲー博2023出展'],
                 ['2022/11/13', '：デジゲー博2022出展'],
-                ['2022/8/14', '：公開予定日変更（2022年後半→2022年度第4四半期）'],
                 ['2022/6/26', '：IGC2022出展'],
                 ['2022/1/12', '：Steamストアページ開設'],
                 ['2022/1/10', '：公式サイトオープン'],
@@ -239,7 +238,7 @@ const IndexPage = () => (
               items={[
                 ['ゲームタイトル', '：光影の塔'],
                 ['価格', '：未定'],
-                ['発売日', '：2024年度予定'],
+                ['発売日', '：2025年度予定'],
                 ['対応プレイ人数', '：1-8人'],
                 ['対応プラットフォーム', '：Windows、MacOS X'],
                 ['対応言語', '：日本語、英語（予定）'],
@@ -260,12 +259,7 @@ const IndexPage = () => (
         <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
         <DeveloperCard name='Lui' charge='企画・デザインサポート' />
         <DeveloperCard name='Van' charge='デバッグ担当' />
-        <DeveloperCard
-          icon={ZipIcon}
-          name='Zip'
-          twitter='ziiiii_iiiiip'
-          charge='開発サポート（2018/7～）'
-        />
+        <DeveloperCard icon={ZipIcon} name='Zip' charge='開発サポート（2018/7～）' />
         <DeveloperCard name='S丼' charge='発案・初期開発（～2018/3）' />
       </div>
     </Section>
