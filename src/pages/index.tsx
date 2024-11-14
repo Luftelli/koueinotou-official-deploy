@@ -11,6 +11,7 @@ import TwoDevidedList from '../components/TwoDevidedList';
 import CdecIcon from '../images/cdec_icon_v2.1.png';
 import ZipIcon from '../images/zip_icon.jpg';
 import YouTube from '../components/YouTube';
+import SteamGame from '../components/SteamGame';
 
 const gameIntroductionItems = [
   {
@@ -96,7 +97,7 @@ const IndexPage = () => (
       width={1920}
       className='flex-none w-full'
     />
-    <Section>
+    <Section className='gap-y-4'>
       <p className='text-4xl'>
         <span className='text-amber-200 font-bold'>光</span>と
         <span className='text-indigo-500 font-bold'>影</span>
@@ -104,24 +105,22 @@ const IndexPage = () => (
         <br />
         オンライン対戦型3Dシューティング
       </p>
-
-      <Section className='gap-2'>
+      <div className='w-full'>
         <p className='text-xl'>ウィッシュリストにぜひ登録してください！</p>
-        <iframe
-          src='https://store.steampowered.com/widget/1822700/?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
-          frameBorder='0'
-          // 幅の動的調整
-          width='350'
-          height='190'
-          title='Steam Store Widget'
+        <SteamGame
+          gameId='1822700'
+          additionalQuery='?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
         />
-      </Section>
+      </div>
 
-      <YouTube
-        embedId='dfol9DmL2xU?si=_arHjj5gLkTcs1wD'
-        aspectRatio={16.0 / 9.0}
-        className='flex flex-grow mt-4 w-full'
-      />
+      <div className='w-full'>
+        <p className='text-xl'>紹介動画</p>
+        <YouTube
+          embedId='dfol9DmL2xU?si=_arHjj5gLkTcs1wD'
+          aspectRatio={16.0 / 9.0}
+          className='flex flex-grow w-full'
+        />
+      </div>
     </Section>
 
     <Section>

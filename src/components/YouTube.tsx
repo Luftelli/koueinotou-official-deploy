@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-type SectionProps = {
+type YouTubeProps = {
   embedId: string;
   aspectRatio: number;
   className?: string;
@@ -9,7 +9,7 @@ type SectionProps = {
 /**
  * 視覚的なグループ
  */
-const YouTube: React.FC<SectionProps> = ({ embedId, aspectRatio, className }) => {
+const YouTube: React.FC<YouTubeProps> = ({ embedId, aspectRatio, className }) => {
   const iFrameRef = useRef<HTMLIFrameElement>(null);
   const [iFrameHeight, setIFrameHeight] = useState(0);
 
