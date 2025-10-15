@@ -9,7 +9,7 @@ const NotFoundPage = () => (
     <h1 className='text-4xl'>ページが見つかりません</h1>
 
     <Section className='gap-y-4'>
-      <p>お探しのページが見つかりませんでした……</p>
+      <p>なんのページも！！ 見つけられませんでした！！</p>
       <Button link='/'>トップページに戻る</Button>
     </Section>
   </Layout>
