@@ -3,9 +3,9 @@ import Footer from './Footer';
 import Header from './Header';
 import ParallaxBackground from './ParallaxBackground';
 
-type LayoutProp = {
+interface LayoutProp {
   children: React.ReactNode;
-};
+}
 
 const Layout: React.FC<LayoutProp> = ({ children }) => (
   <>

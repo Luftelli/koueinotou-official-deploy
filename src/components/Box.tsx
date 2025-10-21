@@ -1,10 +1,10 @@
 import React from 'react';
 
-type SectionProps = {
+interface SectionProps {
   className?: string;
   collapsed?: boolean;
   children: React.ReactNode;
-};
+}
 
 /**
  * 視覚的なグループ

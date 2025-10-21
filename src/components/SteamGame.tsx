@@ -1,10 +1,10 @@
 import React from 'react';
 
-type SteamGameProps = {
+interface SteamGameProps {
   gameId: string;
   additionalQuery?: string;
   className?: string;
-};
+}
 
 /**
  * 視覚的なグループ

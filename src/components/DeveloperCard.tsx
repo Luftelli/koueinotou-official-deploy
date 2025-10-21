@@ -2,14 +2,14 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 import Box from './Box';
 
-type DeveloperCardProps = {
+interface DeveloperCardProps {
   icon?: ImportedImage;
   twitter?: string;
   name: string;
   charge: string;
   supplement?: string;
   className?: string;
-};
+}
 
 const DeveloperCard: React.FC<DeveloperCardProps> = ({
   icon,

@@ -2,10 +2,10 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import OgpImage from '../images/ogp_image.jpg';
 
-type HeaderProps = {
+interface HeaderProps {
   pageTitle?: string;
   pageDescription?: string;
-};
+}
 
 const HeadBase: React.FC<HeaderProps> = ({ pageTitle, pageDescription }) => {
   const data = useStaticQuery<Queries.HeaderQuery>(graphql`
@@ -24,9 +24,7 @@ const HeadBase: React.FC<HeaderProps> = ({ pageTitle, pageDescription }) => {
   const siteName = data?.site?.siteMetadata?.title ?? 'タイトル不明';
   const title = pageTitle == null ? siteName : `${siteName} ${pageTitle}`;
   const description =
-    pageDescription == null
-      ? 'オンライン対戦型3Dシューティングゲーム「光影の塔」公式サイト'
-      : pageDescription;
+    pageDescription ?? 'オンライン対戦型3Dシューティングゲーム「光影の塔」公式サイト';
 
   return (
     <>

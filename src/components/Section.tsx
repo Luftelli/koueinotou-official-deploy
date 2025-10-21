@@ -1,9 +1,9 @@
 import React from 'react';
 
-type SectionProps = {
+interface SectionProps {
   className?: string;
   children: React.ReactNode;
-};
+}
 
 /**
  * 論理的なグループ

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-type YouTubeProps = {
+interface YouTubeProps {
   embedId: string;
   aspectRatio: number;
   className?: string;
-};
+}
 
 /**
  * 視覚的なグループ

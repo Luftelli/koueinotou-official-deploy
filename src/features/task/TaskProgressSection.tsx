@@ -29,7 +29,7 @@ export const TaskProgressGraphCountSource = {
 export type TaskProgressGraphCountSource =
   (typeof TaskProgressGraphCountSource)[keyof typeof TaskProgressGraphCountSource];
 
-export type TaskProgressSectionProps = {
+export interface TaskProgressSectionProps {
   title?: string;
   taskGroup: TaskGroup;
   dueOn: Date | undefined;
@@ -38,7 +38,7 @@ export type TaskProgressSectionProps = {
   collapsed?: boolean;
   hidden?: boolean;
   children?: React.ReactNode;
-};
+}
 
 export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   children,

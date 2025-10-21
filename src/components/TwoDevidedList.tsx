@@ -1,9 +1,9 @@
 import React from 'react';
 
-type TwoDevidedListProps = {
+interface TwoDevidedListProps {
   items: readonly [string, string][];
   className?: string;
-};
+}
 
 const TwoDevidedList: React.FC<TwoDevidedListProps> = ({ items, className }) => (
   <table className={className ?? ''}>

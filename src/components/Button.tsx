@@ -2,11 +2,11 @@ import { Link } from 'gatsby';
 import React from 'react';
 import { OutboundLink } from 'gatsby-plugin-google-gtag';
 
-type ButtonProps = {
+interface ButtonProps {
   link?: string;
   className?: string;
   children?: React.ReactNode;
-};
+}
 
 const Button: React.FC<ButtonProps> = ({ children, link, className }) => {
   // https://やhttp://を含まないなら内部コンテンツとする

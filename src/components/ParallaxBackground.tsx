@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-type Particle = {
+interface Particle {
   x: number;
   y: number;
   baseX: number; // スクロール計算用の基準X座標
@@ -14,7 +14,7 @@ type Particle = {
   hueSpeed: number; // 色相の変化速度
   hueRange: number; // 色相の変化範囲
   baseHue: number; // 基準となる色相
-};
+}
 
 // アニメーション定数
 const PARTICLE_DENSITY = 15000; // パーティクル密度（数値が大きいほど疎）

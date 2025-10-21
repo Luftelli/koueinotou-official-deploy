@@ -169,7 +169,7 @@ export class Task {
 
   private _selfStatus: TaskStatus = TaskStatus.Todo;
 
-  private _counts: { [t in TaskStatus]: number } = {
+  private _counts: Record<TaskStatus, number> = {
     [TaskStatus.Done]: 0,
     [TaskStatus.InProgress]: 0,
     [TaskStatus.Todo]: 0,
@@ -332,7 +332,7 @@ export class TaskGroup {
 
   private _status: TaskStatus = TaskStatus.Todo;
 
-  private _counts: { [t in TaskStatus]: number } = {
+  private _counts: Record<TaskStatus, number> = {
     [TaskStatus.Done]: 0,
     [TaskStatus.InProgress]: 0,
     [TaskStatus.Todo]: 0,
@@ -397,10 +397,10 @@ export class TaskGroup {
   }
 }
 
-export type TaskGroupNameInfo = {
+export interface TaskGroupNameInfo {
   majorVersion: number;
   minorVersion: number;
   patchVersion: number;
   versionApendix: string | undefined;
   title: string | undefined;
-};
+}

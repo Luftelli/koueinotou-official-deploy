@@ -31,7 +31,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
   const taskGroups =
     toolTaskGroups
       ?.map((g) => {
-        if (g == null || g.name == null || g.tasks == null) {
+        if (g?.name == null || g.tasks == null) {
           return undefined;
         }
 
@@ -45,13 +45,13 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 
         const tasks: Task[] = [];
         g.tasks.forEach((t) => {
-          if (t == null || t.name == null || t.completed == null || t.subTasks == null) {
+          if (t?.name == null || t.completed == null || t.subTasks == null) {
             return;
           }
 
           const subTasks: SubTask[] = [];
           t.subTasks.forEach((s) => {
-            if (s == null || s.name == null || s.completed == null) {
+            if (s?.name == null || s.completed == null) {
               return;
             }
 

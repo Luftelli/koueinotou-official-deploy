@@ -3,9 +3,9 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 import { OutboundLink } from 'gatsby-plugin-google-gtag';
 
-type HeaderProps = {
+interface HeaderProps {
   className?: string;
-};
+}
 
 const Header: React.FC<HeaderProps> = ({ className = '' }) => (
   // ページタイトルが指定されない場合はトップページとする

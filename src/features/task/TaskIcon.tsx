@@ -2,9 +2,9 @@ import React from 'react';
 import { assertNever } from '../../utility/type';
 import { getTaskStatusColor, TaskStatus } from './models';
 
-type TaskIconProps = {
+interface TaskIconProps {
   className?: string;
-};
+}
 
 export const TaskDoneIcon = ({ className = '' }: TaskIconProps) => (
   <svg
@@ -61,10 +61,10 @@ export const TaskToDoIcon = ({ className = '' }: TaskIconProps) => (
   </svg>
 );
 
-type TaskStatusIconProps = {
+interface TaskStatusIconProps {
   status: TaskStatus;
   className?: string;
-};
+}
 
 export const TaskStatusIcon = ({ status, className = '' }: TaskStatusIconProps) => {
   switch (status) {
