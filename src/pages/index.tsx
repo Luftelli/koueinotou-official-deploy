@@ -23,7 +23,7 @@ const gameIntroductionItems = [
         <br />
         個性的なエリアからなるステージを探索し塔を占拠🗼
         <br />
-        オブジェクトを壊しながら時期を強化し
+        オブジェクトを壊しながら自機を強化し
         <br />
         塔の占拠数で競うオンライン対応バトル！
       </>
@@ -120,6 +120,18 @@ const IndexPage = () => (
           gameId='1822700'
           additionalQuery='?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
         />
+      </div>
+
+      <div className='w-full flex flex-col items-center gap-4'>
+        <p className='text-xl font-bold'>🎮 11月9日（日）開催のデジゲー博2025に出展します！</p>
+        <Button link='https://digigame-expo.org/' className='flex-none'>
+          <StaticImage
+            src='https://digigame-expo.org/wp-content/uploads/2014/06/digihaku-banner1.png'
+            alt='デジゲー博2025'
+            width={468}
+            className='w-full max-w-md'
+          />
+        </Button>
       </div>
 
       <div className='w-full'>
@@ -228,6 +240,7 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
+                ['2025/11/2', '：デジゲー博2025出展'],
                 ['2024/11/3', '：デジゲー博2024出展'],
                 ['2023/11/12', '：デジゲー博2023出展'],
                 ['2022/11/13', '：デジゲー博2022出展'],
