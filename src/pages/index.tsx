@@ -137,7 +137,7 @@ const IndexPage = () => (
       <div className='w-full'>
         <p className='text-xl'>紹介動画</p>
         <YouTube
-          embedId='dfol9DmL2xU?si=_arHjj5gLkTcs1wD'
+          embedId='xlILRvLVTP8?si=u1KGNydJKVd9dQwz'
           aspectRatio={16.0 / 9.0}
           className='flex flex-grow w-full'
         />

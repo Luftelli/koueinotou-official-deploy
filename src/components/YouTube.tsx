@@ -40,6 +40,7 @@ const YouTube: React.FC<YouTubeProps> = ({ embedId, aspectRatio, className }) =>
         src={`https://www.youtube.com/embed/${embedId}`}
         title='YouTube video player'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+        referrerPolicy='strict-origin-when-cross-origin'
         allowFullScreen
         style={{ border: 'none' }}
       />
