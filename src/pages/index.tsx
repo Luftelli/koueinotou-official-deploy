@@ -122,18 +122,6 @@ const IndexPage = () => (
         />
       </div>
 
-      <div className='w-full flex flex-col items-center gap-4'>
-        <p className='text-xl font-bold'>🎮 11月9日（日）開催のデジゲー博2025に出展します！</p>
-        <Button link='https://digigame-expo.org/' className='flex-none'>
-          <StaticImage
-            src='https://digigame-expo.org/wp-content/uploads/2014/06/digihaku-banner1.png'
-            alt='デジゲー博2025'
-            width={468}
-            className='w-full max-w-md'
-          />
-        </Button>
-      </div>
-
       <div className='w-full'>
         <p className='text-xl'>紹介動画</p>
         <YouTube
@@ -240,7 +228,7 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
-                ['2025/11/2', '：デジゲー博2025出展'],
+                ['2025/11/9', '：デジゲー博2025出展'],
                 ['2024/11/3', '：デジゲー博2024出展'],
                 ['2023/11/12', '：デジゲー博2023出展'],
                 ['2022/11/13', '：デジゲー博2022出展'],
