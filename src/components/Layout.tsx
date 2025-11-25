@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProp> = ({ children }) => (
     <div className='flex flex-col font-body min-h-screen'>
       <Header className='flex-none' />
       <div className='flex flex-1 justify-center'>
-        <main className='flex flex-col flex-1 flex-wrap max-w-full justify-center text-center bg-black/[.7] lg:flex-nowrap lg:max-w-screen-lg'>
+        <main className='flex flex-col flex-1 flex-wrap max-w-full justify-center text-center lg:flex-nowrap lg:max-w-screen-lg'>
           {children}
         </main>
       </div>

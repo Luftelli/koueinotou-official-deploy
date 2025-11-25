@@ -131,11 +131,15 @@ const getNeighborParticles = (particle: Particle, grid: SpatialGrid): Particle[]
 /**
  * ドキュメント全体の高さを計算（最小値を保証）
  */
-const calculateDocumentHeight = (): number =>
-  Math.max(
+const calculateDocumentHeight = (): number => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return 0;
+  }
+  return Math.max(
     document.documentElement.scrollHeight,
     window.innerHeight * MIN_SCREEN_HEIGHT_MULTIPLIER,
   );
+};
 
 /**
  * パーティクルを初期化
@@ -372,8 +376,8 @@ const ParallaxBackground: React.FC = () => {
     });
 
     // body要素とdocumentElement両方を監視
-    resizeObserver.observe(document.body);
-    resizeObserver.observe(document.documentElement);
+    if (document.body) resizeObserver.observe(document.body);
+    if (document.documentElement) resizeObserver.observe(document.documentElement);
 
     return () => {
       if (resizeObserverTimeout) {

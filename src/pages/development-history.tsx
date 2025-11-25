@@ -1,11 +1,15 @@
 import React, { useMemo } from 'react';
-import { Chrono } from 'react-chrono';
 import Layout from '../components/Layout';
 
 import Section from '../components/Section';
 import TwoDevidedList from '../components/TwoDevidedList';
 import Box from '../components/Box';
 import HeadBase from '../components/HeadBase';
+
+// react-chronoを動的インポート（SSR時のビルドエラー回避）
+const Chrono = React.lazy(() =>
+  import('react-chrono').then((module) => ({ default: module.Chrono })),
+);
 
 const items = [
   {
@@ -226,6 +230,11 @@ const items = [
 
 const DevelopmentStatusPage = () => {
   const timelineItems = useMemo(() => [...items], []);
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <Layout>
@@ -234,36 +243,40 @@ const DevelopmentStatusPage = () => {
       <Section className='gap-y-4 w-full'>
         <h2 className='text-3xl'>出来事</h2>
         <div className='w-full text-left'>
-          <Chrono
-            items={timelineItems}
-            layout={{ cardWidth: 800 }}
-            interaction={{ keyboardNavigation: true }}
-            mode='vertical'
-            theme={{
-              primary: '#2dd4bf',
-              secondary: '#5eead4',
-              cardBgColor: '#111827',
-              cardDetailsBackGround: '#111827',
-              cardDetailsColor: '#f3f4f6',
-              cardTitleColor: '#2dd4bf',
-              cardSubtitleColor: '#d1d5db',
-              titleColor: '#f3f4f6',
-              titleColorActive: '#2dd4bf',
-              iconBackgroundColor: '#2dd4bf',
-              iconColor: '#2dd4bf',
-              toolbarBgColor: '#1f2937',
-              toolbarBtnBgColor: '#374151',
-              toolbarTextColor: '#f3f4f6',
-              detailsColor: '#f3f4f6',
-            }}
-            display={{
-              borderless: false,
-              pointShape: 'circle',
-              toolbar: {
-                enabled: false,
-              },
-            }}
-          />
+          {isClient && (
+            <React.Suspense fallback={<div>Loading timeline...</div>}>
+              <Chrono
+                items={timelineItems}
+                layout={{ cardWidth: 800 }}
+                interaction={{ keyboardNavigation: true }}
+                mode='vertical'
+                theme={{
+                  primary: '#2dd4bf',
+                  secondary: '#5eead4',
+                  cardBgColor: '#111827',
+                  cardDetailsBackGround: '#111827',
+                  cardDetailsColor: '#f3f4f6',
+                  cardTitleColor: '#2dd4bf',
+                  cardSubtitleColor: '#d1d5db',
+                  titleColor: '#f3f4f6',
+                  titleColorActive: '#2dd4bf',
+                  iconBackgroundColor: '#2dd4bf',
+                  iconColor: '#2dd4bf',
+                  toolbarBgColor: '#1f2937',
+                  toolbarBtnBgColor: '#374151',
+                  toolbarTextColor: '#f3f4f6',
+                  detailsColor: '#f3f4f6',
+                }}
+                display={{
+                  borderless: false,
+                  pointShape: 'circle',
+                  toolbar: {
+                    enabled: false,
+                  },
+                }}
+              />
+            </React.Suspense>
+          )}
         </div>
       </Section>
 
