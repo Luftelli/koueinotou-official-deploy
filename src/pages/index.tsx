@@ -114,7 +114,7 @@ const IndexPage = () => (
         オンライン対戦型3Dシューティング
       </p>
       <div className='w-full'>
-        <p className='text-xl'>2026年1～3月公開予定！</p>
+        <p className='text-xl'>2026年公開予定！</p>
         <p className='text-xl'>ウィッシュリストにぜひ登録してください！</p>
         <SteamGame
           gameId='1822700'
@@ -248,7 +248,7 @@ const IndexPage = () => (
               items={[
                 ['ゲームタイトル', '：光影の塔'],
                 ['価格', '：未定'],
-                ['発売日', '：2026年1～3月予定'],
+                ['発売日', '：2026年予定'],
                 ['対応プレイ人数', '：1-8人'],
                 ['対応プラットフォーム', '：Windows'],
                 ['対応言語', '：日本語'],
