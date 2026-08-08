@@ -23,6 +23,20 @@ nvmを使用するのがおすすめ。Windowsなら[npm-windows](https://github
 npm install
 ```
 
+### 依存パッケージのoverrides
+
+`package.json`の`overrides`は、Gatsby 5.16.1の推移依存に含まれる脆弱性を、Gatsby本体やプラグインをダウングレードせずに解消するために設定している。
+
+| パッケージ | 固定バージョン | 理由 |
+| --- | --- | --- |
+| `lodash` | `4.18.1` | コードインジェクションおよびPrototype Pollution対策 |
+| `path-to-regexp` | `0.1.13` | ReDoS対策。Expressが許容する`~0.1.12`の範囲内で更新 |
+| `webpack` | `5.109.2` | `buildHttp`の許可リスト回避によるSSRF対策 |
+
+通常の`npm audit fix`ではこれらの推移依存を更新できず、`npm audit fix --force`はGatsbyプラグインを互換性のない旧メジャーバージョンへダウングレードするため使用しないこと。
+
+Gatsbyまたは関連プラグインの更新後は、各overrideを一つずつ外して`npm install`、`npm audit`、`npm run build`を実行する。修正版がGatsbyの通常の依存解決で導入され、ビルドが成功する場合は該当overrideを削除する。
+
 ### VSCode設定
 
 ワークスペースの推奨事項として設定されている以下の拡張機能をインストールする。
@@ -71,7 +85,7 @@ VSCodeなら、自分で入力しなくても、赤波線にカーソルを合�
 なお、コーディング規約のエラーが残っている場合は自動チェックにより指摘されるので全て対応する。
 （指摘ではなくマージ不可にしたいが、Teamの無料版ではできなさそう）
 
-規約自体は[Airbnb Style Guide](https://github.com/airbnb/javascript)に従うが、読み込む必要はない。
+規約は`eslint.config.mjs`に定義したESLint、TypeScript、React、React Hooks、JSX a11yの公式推奨設定に従う。Airbnbなどの外部スタイルガイドは使用しない。
 
 ### 素材の規約
 
