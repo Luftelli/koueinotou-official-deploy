@@ -22,7 +22,7 @@
 - フェッチスクリプト`tools/asana_task_fetcher.ts`は`contents/tasks/asana_tasks.json`を書き換えつつ、NGワードを除去する。状況が変わったら生成されたJSONもコミットに含める。
 
 ## ビルドとデプロイ
-- Node.js 18系（Voltaで固定）が必須。バージョンを切り替えたら`npm install`を一度走らせる。
+- Node.js 24.18.1（Voltaで固定）が必須。バージョンを切り替えたら`npm install`を一度走らせる。
 - ローカルプレビューは`npm run develop`で起動し、`http://localhost:8000`にアクセスする。
 - 本番ビルドは`npm run build`を使用する。`gatsby build --no-uglify`を内包しており、Chart.jsの難読化問題を回避するため必須。
 - Netlifyは`koueinotou-official-deploy`リポジトリをミラーとして参照する。Cdecとの調整なしに自動デプロイ設定を変更しない。
