@@ -6,8 +6,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
-  ChartData,
   DoughnutController,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -141,45 +139,41 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
         <div className='grid w-full h-full lg:h-[28rem] gap-12 grid-cols-1 lg:grid-cols-2 justify-center'>
           <div className='relative flex justify-center items-center'>
             <Doughnut
-              data={
-                {
-                  labels,
-                  datasets: [
-                    {
-                      backgroundColor: colors,
-                      borderColor: 'rgb(200, 200, 200)',
-                      data,
+              data={{
+                labels,
+                datasets: [
+                  {
+                    backgroundColor: colors,
+                    borderColor: 'rgb(200, 200, 200)',
+                    data,
+                  },
+                ],
+              }}
+              options={{
+                plugins: {
+                  title: {
+                    display: false,
+                  },
+                  // ラベルに項目名を表示するので判例は非表示
+                  legend: {
+                    display: false,
+                  },
+                  // マウスオーバー時に情報を表示しない
+                  tooltip: { enabled: false },
+                  datalabels: {
+                    color: '#000',
+                    textAlign: 'center',
+                    font: {
+                      weight: 'bold',
                     },
-                  ],
-                } as ChartData<'doughnut'>
-              }
-              options={
-                {
-                  plugins: {
-                    title: {
-                      display: false,
-                    },
-                    // ラベルに項目名を表示するので判例は非表示
-                    legend: {
-                      display: false,
-                    },
-                    // マウスオーバー時に情報を表示しない
-                    tooltip: { enabled: false },
-                    datalabels: {
-                      color: '#000',
-                      textAlign: 'center',
-                      font: {
-                        weight: 'bold',
-                      },
-                      formatter: (value, ctx) => {
-                        const { labels: ls } = ctx.chart.data;
-                        const label = ls == null ? 'null' : ls[ctx.dataIndex];
-                        return `${label}\n${value}項目`;
-                      },
+                    formatter: (value, ctx) => {
+                      const { labels: ls } = ctx.chart.data;
+                      const label = ls == null ? 'null' : ls[ctx.dataIndex];
+                      return `${label}\n${value}項目`;
                     },
                   },
-                } as ChartOptions<'doughnut'>
-              }
+                },
+              }}
             />
             <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
               {progressDisplay}

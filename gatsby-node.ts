@@ -1,6 +1,6 @@
 import type { GatsbyNode } from 'gatsby';
 
-export const onCreatePage: GatsbyNode['onCreatePage'] = async ({ actions }) => {
+export const onCreatePage: GatsbyNode['onCreatePage'] = ({ actions }) => {
   const { createRedirect } = actions;
   createRedirect({
     fromPath: 'https://koueinotou.netlify.app/*',

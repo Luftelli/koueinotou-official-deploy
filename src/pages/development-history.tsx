@@ -11,6 +11,10 @@ const Chrono = React.lazy(() =>
   import('react-chrono').then((module) => ({ default: module.Chrono })),
 );
 
+const subscribeToClientEnvironment = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 const items = [
   {
     title: '2017/5',
@@ -230,11 +234,11 @@ const items = [
 
 const DevelopmentStatusPage = () => {
   const timelineItems = useMemo(() => [...items], []);
-  const [isClient, setIsClient] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const isClient = React.useSyncExternalStore(
+    subscribeToClientEnvironment,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
 
   return (
     <Layout>

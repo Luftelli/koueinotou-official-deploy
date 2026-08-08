@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { max } from 'date-fns';
 import { assertNever } from '../../utility/type';
 
@@ -309,9 +308,7 @@ export class TaskGroup {
   }
 
   static sort(l: TaskGroup, r: TaskGroup) {
-    // eslint-disable-next-line no-underscore-dangle
     const lInfo = l._extractInfoFromName();
-    // eslint-disable-next-line no-underscore-dangle
     const rInfo = r._extractInfoFromName();
 
     const lVer = lInfo.majorVersion * 10000 + lInfo.minorVersion * 100 + lInfo.patchVersion;

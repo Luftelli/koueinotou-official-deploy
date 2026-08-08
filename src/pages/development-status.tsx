@@ -102,11 +102,11 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
     }
   }
 
-  // 最初の完了状態でないグループが出たらそれをアクティブグループとし、それより後のグループは未着手状態とする
-  let isActiveGroupAppeard = false;
-  const stepElements = sortedTaskGroups.map((g) => {
+  // 最初の完了状態でないグループをアクティブとし、それより後のグループは未着手状態とする
+  const activeGroupIndex = sortedTaskGroups.findIndex((g) => g.status !== TaskStatus.Done);
+  const stepElements = sortedTaskGroups.map((g, index) => {
     const displayName = g.title == null ? g.versionString : `${g.versionString}: ${g.title}`;
-    if (isActiveGroupAppeard) {
+    if (activeGroupIndex >= 0 && index > activeGroupIndex) {
       return (
         <li
           key={displayName}
@@ -118,10 +118,7 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
       );
     }
 
-    const isCurrentGroupActive = g.status !== TaskStatus.Done;
-    isActiveGroupAppeard = isCurrentGroupActive;
-
-    if (isActiveGroupAppeard) {
+    if (index === activeGroupIndex) {
       return (
         <li
           key={displayName}
