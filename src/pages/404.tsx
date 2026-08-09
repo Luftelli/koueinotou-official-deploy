@@ -6,7 +6,7 @@ import HeadBase from '../components/HeadBase';
 
 const NotFoundPage = () => (
   <Layout>
-    <h1 className='text-4xl'>ページが見つかりません</h1>
+    <h1 className='mt-12 text-4xl font-bold lg:mt-16'>ページが見つかりません</h1>
 
     <Section className='gap-y-4'>
       <p>なんのページも！！ 見つけられませんでした！！</p>

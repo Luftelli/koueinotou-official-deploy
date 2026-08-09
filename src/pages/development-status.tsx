@@ -152,25 +152,25 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 
   return (
     <Layout>
-      <h1 className='text-4xl'>全体状況</h1>
+      <h1 className='mt-12 text-4xl font-bold lg:mt-16'>全体状況</h1>
       <TaskProgressSection
         taskGroup={allGroup}
         dueOn={allGroup.finalDueOn}
         graphCountSource={TaskProgressGraphCountSource.TaskRecursiveCount}
         displayTaskList={false}
       >
-        <div className='h-full flex flex-col gap-1'>
+        <div className='flex h-full min-h-0 flex-col gap-1'>
           <p className='text-2xl'>状況概要</p>
           <p className='text-l'>
             {sortedTaskGroups.length}ステップ中{completedTaskGroupCount}ステップ完了
           </p>
-          <div className='h-full overflow-y-auto mx-auto my-auto'>
-            <ul className='steps steps-vertical overflow-auto'>{stepElements}</ul>
+          <div className='mx-auto min-h-0 w-full flex-1 overflow-y-auto'>
+            <ul className='steps steps-vertical w-full'>{stepElements}</ul>
           </div>
         </div>
       </TaskProgressSection>
 
-      <h1 className='text-4xl' aria-label='1'>
+      <h1 className='mt-8 text-4xl font-bold' aria-label='1'>
         ステップ毎状況
       </h1>
       <div className='form-control'>

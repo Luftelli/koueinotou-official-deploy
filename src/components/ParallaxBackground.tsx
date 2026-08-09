@@ -497,7 +497,7 @@ const ParallaxBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className='fixed top-0 left-0 -z-50 w-screen h-screen'
+      className='fixed inset-0 -z-50 h-full w-full'
       style={{ background: '#000510' }}
     />
   );

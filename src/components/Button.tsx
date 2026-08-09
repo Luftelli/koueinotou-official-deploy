@@ -14,13 +14,13 @@ const Button: React.FC<ButtonProps> = ({ children, link, className }) => {
 
   const mainComponent = (
     <div
-      className={`flex justify-center items-center text-2xl text-white font-bold align-middle h-12 w-64 transform -skew-x-[35deg] transition-all duration-200 ${
+      className={`mx-auto flex h-12 w-64 max-w-full transform items-center justify-center px-6 align-middle text-xl font-bold text-white -skew-x-[24deg] transition-all duration-200 sm:mx-0 sm:text-2xl ${
         link == null
           ? 'bg-gray-700 cursor-not-allowed'
           : 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)]'
       } ${className ?? ''}`}
     >
-      <span className='transform skew-x-[35deg]'>{children}</span>
+      <span className='transform skew-x-[24deg]'>{children}</span>
     </div>
   );
 

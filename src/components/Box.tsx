@@ -12,10 +12,12 @@ interface SectionProps {
 const Box: React.FC<SectionProps> = ({ children, className, collapsed = false }) => {
   const additionalClassName = collapsed ? 'scale-y-0 h-0 py-0 overflow-hidden' : '';
   return (
-    <div className={`w-full relative group origin-top ${additionalClassName} ${className ?? ''}`}>
+    <div
+      className={`group relative w-full origin-top overflow-hidden border border-cyan-200/10 shadow-2xl shadow-black/25 transition-all duration-300 ${additionalClassName} ${className ?? ''}`}
+    >
       {/* Background and Shape */}
       <div className='absolute inset-0'>
-        <div className='absolute inset-0 bg-black/80 backdrop-blur-sm shadow-lg' />
+        <div className='absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-indigo-900/75 backdrop-blur-md' />
         {/* Rainbow Line */}
         <div
           className='absolute bottom-0 left-0 right-0 h-0.5 animate-rainbow-scroll'
@@ -38,7 +40,7 @@ const Box: React.FC<SectionProps> = ({ children, className, collapsed = false })
       </div>
 
       {/* Content */}
-      <div className='relative p-8 md:px-16'>{children}</div>
+      <div className='relative p-5 sm:p-8 lg:p-10'>{children}</div>
     </div>
   );
 };

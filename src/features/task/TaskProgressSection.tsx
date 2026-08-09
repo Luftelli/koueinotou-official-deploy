@@ -52,6 +52,11 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
     ChartJS.register(ArcElement, DoughnutController, Title, Tooltip, Legend, ChartDataLabels);
   }, []);
 
+  // 完了済みセクションは、表示を要求されるまで重いcanvasを生成しない
+  if (hidden) {
+    return null;
+  }
+
   function getCount(status: TaskStatus) {
     switch (graphCountSource) {
       case TaskProgressGraphCountSource.TaskCount:
@@ -131,14 +136,19 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   }
 
   return (
-    <Section className={`gap-y-1 flex-grow-0 my-2 ${hidden ? 'hidden' : ''}`}>
+    <Section className='my-2 flex-grow-0 gap-y-1'>
       {title && <h2 className='text-3xl'>{title}</h2>}
       <p className='text-xl'>{statusText}</p>
       <Box className='h-full' collapsed={collapsed}>
-        {/* 2列表示時はレイアウトの崩れを防止するために高さを具体的に指定。右側と同じ高さにする。1列表示時はh-fullにしないと崩れるのでそうする */}
-        <div className='grid w-full h-full lg:h-[28rem] gap-12 grid-cols-1 lg:grid-cols-2 justify-center'>
-          <div className='relative flex justify-center items-center'>
+        <div className='grid w-full min-w-0 grid-cols-1 items-center justify-center gap-8 xl:grid-cols-2 xl:gap-12'>
+          {/* Chart.jsが親要素の寸法からcanvasを計算できるよう、専用の正方形コンテナを使用 */}
+          <div
+            className='relative mx-auto w-full min-w-0 max-w-[28rem] overflow-hidden'
+            style={{ height: 'min(28rem, calc(100vw - 5.25rem))' }}
+          >
             <Doughnut
+              aria-label={`${taskGroup.name}の進捗状況`}
+              role='img'
               data={{
                 labels,
                 datasets: [
@@ -150,6 +160,8 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
                 ],
               }}
               options={{
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                   title: {
                     display: false,
@@ -175,16 +187,15 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
                 },
               }}
             />
-            <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
+            <div className='pointer-events-none absolute inset-0 flex items-center justify-center'>
               {progressDisplay}
             </div>
           </div>
-          {/* スクロールバーを表示するために絶対値指定 */}
-          <div className='overflow-hidden max-h-[28rem]'>
+          <div className='h-[28rem] min-w-0 overflow-hidden'>
             {displayTaskList && (
-              <div className='h-full flex flex-col gap-2 justify-center'>
+              <div className='flex h-full min-h-0 flex-col justify-start gap-2'>
                 <p className='text-2xl'>タスク一覧</p>
-                <div className='h-auto overflow-y-auto flex'>
+                <div className='min-h-0 flex-1 overflow-y-auto'>
                   <table className='h-auto mx-auto text-base text-left'>
                     <tbody>
                       {taskGroup.tasks.map((t) => (

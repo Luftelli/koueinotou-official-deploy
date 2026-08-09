@@ -242,7 +242,7 @@ const DevelopmentStatusPage = () => {
 
   return (
     <Layout>
-      <h1 className='text-4xl'>開発の歴史</h1>
+      <h1 className='mt-12 text-4xl font-bold lg:mt-16'>開発の歴史</h1>
       <p>迷走の歴史</p>
       <Section className='gap-y-4 w-full'>
         <h2 className='text-3xl'>出来事</h2>

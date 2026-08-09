@@ -10,9 +10,7 @@ interface SectionProps {
  */
 const Section: React.FC<SectionProps> = ({ children, className }) => (
   <div
-    className={`flex flex-col flex-1 justify-center items-center mx-4 md:mx-8 lg:mx-16 my-6 ${
-      className ?? ''
-    }`}
+    className={`mx-auto flex w-full max-w-[1600px] flex-col items-center justify-center px-4 py-10 sm:px-6 md:py-14 lg:px-10 lg:py-16 xl:px-16 2xl:px-20 ${className ?? ''}`}
   >
     {children}
   </div>

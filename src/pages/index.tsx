@@ -99,79 +99,82 @@ function gameIntroductionImage(id: string, className: string) {
 
 const IndexPage = () => (
   <Layout>
-    <StaticImage
-      src='../images/header.jpg'
-      alt='Header'
-      width={1920}
-      className='flex-none w-full'
-    />
-    <Section className='gap-y-4'>
-      <p className='text-4xl'>
-        <span className='text-amber-200 font-bold'>光</span>と
-        <span className='text-indigo-500 font-bold'>影</span>
-        に分かれて戦う
-        <br />
-        オンライン対戦型3Dシューティング
-      </p>
-      <div className='w-full'>
-        <p className='text-xl'>2026年公開予定！</p>
-        <p className='text-xl'>ウィッシュリストにぜひ登録してください！</p>
-        <SteamGame
-          gameId='1822700'
-          additionalQuery='?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
-        />
+    <div className='relative w-full overflow-hidden border-b border-cyan-300/10'>
+      <StaticImage
+        src='../images/header.jpg'
+        alt='光影の塔のキービジュアル'
+        width={1920}
+        className='flex-none w-full lg:h-[clamp(34rem,56vw,52rem)]'
+        imgStyle={{ objectFit: 'cover', objectPosition: 'center top' }}
+      />
+      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900 to-transparent' />
+    </div>
+
+    <Section className='gap-8 lg:grid lg:grid-cols-12 lg:items-center lg:text-left'>
+      <div className='flex w-full flex-col items-center gap-6 lg:col-span-5 lg:items-start'>
+        <h1 className='text-[clamp(2rem,4vw,4.5rem)] font-bold leading-[1.15] tracking-tight'>
+          <span className='text-amber-200'>光</span>と
+          <span className='text-indigo-400'>影</span>
+          に分かれて戦う
+          <br />
+          オンライン対戦型
+          <br className='hidden xl:block' />
+          3Dシューティング
+        </h1>
+        <p className='max-w-2xl text-base leading-8 text-slate-300 sm:text-lg'>
+          2026年公開予定。Steamでウィッシュリストに登録して、最新情報をお待ちください。
+        </p>
+        <div className='w-full max-w-xl'>
+          <SteamGame
+            gameId='1822700'
+            additionalQuery='?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
+          />
+        </div>
+        <div className='grid w-full max-w-xl grid-cols-1 gap-4 sm:grid-cols-2'>
+          <div>
+            <p className='mb-2 text-sm text-slate-400'>鋭意開発中</p>
+            <Button link='/development-status'>開発状況</Button>
+          </div>
+          <div>
+            <p className='mb-2 text-sm text-slate-400'>最新情報はこちら</p>
+            <Button link='https://twitter.com/luftelli'>Twitter</Button>
+          </div>
+        </div>
       </div>
 
-      <div className='w-full'>
-        <p className='text-xl'>紹介動画</p>
+      <div className='w-full lg:col-span-7'>
         <YouTube
           embedId='xlILRvLVTP8?si=u1KGNydJKVd9dQwz'
           aspectRatio={16.0 / 9.0}
-          className='flex flex-grow w-full'
+          className='flex w-full flex-grow overflow-hidden border border-white/10 bg-black shadow-2xl shadow-cyan-900/40'
         />
       </div>
     </Section>
 
-    <Section>
-      <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
-        <div>
-          <p className='text-xl'>鋭意開発中</p>
-          <Button link='/development-status' className='flex-none'>
-            開発状況
-          </Button>
-        </div>
-        <div>
-          <p className='text-xl'>最新情報はこちら</p>
-          <Button link='https://twitter.com/luftelli' className='flex-none'>
-            Twitter
-          </Button>
-        </div>
-      </div>
-    </Section>
-
-    <Section className='gap-y-6'>
-      {gameIntroductionItems.map((g) => (
+    <Section className='gap-y-12 lg:gap-y-20'>
+      {gameIntroductionItems.map((g, index) => (
         <div
           key={g.title}
-          className='flex w-full gap-x-4 flex-col items-center lg:odd:flex-row-reverse lg:even:flex-row'
+          className='grid w-full items-center gap-6 text-center lg:grid-cols-12 lg:gap-10 lg:text-left'
         >
-          {gameIntroductionImage(g.imageId, 'max-w-md lg:basis-1/2')}
-          <div className='flex flex-col p-4 gap-y-2 lg:basis-1/2 '>
-            <p className='text-2xl'>{g.title}</p>
-            <div className='flex-grow' />
-            <p className='text-base leading-relaxed'>{g.content}</p>
-            <div className='flex-grow' />
+          <div className={`w-full lg:col-span-7 ${index % 2 === 0 ? '' : 'lg:order-2'}`}>
+            {gameIntroductionImage(
+              g.imageId,
+              'w-full overflow-hidden border border-white/10 shadow-2xl shadow-black/30',
+            )}
+          </div>
+          <div className='flex flex-col items-center gap-y-4 lg:col-span-5 lg:items-start lg:p-6'>
+            <h2 className='text-3xl font-bold sm:text-4xl'>{g.title}</h2>
+            <p className='text-base leading-8 text-slate-300 sm:text-lg'>{g.content}</p>
           </div>
         </div>
       ))}
     </Section>
 
     <Section className='gap-y-6'>
-      <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
+      <div className='flex w-full flex-col items-center justify-center gap-6 sm:flex-row'>
         <Button className='flex-none h-20'>ゲームシステム詳細（準備中）</Button>
-      </div>
-      <div className='flex justify-center items-center w-full gap-6 flex-col lg:flex-row'>
-        <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none'>
+        <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none h-20'>
           お問い合わせ
         </Button>
         {/* <Button className='flex-none'>利用規約</Button>
@@ -181,48 +184,48 @@ const IndexPage = () => (
 
     <Section className='gap-y-4'>
       <h2 className='text-3xl'>ギャラリー</h2>
-      <div className='grid w-full gap-12 grid-cols-1 lg:grid-cols-2'>
+      <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
         <StaticImage
           src='../images/ss1.jpg'
           alt='Screen Shot 1'
           width={640}
-          className='justify-self-center max-w-md'
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss5.jpg'
           alt='Screen Shot 5'
           width={640}
-          className='justify-self-center max-w-md'
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss2.jpg'
           alt='Screen Shot 2'
           width={640}
-          className='justify-self-center max-w-md'
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss4.jpg'
           alt='Screen Shot 4'
           width={640}
-          className='justify-self-center max-w-md'
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss3.jpg'
           alt='Screen Shot 3'
           width={640}
-          className='justify-self-center max-w-md'
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss6.jpg'
           alt='Screen Shot 6'
           width={640}
-          className='justify-self-center max-w-md'
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
       </div>
     </Section>
 
     <Section>
-      <div className='grid w-full gap-12 grid-cols-1 lg:grid-cols-2'>
+      <div className='grid w-full grid-cols-1 gap-8 lg:grid-cols-2'>
         <div className='h-full flex flex-col gap-4'>
           <h2 className='text-3xl'>ニュース</h2>
           <Box className='h-full'>
@@ -265,7 +268,7 @@ const IndexPage = () => (
 
     <Section className='gap-y-4'>
       <h2 className='text-3xl'>開発者</h2>
-      <div className='grid w-full gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5'>
         <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
         <DeveloperCard name='Lui' charge='企画・デザインサポート' />
         <DeveloperCard name='Van' charge='デバッグ担当' />
