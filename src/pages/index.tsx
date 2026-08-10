@@ -173,8 +173,7 @@ const IndexPage = () => (
 
     <Section className='gap-y-6'>
       <div className='flex w-full flex-col items-center justify-center gap-6 sm:flex-row'>
-        <Button className='flex-none h-20'>ゲームシステム詳細（準備中）</Button>
-        <Button link='https://forms.gle/FUJs7ia2cUuH3maZ6' className='flex-none h-20'>
+        <Button link='https://luftelli.com/contact' className='flex-none h-20'>
           お問い合わせ
         </Button>
         {/* <Button className='flex-none'>利用規約</Button>
