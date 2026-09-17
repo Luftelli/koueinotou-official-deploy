@@ -1,4 +1,5 @@
 import { StaticImage } from 'gatsby-plugin-image';
+import { OutboundLink } from 'gatsby-plugin-google-gtag';
 import React from 'react';
 import Box from '../components/Box';
 import Button from '../components/Button';
@@ -113,8 +114,7 @@ const IndexPage = () => (
     <Section className='gap-8 lg:grid lg:grid-cols-12 lg:items-center lg:text-left'>
       <div className='flex w-full flex-col items-center gap-6 lg:col-span-5 lg:items-start'>
         <h1 className='text-[clamp(2rem,4vw,4.5rem)] font-bold leading-[1.15] tracking-tight'>
-          <span className='text-amber-200'>光</span>と
-          <span className='text-indigo-400'>影</span>
+          <span className='text-amber-200'>光</span>と<span className='text-indigo-400'>影</span>
           に分かれて戦う
           <br />
           オンライン対戦型
@@ -149,6 +149,58 @@ const IndexPage = () => (
           className='flex w-full flex-grow overflow-hidden border border-white/10 bg-black shadow-2xl shadow-cyan-900/40'
         />
       </div>
+    </Section>
+
+    <Section className='gap-5'>
+      <h2 className='text-center text-2xl leading-relaxed sm:text-3xl'>
+        <span className='inline-block'>デジゲー博2026に</span>
+        <span className='inline-block'>出展します！</span>
+      </h2>
+      <Box className='max-w-5xl'>
+        <div className='flex flex-col items-center gap-5'>
+          <OutboundLink
+            href='https://digigame-expo.org/'
+            target='_blank'
+            rel='noreferrer'
+            className='mx-auto block w-full max-w-[468px] transition-opacity hover:opacity-80'
+          >
+            <img
+              src='https://digigame-expo.org/wp-content/uploads/2014/06/digihaku-banner1.png'
+              alt='デジゲー博2026に出展します。公式サイトへ'
+              width={468}
+              height={60}
+              className='h-auto w-full'
+            />
+          </OutboundLink>
+          <p className='text-center text-base text-slate-300 sm:text-lg'>
+            「光影の塔」完成版を出展・頒布予定。体験プレイも可能なのでぜひお越しください！
+          </p>
+          <div className='max-w-3xl py-2'>
+            <dl className='space-y-5 text-left text-base leading-7 sm:text-lg'>
+              <div className='flex flex-col gap-1 lg:flex-row lg:gap-6'>
+                <dt className='shrink-0 font-bold text-cyan-200 lg:w-20'>日時</dt>
+                <dd className='min-w-0'>
+                  <time className='inline-block' dateTime='2026-11-08'>
+                    11月8日（日）
+                  </time>{' '}
+                  <span className='inline-block'>11:00～16:00</span>
+                </dd>
+              </div>
+              <div className='flex flex-col gap-1 lg:flex-row lg:gap-6'>
+                <dt className='shrink-0 font-bold text-cyan-200 lg:w-20'>会場</dt>
+                <dd className='min-w-0'>
+                  <span className='inline-block'>秋葉原UDX2階</span>{' '}
+                  <span className='inline-block'>アキバ・スクエア</span>
+                </dd>
+              </div>
+              <div className='flex flex-col gap-1 lg:flex-row lg:gap-6'>
+                <dt className='shrink-0 font-bold text-cyan-200 lg:w-20'>ブース</dt>
+                <dd className='min-w-0'>A-14ab</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </Box>
     </Section>
 
     <Section className='gap-y-12 lg:gap-y-20'>
@@ -230,14 +282,15 @@ const IndexPage = () => (
           <Box className='h-full'>
             <TwoDevidedList
               items={[
-                ['2025/11/9', '：デジゲー博2025出展'],
-                ['2024/11/3', '：デジゲー博2024出展'],
-                ['2023/11/12', '：デジゲー博2023出展'],
-                ['2022/11/13', '：デジゲー博2022出展'],
-                ['2022/6/26', '：IGC2022出展'],
-                ['2022/1/12', '：Steamストアページ開設'],
-                ['2022/1/10', '：公式サイトオープン'],
-                ['2021/11/13', '：デジゲー博2021出展'],
+                ['2026年11月8日', '：デジゲー博2026出展予定'],
+                ['2025年11月9日', '：デジゲー博2025出展'],
+                ['2024年11月3日', '：デジゲー博2024出展'],
+                ['2023年11月12日', '：デジゲー博2023出展'],
+                ['2022年11月13日', '：デジゲー博2022出展'],
+                ['2022年6月26日', '：IGC2022出展'],
+                ['2022年1月12日', '：Steamストアページ開設'],
+                ['2022年1月10日', '：公式サイトオープン'],
+                ['2021年11月13日', '：デジゲー博2021出展'],
               ]}
               className='text-base text-left'
             />
