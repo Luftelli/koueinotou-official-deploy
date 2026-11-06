@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-/* eslint-disable no-console */
 import * as fs from 'fs';
 import dotenv from 'dotenv';
 import {

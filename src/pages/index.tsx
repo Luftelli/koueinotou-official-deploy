@@ -6,18 +6,21 @@ import Button from '../components/Button';
 import DeveloperCard from '../components/DeveloperCard';
 import HeadBase from '../components/HeadBase';
 import Layout from '../components/Layout';
+import LoopVideo from '../components/LoopVideo';
 import Section from '../components/Section';
 import TwoDevidedList from '../components/TwoDevidedList';
 
 import CdecIcon from '../images/cdec_icon_v2.1.png';
 import ZipIcon from '../images/zip_icon.jpg';
-import YouTube from '../components/YouTube';
+import HighlightVideo from '../images/game-details/highlight.mp4';
+import HighlightPoster from '../images/game-details/highlight_poster.jpg';
 import SteamGame from '../components/SteamGame';
 
 const gameIntroductionItems = [
   {
     title: '爽快感抜群のチーム対戦型STG',
     imageId: 'battle',
+    detailsAnchor: 'rules',
     content: (
       <>
         光と影チームに分かれ
@@ -33,6 +36,7 @@ const gameIntroductionItems = [
   {
     title: '探索と破壊',
     imageId: 'weapon',
+    detailsAnchor: 'overview',
     content: (
       <>
         ステージには塔や壊せるオブジェクトが点在。
@@ -48,6 +52,7 @@ const gameIntroductionItems = [
   {
     title: 'マシン強化',
     imageId: 'powerup',
+    detailsAnchor: 'power-up',
     content: (
       <>
         落ちているパワーアップアイテムで
@@ -69,8 +74,8 @@ function gameIntroductionImage(id: string, className: string) {
     case 'battle':
       return (
         <StaticImage
-          src='../images/intro_winner.jpg'
-          alt={`Screen Shot ${id}`}
+          src='../images/intro_battle.jpg'
+          alt='敵味方のプレイヤーが入り乱れて塔を奪い合う対戦画面'
           width={640}
           className={className}
         />
@@ -79,7 +84,7 @@ function gameIntroductionImage(id: string, className: string) {
       return (
         <StaticImage
           src='../images/intro_powerup.jpg'
-          alt={`Screen Shot ${id}`}
+          alt='パワーアップアイテムを取って武器性能が上がる瞬間のマシン'
           width={640}
           className={className}
         />
@@ -88,7 +93,7 @@ function gameIntroductionImage(id: string, className: string) {
       return (
         <StaticImage
           src='../images/intro_weapon.jpg'
-          alt={`Screen Shot ${id}`}
+          alt='ブロック状に崩れ落ちる建物の中を進むマシン'
           width={640}
           className={className}
         />
@@ -130,25 +135,58 @@ const IndexPage = () => (
             additionalQuery='?utm_source=koueinotou_hopmepage&utm_medium=referral&utm_campaign=permanent'
           />
         </div>
-        <div className='grid w-full max-w-xl grid-cols-1 gap-4 sm:grid-cols-2'>
-          <div>
-            <p className='mb-2 text-sm text-slate-400'>鋭意開発中</p>
-            <Button link='/development-status'>開発状況</Button>
-          </div>
-          <div>
-            <p className='mb-2 text-sm text-slate-400'>最新情報はこちら</p>
-            <Button link='https://twitter.com/luftelli'>Twitter</Button>
+        <div className='flex w-full max-w-xl flex-col gap-5'>
+          <Button link='/game-details' className='h-16 w-full'>
+            どんなゲーム？
+          </Button>
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+            <div>
+              <p className='mb-2 text-sm text-slate-400'>最新情報はこちら</p>
+              <Button link='https://x.com/luftelli' variant='secondary' className='w-full'>
+                公式X
+              </Button>
+            </div>
+            <div>
+              <p className='mb-2 text-sm text-slate-400'>鋭意開発中</p>
+              <Button link='/development-status' variant='secondary' className='w-full'>
+                開発状況
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
       <div className='w-full lg:col-span-7'>
-        <YouTube
-          embedId='xlILRvLVTP8?si=u1KGNydJKVd9dQwz'
-          aspectRatio={16.0 / 9.0}
-          className='flex w-full flex-grow overflow-hidden border border-white/10 bg-black shadow-2xl shadow-cyan-900/40'
+        <LoopVideo
+          src={HighlightVideo}
+          poster={HighlightPoster}
+          label='走る、塔を壊す、アイテムを取る、空を飛ぶ、オーバードライブ、勝利までを短くまとめたプレイ映像'
+          className='w-full overflow-hidden border border-white/10 bg-black shadow-2xl shadow-cyan-900/40'
         />
       </div>
+    </Section>
+
+    <Section className='gap-y-12 lg:gap-y-20'>
+      {gameIntroductionItems.map((g, index) => (
+        <div
+          key={g.title}
+          className='grid w-full items-center gap-6 text-center lg:grid-cols-12 lg:gap-10 lg:text-left'
+        >
+          <div className={`w-full lg:col-span-7 ${index % 2 === 0 ? '' : 'lg:order-2'}`}>
+            {gameIntroductionImage(
+              g.imageId,
+              'w-full overflow-hidden border border-white/10 shadow-2xl shadow-black/30',
+            )}
+          </div>
+          <div className='flex flex-col items-center gap-y-4 lg:col-span-5 lg:items-start lg:p-6'>
+            <h2 className='text-3xl font-bold sm:text-4xl'>{g.title}</h2>
+            <p className='text-base leading-8 text-slate-300 sm:text-lg'>{g.content}</p>
+            <Button link={`/game-details/#${g.detailsAnchor}`} variant='secondary'>
+              詳しく見る
+            </Button>
+          </div>
+        </div>
+      ))}
     </Section>
 
     <Section className='gap-5'>
@@ -203,72 +241,42 @@ const IndexPage = () => (
       </Box>
     </Section>
 
-    <Section className='gap-y-12 lg:gap-y-20'>
-      {gameIntroductionItems.map((g, index) => (
-        <div
-          key={g.title}
-          className='grid w-full items-center gap-6 text-center lg:grid-cols-12 lg:gap-10 lg:text-left'
-        >
-          <div className={`w-full lg:col-span-7 ${index % 2 === 0 ? '' : 'lg:order-2'}`}>
-            {gameIntroductionImage(
-              g.imageId,
-              'w-full overflow-hidden border border-white/10 shadow-2xl shadow-black/30',
-            )}
-          </div>
-          <div className='flex flex-col items-center gap-y-4 lg:col-span-5 lg:items-start lg:p-6'>
-            <h2 className='text-3xl font-bold sm:text-4xl'>{g.title}</h2>
-            <p className='text-base leading-8 text-slate-300 sm:text-lg'>{g.content}</p>
-          </div>
-        </div>
-      ))}
-    </Section>
-
-    <Section className='gap-y-6'>
-      <div className='flex w-full flex-col items-center justify-center gap-6 sm:flex-row'>
-        <Button link='https://luftelli.com/contact' className='flex-none h-20'>
-          お問い合わせ
-        </Button>
-        {/* <Button className='flex-none'>利用規約</Button>
-          <Button className='flex-none'>ガイドライン</Button> */}
-      </div>
-    </Section>
-
     <Section className='gap-y-4'>
       <h2 className='text-3xl'>ギャラリー</h2>
       <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
         <StaticImage
-          src='../images/ss1.jpg'
-          alt='Screen Shot 1'
+          src='../images/stage_kishou.jpg'
+          alt='癸晶の城跡の水辺から城跡と上空の円環を見上げた風景'
           width={640}
           className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss5.jpg'
-          alt='Screen Shot 5'
+          alt='月と光る環状の道を見下ろして飛ぶマシン'
           width={640}
           className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss2.jpg'
-          alt='Screen Shot 2'
-          width={640}
-          className='w-full overflow-hidden border border-white/10 shadow-xl'
-        />
-        <StaticImage
-          src='../images/ss4.jpg'
-          alt='Screen Shot 4'
+          alt='昼のエリアを走り、遠くの塔を狙うマシン'
           width={640}
           className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss3.jpg'
-          alt='Screen Shot 3'
+          alt='オーバードライブ中に建物を破壊するマシン'
+          width={640}
+          className='w-full overflow-hidden border border-white/10 shadow-xl'
+        />
+        <StaticImage
+          src='../images/ss7.jpg'
+          alt='残り60秒を知らせる赤いエリアを走るマシン'
           width={640}
           className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
         <StaticImage
           src='../images/ss6.jpg'
-          alt='Screen Shot 6'
+          alt='光チームが51対13で勝利した結果画面'
           width={640}
           className='w-full overflow-hidden border border-white/10 shadow-xl'
         />
@@ -303,7 +311,7 @@ const IndexPage = () => (
               items={[
                 ['ゲームタイトル', '：光影の塔'],
                 ['価格', '：未定'],
-                ['発売日', '：2026年予定'],
+                ['発売日', '：2027年第一四半期'],
                 ['対応プレイ人数', '：1-8人'],
                 ['対応プラットフォーム', '：Windows'],
                 ['対応言語', '：日本語'],
@@ -321,7 +329,7 @@ const IndexPage = () => (
     <Section className='gap-y-4'>
       <h2 className='text-3xl'>開発者</h2>
       <div className='grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5'>
-        <DeveloperCard icon={CdecIcon} name='Cdec' twitter='cdecpgl' charge='全般担当' />
+        <DeveloperCard icon={CdecIcon} name='Cdec' xAccount='cdecpgl' charge='全般担当' />
         <DeveloperCard name='Lui' charge='企画・デザインサポート' />
         <DeveloperCard name='Van' charge='デバッグ担当' />
         <DeveloperCard icon={ZipIcon} name='Zip' charge='開発サポート（2018/7～）' />

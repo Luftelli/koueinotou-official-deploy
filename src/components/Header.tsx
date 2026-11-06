@@ -14,13 +14,21 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => (
   >
     <nav className='flex w-full justify-center py-3'>
       <div className='flex w-full max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-20'>
-        <Link
-          to='/'
-          className='tooltip transition-opacity duration-200 hover:opacity-80'
-          data-tip='トップページへ'
-        >
-          <StaticImage src='../images/ctm_logo_v1.png' height={32} alt='トップページへ' />
-        </Link>
+        <div className='flex items-center gap-5 sm:gap-8'>
+          <Link
+            to='/'
+            className='tooltip transition-opacity duration-200 hover:opacity-80'
+            data-tip='トップページへ'
+          >
+            <StaticImage src='../images/ctm_logo_v1.png' height={32} alt='トップページへ' />
+          </Link>
+          <Link
+            to='/game-details'
+            className='text-sm font-bold text-cyan-200 transition-colors duration-200 hover:text-white sm:text-base'
+          >
+            ゲーム紹介
+          </Link>
+        </div>
         <OutboundLink
           href='https://luftelli.com'
           className='tooltip'

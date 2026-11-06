@@ -13,3 +13,6 @@ declare module '*.gif' {
 declare module '*.webp' {
     export default importedImage;
 }
+declare module '*.mp4' {
+    export default importedImage;
+}

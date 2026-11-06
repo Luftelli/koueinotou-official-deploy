@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import axios, { Axios } from 'axios';
 
 export class Semaphore {
