@@ -8,14 +8,20 @@ export const TaskStatus = {
 } as const;
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus];
 
+/**
+ * 進捗の状態色
+ * 開発状況のページは影の帯だけで構成するため、いま進めている進行中を影の紫で最も目立たせる
+ * 完了はひと目で済んだとわかる緑にし、面積が大きくなるため彩度を落として紫とぶつからないようにする
+ * 未着手は背景になじむ暗いグレーにする
+ */
 export function getTaskStatusColor(status: TaskStatus): string {
   switch (status) {
     case TaskStatus.Done:
-      return 'rgb(99, 255, 132)';
+      return '#39ac69';
     case TaskStatus.InProgress:
-      return 'rgb(99, 132, 255)';
+      return '#fb00ff';
     case TaskStatus.Todo:
-      return 'rgb(255, 99, 132)';
+      return '#5a5a64';
     default:
       return assertNever(status);
   }

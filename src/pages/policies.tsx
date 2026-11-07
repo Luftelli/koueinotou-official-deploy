@@ -1,8 +1,10 @@
 import { OutboundLink } from 'gatsby-plugin-google-gtag';
 import React from 'react';
 import Box from '../components/Box';
+import ExternalLinkIcon from '../components/ExternalLinkIcon';
 import HeadBase from '../components/HeadBase';
 import Layout from '../components/Layout';
+import MenuHeading from '../components/MenuHeading';
 import Section from '../components/Section';
 
 const policies = [
@@ -32,29 +34,27 @@ const PoliciesPage = () => (
   <Layout>
     <Section className='gap-y-8'>
       <div className='w-full max-w-4xl text-left'>
-        <p className='text-sm font-bold tracking-[0.3em] text-cyan-300'>POLICIES</p>
-        <h1 className='mt-3 text-3xl font-bold text-white sm:text-4xl'>規約・ポリシー</h1>
-        <p className='mt-6 text-base leading-8 text-slate-300 sm:text-lg'>
+        <MenuHeading as='h1'>規約・ポリシー</MenuHeading>
+        <p className='info-back mt-6 text-base leading-8 text-ink-dim sm:text-lg'>
           「光影の塔」公式サイトおよび本作の利用・配信などには、ゲーム制作サークルLuftelliが定める共通規約・方針が適用されます。最新の内容は、以下のLuftelli公式ページをご確認ください。
         </p>
       </div>
 
       <Box className='max-w-4xl'>
-        <ul className='divide-y divide-cyan-200/10 text-left'>
+        <ul className='divide-y divide-rule text-left'>
           {policies.map(({ title, description, href }) => (
             <li key={href}>
               <OutboundLink
                 href={href}
                 target='_blank'
-                className='group/link flex flex-col gap-2 px-1 py-5 transition-colors duration-200 sm:px-2 sm:py-6'
+                className='group/link flex flex-col gap-2 px-1 py-5 sm:px-2 sm:py-6'
               >
-                <span className='flex items-center justify-between gap-4 text-lg font-bold text-white transition-colors duration-200 group-hover/link:text-cyan-200 sm:text-xl'>
+                <span className='flex items-center justify-between gap-4 text-lg font-bold decoration-2 underline-offset-[6px] group-hover/link:underline sm:text-xl'>
                   {title}
-                  <span aria-hidden='true' className='text-cyan-300'>
-                    ↗
-                  </span>
+                  <ExternalLinkIcon />
+                  <span className='sr-only'>（新しいタブで開く）</span>
                 </span>
-                <span className='text-sm leading-6 text-slate-400 sm:text-base'>{description}</span>
+                <span className='text-sm leading-6 text-ink-dim sm:text-base'>{description}</span>
               </OutboundLink>
             </li>
           ))}

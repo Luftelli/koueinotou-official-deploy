@@ -3,25 +3,19 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     fontFamily: {
-      body: ['Noto Sans Japanese', 'ui-sans-serif'],
+      // ゲームのUIと同じ書体。名前が数字で終わるため、CSSでも引用符が必要
+      body: ['"M PLUS 1"', 'ui-sans-serif', 'sans-serif'],
     },
     extend: {
       colors: {
-        'lightning-cyan': '#06b6d4',
-        'gravity-purple': '#8b5cf6',
-      },
-      boxShadow: {
-        'neon-cyan': '0 0 5px #06b6d4, 0 0 20px #06b6d4',
-        'neon-purple': '0 0 5px #8b5cf6, 0 0 20px #8b5cf6',
-      },
-      keyframes: {
-        'rainbow-scroll': {
-          '0%': { backgroundPosition: '0% 50%' },
-          '100%': { backgroundPosition: '600% 50%' },
-        },
-      },
-      animation: {
-        'rainbow-scroll': 'rainbow-scroll 30s linear infinite',
+        // チームの色。ゲームのStandardUIColorSettingと同じ値にする
+        hikari: '#fff700',
+        kage: '#fb00ff',
+        // 光・影どちらの帯の上でも読めるよう、global.cssの変数で切り替える
+        ink: 'var(--ink)',
+        'ink-dim': 'var(--ink-dim)',
+        rule: 'var(--rule)',
+        paper: 'var(--paper)',
       },
     },
   },
@@ -30,13 +24,14 @@ module.exports = {
     themes: [
       {
         lightning: {
-          primary: '#06b6d4',
-          secondary: '#8b5cf6',
-          accent: '#d946ef',
-          neutral: '#1e293b',
-          'base-100': '#0f172a',
-          info: '#3abff8',
-          success: '#36d399',
+          primary: '#fff700',
+          secondary: '#fb00ff',
+          accent: '#fb00ff',
+          neutral: '#26262c',
+          'base-100': '#000000',
+          // 開発状況のステップ表示に使う。features/task/models.tsxの状態色と揃える
+          info: '#fb00ff',
+          success: '#39ac69',
           warning: '#fbbd23',
           error: '#f87272',
         },

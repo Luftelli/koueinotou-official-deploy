@@ -9,11 +9,20 @@ interface LayoutProp {
 
 const Layout: React.FC<LayoutProp> = ({ children }) => (
   <>
+    <a href='#main' className='skip-link'>
+      本文へ移動
+    </a>
     <ParallaxBackground />
     <div className='flex min-h-screen flex-col font-body'>
       <Header className='flex-none' />
       <div className='flex flex-1'>
-        <main className='flex min-w-0 w-full flex-1 flex-col items-center text-center'>{children}</main>
+        <main
+          id='main'
+          tabIndex={-1}
+          className='flex min-w-0 w-full flex-1 flex-col items-center text-center'
+        >
+          {children}
+        </main>
       </div>
       {/* 画面一番下に表示 */}
       <Footer className='flex-none' />

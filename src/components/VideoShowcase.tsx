@@ -51,7 +51,7 @@ const VideoShowcase: React.FC<VideoShowcaseProps> = ({ items }) => {
 
   return (
     <div ref={containerRef} className='grid w-full gap-5 text-left lg:grid-cols-12 lg:gap-8'>
-      <div className='relative aspect-video w-full self-start overflow-hidden border border-white/10 shadow-2xl shadow-black/30 lg:col-span-8'>
+      <div className='relative aspect-video w-full self-start overflow-hidden border border-rule lg:col-span-8'>
         {items.map(({ video, poster, label }, index) => (
           <LoopVideo
             key={video}
@@ -76,14 +76,14 @@ const VideoShowcase: React.FC<VideoShowcaseProps> = ({ items }) => {
               type='button'
               aria-pressed={index === activeIndex}
               onClick={() => setActiveIndex(index)}
-              className={`h-full w-full border-l-4 p-5 text-left transition-colors duration-200 ${
-                index === activeIndex
-                  ? 'border-cyan-300 bg-slate-800/90'
-                  : 'border-transparent bg-slate-900/70 hover:bg-slate-800/70'
+              className={`relative h-full w-full p-5 text-left transition-colors duration-200 ${
+                index === activeIndex ? 'bg-black' : 'bg-black/60 hover:bg-black/80'
               }`}
             >
               <span className='block text-xl font-bold text-white'>{title}</span>
-              <span className='mt-2 block leading-7 text-slate-300'>{description}</span>
+              <span className='mt-2 block leading-7 text-ink-dim'>{description}</span>
+              {/* 再生中の項目はボタンと同じ虹色の線で示す */}
+              {index === activeIndex && <span aria-hidden='true' className='light-bar' />}
             </button>
           </li>
         ))}

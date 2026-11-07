@@ -6,15 +6,16 @@ interface TwoDevidedListProps {
 }
 
 const TwoDevidedList: React.FC<TwoDevidedListProps> = ({ items, className }) => (
-  <table className={className ?? ''}>
-    <tbody>
-      {items.map((item) => (
-        <tr key={item[0] + item[1]}>
-          <td>{item[0]}</td>
-          <td>{item[1]}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+  <dl className={`divide-y divide-rule tabular-nums ${className ?? ''}`}>
+    {items.map((item) => (
+      <div
+        key={item[0] + item[1]}
+        className='grid grid-cols-1 gap-x-6 py-2.5 sm:grid-cols-[11rem_1fr]'
+      >
+        <dt className='text-ink-dim'>{item[0]}</dt>
+        <dd className='font-bold'>{item[1]}</dd>
+      </div>
+    ))}
+  </dl>
 );
 export default TwoDevidedList;

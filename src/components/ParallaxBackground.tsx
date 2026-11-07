@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { isMotionStopped } from '../utility/motion';
 
 interface Particle {
   x: number;
@@ -434,6 +435,8 @@ const ParallaxBackground: React.FC = () => {
 
     // フレームレート制御（60fps目標）
     let lastFrameTime = performance.now();
+    // 動きを止めているあいだは、画面サイズが変わったときだけ描き直す
+    let stoppedFrameSize = '';
 
     // アニメーションループ
     const animate = (currentTime: number): void => {
@@ -446,6 +449,17 @@ const ParallaxBackground: React.FC = () => {
         return;
       }
       lastFrameTime = currentTime - (elapsed % FRAME_INTERVAL);
+
+      if (isMotionStopped()) {
+        const frameSize = `${canvas.width}x${canvas.height}`;
+        if (frameSize === stoppedFrameSize) {
+          animationFrameRef.current = requestAnimationFrame(animate);
+          return;
+        }
+        stoppedFrameSize = frameSize;
+      } else {
+        stoppedFrameSize = '';
+      }
 
       animationTimeRef.current += 1;
       const currentScrollY = scrollYRef.current;
@@ -495,11 +509,22 @@ const ParallaxBackground: React.FC = () => {
   }, [updateDocumentHeight]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className='fixed inset-0 -z-50 h-full w-full'
-      style={{ background: '#000510' }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className='fixed inset-0 -z-50 h-full w-full'
+        style={{ background: '#000510' }}
+      />
+      {/* ゲームのメニュー背景と同じく、上を影チーム寄りの青紫、下を光チーム寄りの黄緑にする */}
+      <div
+        aria-hidden='true'
+        className='pointer-events-none fixed inset-0 -z-40'
+        style={{
+          background:
+            'linear-gradient(to bottom, rgb(40 20 120 / 0.3), transparent 35%, transparent 62%, rgb(90 110 0 / 0.2))',
+        }}
+      />
+    </>
   );
 };
 

@@ -1,28 +1,330 @@
-@import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* 既定は影の世界。.world-light が変数を上書きして光の世界へ切り替える */
+  :root {
+    --ink: #fff;
+    --ink-dim: #c4c4ce;
+    --rule: rgb(255 255 255 / 0.24);
+    --focus: #fff;
+    --paper: #000;
+    /* 見出しの線は置かれた帯のチーム色にする。既定は影の紫 */
+    --heading-line: #fb00ff;
+    /* ゲームのInfoPanelと同じ、文字の背後を暗く保つ下地 */
+    --info-back: rgb(0 0 0 / 0.6);
+    --info-pad: 1rem;
+    /* キービジュアルの境界線と同じ向きに傾ける帯の高低差 */
+    --slant: clamp(1.75rem, 5.5vw, 5.5rem);
+    --seam: 6px;
+    /* 光と影の帯の境目。白い帯側に光の黄、暗い帯側に影のマゼンタを引く */
+    --band-seam: 4px;
+    /* ゲームのボタンのSkewedImageと同じ傾き */
+    --skew: 35deg;
+    /* ParallelogramButtonのLightBarと同じ色の並び */
+    --rainbow: linear-gradient(
+      90deg,
+      #f00 0%,
+      #ffbb00 12.5%,
+      #80ff00 25%,
+      #00ff40 37.5%,
+      #0ff 50%,
+      #0040ff 62.5%,
+      #8000ff 75%,
+      #f00 100%
+    );
+  }
+
+  /* daisyUIの:root指定より優先させる */
+  :root:root {
+    color-scheme: dark;
+  }
+
   html {
-    @apply scroll-smooth bg-slate-900;
+    @apply scroll-smooth;
+    /* 固定ヘッダーと目次の下に移動先が隠れないようにする */
+    scroll-padding-top: 7rem;
+    background-color: #000;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgb(255 247 0 / 0.25);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    word-break: auto-phrase;
   }
 
   body {
-    @apply min-w-0 overflow-x-hidden text-standard-color antialiased;
+    @apply min-w-0 overflow-x-hidden text-ink antialiased;
   }
 
+  /* 操作に関わる強調はチームに寄せず、文字色を反転させるだけにする */
   ::selection {
-    @apply bg-cyan-300 text-slate-900;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 60;
+    background: #fff700;
+    padding: 0.5rem 1rem;
+    color: #000;
+    font-weight: 700;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .world-light {
+    --ink: #000;
+    --ink-dim: #3f3f4a;
+    --rule: rgb(0 0 0 / 0.22);
+    --focus: #000;
+    --paper: #fff;
+    --heading-line: #fff700;
+    --info-back: transparent;
+    --info-pad: 0;
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    padding-block: var(--slant);
+    color: var(--ink);
+  }
+
+  /*
+    帯の面と境界線を別レイヤーにし、中身がclip-pathで切られないようにする
+    外側から影のマゼンタ、光の黄、白い面の順に重ね、境目に2本の線を出す
+  */
+  .world-light::before,
+  .world-light::after,
+  .world-light-seam {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .world-light::before {
+    z-index: -3;
+    background: #fb00ff;
+    clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+  }
+
+  .world-light-seam {
+    z-index: -2;
+    background: #fff700;
+    clip-path: polygon(
+      0 calc(var(--slant) + var(--band-seam)),
+      100% var(--band-seam),
+      100% calc(100% - var(--slant) - var(--band-seam)),
+      0 calc(100% - var(--band-seam))
+    );
+  }
+
+  .world-light::after {
+    z-index: -1;
+    background:
+      linear-gradient(rgb(0 0 0 / 0.06) 1px, transparent 1px) 0 0 / 72px 72px,
+      linear-gradient(90deg, rgb(0 0 0 / 0.06) 1px, transparent 1px) 0 0 / 72px 72px,
+      #fff;
+    clip-path: polygon(
+      0 calc(var(--slant) + var(--band-seam) * 2),
+      100% calc(var(--band-seam) * 2),
+      100% calc(100% - var(--slant) - var(--band-seam) * 2),
+      0 calc(100% - var(--band-seam) * 2)
+    );
+  }
+
+  .info-back {
+    background: var(--info-back);
+    padding: var(--info-pad);
+  }
+
+  /* 面は敷かず、文字の下に帯のチーム色の線を幅いっぱいに引く */
+  .menu-heading {
+    width: 100%;
+    border-bottom: 3px solid var(--heading-line);
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .menu-heading {
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .menu-heading {
+      font-size: 2.5rem;
+    }
+  }
+
+  .menu-heading-title {
+    overflow-wrap: anywhere;
+    padding-bottom: 0.3em;
+    color: var(--ink);
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  /* ページの最初の見出しは、チーム色の線の代わりに虹色の線を流す */
+  .menu-heading-page {
+    position: relative;
+    border-bottom: 0;
+    padding-bottom: 4px;
+  }
+
+  /* ゲームのParallelogramButton */
+  .menu-button {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    /* 傾きで左右にはみ出す分だけ内側へ寄せる。縦に積む幅では中央に置く */
+    max-width: calc(100% - 2.5rem);
+    margin-inline: auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    border-bottom: 0;
+    padding-inline: 2.5rem;
+    font-weight: 500;
+    transform: skewX(calc(var(--skew) * -1));
+    transition:
+      background-color 0.15s,
+      color 0.15s;
+  }
+
+  /* 本文と横に並ぶ幅では、本文の左端に揃える */
+  @media (min-width: 1024px) {
+    .menu-button {
+      margin-inline: 1.25rem;
+    }
+  }
+
+  .menu-button-normal {
+    background: rgb(26 26 26 / 0.9);
+    color: #fff;
+  }
+
+  /* ホバー中はゲームの選択中の項目と同じ明るい面にする */
+  .menu-button-normal:hover {
+    background: rgb(230 230 230 / 0.92);
+    color: #000;
+  }
+
+  .menu-button-disabled {
+    background: rgb(128 128 128 / 0.25);
+    color: rgb(255 255 255 / 0.6);
+    cursor: not-allowed;
+  }
+
+  .menu-button-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    transform: skewX(var(--skew));
+  }
+
+  .light-bar {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 4px;
+    overflow: hidden;
+  }
+
+  .light-bar-top {
+    top: 0;
+    bottom: auto;
+  }
+
+  /* 再描画を避けるため、背景位置ではなくtransformで流す */
+  .light-bar::before,
+  .hero-frame::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 200%;
+    background: var(--rainbow) 0 0 / 50% 100% repeat-x;
+    animation: light-bar-flow 6s linear infinite;
+  }
+
+  /* ゲームのHUDのチームマーク */
+  .team-mark {
+    display: inline-grid;
+    width: 1.5em;
+    height: 1.3em;
+    margin-inline: 0.04em;
+    place-items: center;
+    clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    color: #000;
+    line-height: 1;
+  }
+
+  /* キービジュアルの下を流れる虹色の境界線 */
+  .hero-frame {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: var(--seam);
+  }
+
+  .hero-image {
+    position: relative;
+  }
+
+  .hero-frame,
+  .hero-image {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+  }
+
+  .hero-plate {
+    animation: plate-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+  }
+
+  /* ボタンと同じ傾きの平行四辺形 */
+  .slant-frame {
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+  }
+
+  /* ゲームのInfoPanelと同じ黒いパネル。どの帯に置いても中身は白文字にする */
+  .panel-shadow {
+    --ink: #fff;
+    --ink-dim: #c4c4ce;
+    --rule: rgb(255 255 255 / 0.24);
+    --paper: #000;
+    --focus: #fff;
+    background: rgb(0 0 0 / 0.72);
+    color: var(--ink);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }
 
 @layer utilities {
-  .text-standard-color {
-    @apply text-slate-200;
-  }
-
   /* スクロールバーのカスタマイズ */
   ::-webkit-scrollbar {
     width: 16px;
@@ -32,11 +334,38 @@
   ::-webkit-scrollbar-track {
     background-color: #f9f9f91a;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 10px 10px #909090;
     border: solid 4px transparent;
+  }
+}
+
+/* サイト内の停止ボタン。読み込み時の一度きりの動きは止めない */
+html[data-motion='paused'] .light-bar::before,
+html[data-motion='paused'] .hero-frame::before {
+  animation-play-state: paused;
+}
+
+@keyframes plate-in {
+  /* 購入導線を隠さないよう、透明度は変えず位置だけを動かす */
+  from {
+    transform: translateX(-2rem);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes light-bar-flow {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
   }
 }
 

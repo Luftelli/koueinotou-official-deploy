@@ -4,6 +4,8 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import HeadBase from '../components/HeadBase';
 
 import Layout from '../components/Layout';
+import MenuHeading from '../components/MenuHeading';
+import Section from '../components/Section';
 
 import { SubTask, Task, TaskGroup, TaskStatus } from '../features/task/models';
 import {
@@ -22,9 +24,16 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
   data,
 }) => {
   const [displayCompletedSteps, setDisplayCompletedSteps] = useState(false);
+  const stepListRef = useRef<HTMLDivElement>(null);
   const currentProgressingPhaseRef = useRef<HTMLLIElement>(null);
+  // ページ全体は動かさず、ステップ一覧の中だけ進行中の位置までスクロールする
   useLayoutEffect(() => {
-    currentProgressingPhaseRef.current?.scrollIntoView();
+    const list = stepListRef.current;
+    const phase = currentProgressingPhaseRef.current;
+    if (list == null || phase == null) {
+      return;
+    }
+    list.scrollTop += phase.getBoundingClientRect().top - list.getBoundingClientRect().top;
   }, []);
 
   const toolTaskGroups = data.allTasksJson.nodes.at(0)?.taskGroups;
@@ -152,7 +161,9 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 
   return (
     <Layout>
-      <h1 className='mt-12 text-4xl font-bold lg:mt-16'>全体状況</h1>
+      <Section className='!pb-2 text-left'>
+        <MenuHeading as='h1'>開発状況</MenuHeading>
+      </Section>
       <TaskProgressSection
         taskGroup={allGroup}
         dueOn={allGroup.finalDueOn}
@@ -160,19 +171,19 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
         displayTaskList={false}
       >
         <div className='flex h-full min-h-0 flex-col gap-1'>
-          <p className='text-2xl'>状況概要</p>
-          <p className='text-l'>
+          <h2 className='text-2xl font-bold'>状況概要</h2>
+          <p className='text-ink-dim'>
             {sortedTaskGroups.length}ステップ中{completedTaskGroupCount}ステップ完了
           </p>
-          <div className='mx-auto min-h-0 w-full flex-1 overflow-y-auto'>
+          <div ref={stepListRef} className='mx-auto min-h-0 w-full flex-1 overflow-y-auto'>
             <ul className='steps steps-vertical w-full'>{stepElements}</ul>
           </div>
         </div>
       </TaskProgressSection>
 
-      <h1 className='mt-8 text-4xl font-bold' aria-label='1'>
-        ステップ毎状況
-      </h1>
+      <Section className='!pb-0 text-left'>
+        <MenuHeading>ステップ毎状況</MenuHeading>
+      </Section>
       <div className='form-control'>
         <label
           className='label cursor-pointer justify-center gap-2'
@@ -205,7 +216,12 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 
 export default DevelopmentStatusPage;
 
-export const Head = () => <HeadBase pageTitle='開発状況' pageDescription='開発の状況' />;
+export const Head = () => (
+  <HeadBase
+    pageTitle='開発状況'
+    pageDescription='「光影の塔」の開発の進み具合をステップごとに公開しています。'
+  />
+);
 
 export const query = graphql`
   query DevelopmentStatusPageQuery {

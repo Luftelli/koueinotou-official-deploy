@@ -12,12 +12,10 @@ interface ButtonProps {
   children?: React.ReactNode;
 }
 
-// 視覚的な優先度。primaryが最も目立つ
+// 視覚的な優先度。primaryはゲームの選択中の項目と同じ明るい面にする
 const variantClassNames: Record<ButtonVariant, string> = {
-  primary:
-    'text-xl text-white sm:text-2xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)]',
-  secondary:
-    'text-lg text-cyan-100 sm:text-xl border-2 border-cyan-400 bg-slate-900/60 hover:bg-cyan-400/20',
+  primary: 'menu-button-normal text-xl sm:text-2xl',
+  secondary: 'menu-button-normal text-lg sm:text-xl',
 };
 
 const Button: React.FC<ButtonProps> = ({ children, link, variant = 'primary', className }) => {
@@ -27,13 +25,12 @@ const Button: React.FC<ButtonProps> = ({ children, link, variant = 'primary', cl
 
   const mainComponent = (
     <div
-      className={`mx-auto flex h-12 w-64 max-w-full transform items-center justify-center px-6 align-middle font-bold -skew-x-[24deg] transition-all duration-200 sm:mx-0 ${
-        link == null
-          ? 'text-xl text-white sm:text-2xl bg-gray-700 cursor-not-allowed'
-          : variantClassNames[variant]
+      aria-disabled={link == null ? true : undefined}
+      className={`menu-button h-14 w-64 ${
+        link == null ? 'menu-button-disabled text-xl sm:text-2xl' : variantClassNames[variant]
       } ${className ?? ''}`}
     >
-      <span className='inline-flex transform items-center gap-2 skew-x-[24deg]'>
+      <span className='menu-button-label'>
         {children}
         {isExternal && (
           <>
@@ -42,6 +39,7 @@ const Button: React.FC<ButtonProps> = ({ children, link, variant = 'primary', cl
           </>
         )}
       </span>
+      <span aria-hidden='true' className='light-bar' />
     </div>
   );
 
@@ -50,11 +48,15 @@ const Button: React.FC<ButtonProps> = ({ children, link, variant = 'primary', cl
   }
 
   if (isInternal) {
-    return <Link to={link}>{mainComponent}</Link>;
+    return (
+      <Link to={link} className='block w-full max-w-full lg:w-auto'>
+        {mainComponent}
+      </Link>
+    );
   }
 
   return (
-    <OutboundLink href={link} target='_blank'>
+    <OutboundLink href={link} target='_blank' className='block w-full max-w-full lg:w-auto'>
       {mainComponent}
     </OutboundLink>
   );

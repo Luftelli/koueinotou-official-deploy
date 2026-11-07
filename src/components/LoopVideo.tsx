@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { isMotionStopped, useMotionPaused } from '../utility/motion';
 
 interface LoopVideoProps {
   src: string;
@@ -16,7 +17,7 @@ interface LoopVideoProps {
 
 /**
  * GIFアニメーションのように無音でループ再生する動画
- * 半分以上見えているときだけ再生し、動きを減らす設定の環境では静止画を表示する
+ * 半分以上見えているときだけ再生し、動きを止めているあいだは静止画を表示する
  */
 const LoopVideo: React.FC<LoopVideoProps> = ({
   src,
@@ -30,6 +31,7 @@ const LoopVideo: React.FC<LoopVideoProps> = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const onFadeOutStartRef = useRef(onFadeOutStart);
+  const motionPaused = useMotionPaused();
 
   useEffect(() => {
     onFadeOutStartRef.current = onFadeOutStart;
@@ -37,7 +39,11 @@ const LoopVideo: React.FC<LoopVideoProps> = ({
 
   useEffect(() => {
     const video = videoRef.current;
-    if (video == null || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (video == null) {
+      return undefined;
+    }
+    if (isMotionStopped()) {
+      video.pause();
       return undefined;
     }
 
@@ -81,7 +87,7 @@ const LoopVideo: React.FC<LoopVideoProps> = ({
       observer.disconnect();
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [active, fadeSeconds]);
+  }, [active, fadeSeconds, motionPaused]);
 
   return (
     <video

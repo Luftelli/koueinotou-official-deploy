@@ -29,6 +29,13 @@ const HeadBase: React.FC<HeaderProps> = ({ pageTitle, pageDescription }) => {
   return (
     <>
       <meta charSet='utf-8' />
+      <meta name='theme-color' content='#000000' />
+      <link rel='preconnect' href='https://fonts.googleapis.com' />
+      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
+      <link
+        rel='stylesheet'
+        href='https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;500;700&display=swap'
+      />
       <html lang='ja' />
       <title>{title}</title>
       <meta name='description' content={description} />

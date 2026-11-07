@@ -1,15 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-  DoughnutController,
-} from 'chart.js';
+import { Chart as ChartJS, ArcElement, Title, Tooltip, Legend, DoughnutController } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { format } from 'date-fns';
 
 import Section from '../../components/Section';
 
@@ -19,6 +11,8 @@ import { TaskStatusIcon } from './TaskIcon';
 import { assertNever } from '../../utility/type';
 
 ChartJS.register(ArcElement, DoughnutController, Title, Tooltip, Legend, ChartDataLabels);
+
+const dueOnFormatter = new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' });
 
 export const TaskProgressGraphCountSource = {
   TaskCount: 'TaskCount',
@@ -82,7 +76,8 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   const doneCount = getCount(TaskStatus.Done);
   const inProgressCount = getCount(TaskStatus.InProgress);
   const toDoCount = getCount(TaskStatus.Todo);
-  const percentage = Math.round((doneCount / getTotalCount()) * 100);
+  const totalCount = getTotalCount();
+  const percentage = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
   let progressDisplay: JSX.Element;
   let dueOnTextSuffix;
   let statusTextHead = '';
@@ -113,8 +108,9 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
       return assertNever(taskGroup.status);
   }
 
-  const dueOnText = dueOn == null ? undefined : format(dueOn, 'y年M月d日');
-  const statusText = `${statusTextHead}: ${dueOnText}${dueOnTextSuffix}`;
+  const dueOnText = dueOn == null ? undefined : dueOnFormatter.format(dueOn);
+  const statusText =
+    dueOnText == null ? statusTextHead : `${statusTextHead}: ${dueOnText}${dueOnTextSuffix}`;
 
   const labels = [];
   const colors = [];
@@ -136,9 +132,9 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
   }
 
   return (
-    <Section className='my-2 flex-grow-0 gap-y-1'>
-      {title && <h2 className='text-3xl'>{title}</h2>}
-      <p className='text-xl'>{statusText}</p>
+    <Section className='flex-grow-0 gap-y-3 !py-6'>
+      {title && <h2 className='text-2xl font-bold sm:text-3xl'>{title}</h2>}
+      <p className='text-lg text-ink-dim'>{statusText}</p>
       <Box className='h-full' collapsed={collapsed}>
         <div className='grid w-full min-w-0 grid-cols-1 items-center justify-center gap-8 xl:grid-cols-2 xl:gap-12'>
           {/* Chart.jsが親要素の寸法からcanvasを計算できるよう、専用の正方形コンテナを使用 */}
@@ -154,7 +150,8 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
                 datasets: [
                   {
                     backgroundColor: colors,
-                    borderColor: 'rgb(200, 200, 200)',
+                    borderColor: '#000',
+                    borderWidth: 3,
                     data,
                   },
                 ],
@@ -172,8 +169,11 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
                   },
                   // マウスオーバー時に情報を表示しない
                   tooltip: { enabled: false },
+                  // 明るい色にも暗い色にも重なるため、白文字を黒で縁取る
                   datalabels: {
-                    color: '#000',
+                    color: '#fff',
+                    textStrokeColor: '#000',
+                    textStrokeWidth: 3,
                     textAlign: 'center',
                     font: {
                       weight: 'bold',
@@ -194,7 +194,7 @@ export const TaskProgressSection: React.FC<TaskProgressSectionProps> = ({
           <div className='h-[28rem] min-w-0 overflow-hidden'>
             {displayTaskList && (
               <div className='flex h-full min-h-0 flex-col justify-start gap-2'>
-                <p className='text-2xl'>タスク一覧</p>
+                <h3 className='text-2xl font-bold'>タスク一覧</h3>
                 <div className='min-h-0 flex-1 overflow-y-auto'>
                   <table className='h-auto mx-auto text-base text-left'>
                     <tbody>
