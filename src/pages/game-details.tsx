@@ -1,4 +1,5 @@
 import { StaticImage } from 'gatsby-plugin-image';
+import { HeadProps } from 'gatsby';
 import React from 'react';
 import HeadBase from '../components/HeadBase';
 import Layout from '../components/Layout';
@@ -551,8 +552,9 @@ const GameDetailsPage = () => (
 
 export default GameDetailsPage;
 
-export const Head = () => (
+export const Head = ({ location }: HeadProps) => (
   <HeadBase
+    pagePath={location.pathname}
     pageTitle='ゲーム紹介'
     pageDescription='光と影に分かれて塔を奪い合う、オンライン対戦型3Dシューティング「光影の塔」がどんなゲームなのかを紹介します。'
   />

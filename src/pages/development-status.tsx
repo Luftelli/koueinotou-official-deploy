@@ -1,5 +1,5 @@
 import { parse } from 'date-fns';
-import { graphql, PageProps } from 'gatsby';
+import { graphql, HeadProps, PageProps } from 'gatsby';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import HeadBase from '../components/HeadBase';
 
@@ -216,8 +216,9 @@ const DevelopmentStatusPage: React.FC<PageProps<Queries.DevelopmentStatusPageQue
 
 export default DevelopmentStatusPage;
 
-export const Head = () => (
+export const Head = ({ location }: HeadProps) => (
   <HeadBase
+    pagePath={location.pathname}
     pageTitle='開発状況'
     pageDescription='「光影の塔」の開発の進み具合をステップごとに公開しています。'
   />

@@ -1,4 +1,5 @@
 import { OutboundLink } from 'gatsby-plugin-google-gtag';
+import { HeadProps } from 'gatsby';
 import React from 'react';
 import Box from '../components/Box';
 import ExternalLinkIcon from '../components/ExternalLinkIcon';
@@ -66,8 +67,9 @@ const PoliciesPage = () => (
 
 export default PoliciesPage;
 
-export const Head = () => (
+export const Head = ({ location }: HeadProps) => (
   <HeadBase
+    pagePath={location.pathname}
     pageTitle='規約・ポリシー'
     pageDescription='「光影の塔」に適用されるLuftelli共通の規約・方針をご案内します。'
   />

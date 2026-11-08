@@ -1,5 +1,6 @@
 import { StaticImage } from 'gatsby-plugin-image';
 import { OutboundLink } from 'gatsby-plugin-google-gtag';
+import { HeadProps } from 'gatsby';
 import React from 'react';
 import Box from '../components/Box';
 import Button from '../components/Button';
@@ -109,7 +110,7 @@ const IndexPage = () => (
             オンライン対戦型3Dシューティング
           </h1>
           <p className='max-w-[34rem] text-sm leading-6 text-ink-dim lg:text-base lg:leading-7'>
-            2027年第一四半期発売予定。Steamでウィッシュリストに登録して、最新情報をお待ちください。
+            2027年2月発売予定。Steamでウィッシュリストに登録して、最新情報をお待ちください。
           </p>
         </div>
         {/*
@@ -281,10 +282,10 @@ const IndexPage = () => (
               items={[
                 ['ゲームタイトル', '光影の塔'],
                 ['価格', '未定'],
-                ['発売日', '2027年第一四半期'],
+                ['発売日', '2027年2月予定'],
                 ['対応プレイ人数', '1-8人'],
                 ['対応プラットフォーム', 'Windows'],
-                ['対応言語', '日本語'],
+                ['対応言語', '日本語（英語版は検討中・公開日未定）'],
                 ['対応年齢', '全年齢'],
                 ['ネットワーク機能', 'あり'],
                 ['開発チーム名', 'Luftelli'],
@@ -330,4 +331,4 @@ const IndexPage = () => (
 
 export default IndexPage;
 
-export const Head = () => <HeadBase />;
+export const Head = ({ location }: HeadProps) => <HeadBase pagePath={location.pathname} />;
